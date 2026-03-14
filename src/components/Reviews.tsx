@@ -239,7 +239,7 @@ export default function Reviews() {
 
           <div
             ref={trackRef}
-            className={`flex w-max will-change-transform select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`flex gap-6 w-max will-change-transform select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{ transform: 'translate3d(0px, 0, 0)' }}
           >
             {[0, 1].map((setIndex) => (

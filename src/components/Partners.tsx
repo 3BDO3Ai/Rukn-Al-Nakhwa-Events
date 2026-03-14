@@ -22,13 +22,13 @@ const PIXELS_PER_SECOND = 42;
 
 function LogoCard({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="flex items-center justify-center bg-white hover:bg-gray-50 border border-gray-100 rounded-2xl px-8 py-5 w-[240px] h-32 flex-shrink-0 transition-all group shadow-sm hover:shadow-md">
+    <div className="flex items-center justify-center bg-white hover:bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 w-[240px] h-32 flex-shrink-0 transition-all shadow-sm hover:shadow-md">
       <Image
         src={src}
         alt={alt}
-        width={180}
-        height={88}
-        className="object-contain max-h-20 w-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+        width={220}
+        height={110}
+        className="object-contain w-full h-full"
       />
     </div>
   );
@@ -149,7 +149,7 @@ export default function Partners() {
 
           <div
             ref={trackRef}
-            className="flex w-max will-change-transform"
+            className="flex gap-8 w-max will-change-transform"
             style={{ transform: 'translate3d(0px, 0, 0)' }}
           >
             {[0, 1].map((setIndex) => (
