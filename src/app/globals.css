@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --secondary: #14213d;
-  --accent: #fca311;
-  --light: #e5e5e5;
+  --background: #E8E7E8;
+  --foreground: #1E1D31;
+  --secondary: #C63D00;
+  --accent: #C63D00;
+  --light: #E8E7E8;
 }
 
 body {
@@ -18,7 +18,7 @@ body {
 
 /* Custom Arabic Typography */
 .arabic-text {
-  font-family: var(--font-cairo), 'Cairo', 'Tajawal', sans-serif;
+  font-family: var(--font-cairo), 'Tajawal', sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -50,7 +50,7 @@ body {
 
 /* Modern light theme hero gradient */
 .hero-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #e5e5e5 50%, #f0f4f8 75%, #ffffff 100%);
+  background: linear-gradient(135deg, #E8E7E8 0%, #f3f2f3 25%, #ebe9eb 50%, #f4f3f4 75%, #E8E7E8 100%);
   background-size: 400% 400%;
   animation: gradientAnimation 12s ease infinite;
 }
@@ -141,7 +141,7 @@ html {
 
 /* Modern accent gradient */
 .accent-gradient {
-  background: linear-gradient(45deg, #fca311, #ffb84d);
+  background: linear-gradient(45deg, #C63D00, #a63300);
 }
 
 /* Interactive button styles */
@@ -152,7 +152,7 @@ html {
 
 .btn-modern:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(252, 163, 17, 0.2);
+  box-shadow: 0 10px 25px rgba(198, 61, 0, 0.25);
 }
 
 /* Card hover effects */
@@ -211,3 +211,23 @@ html {
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
 }
+
+/* Partner logos infinite scroll marquee */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+

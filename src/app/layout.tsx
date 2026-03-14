@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 
-const cairo = Cairo({ 
+const cairo = Cairo({
   subsets: ["arabic", "latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
-  variable: "--font-cairo"
+  variable: "--font-cairo",
 });
 
 export const metadata: Metadata = {
-  title: "Your App Title",
-  description: "Your app description",
+  title: "مكتب المهمات الاحترافية للخدمات الالكترونية | خدمات حكومية إلكترونية",
+  description: "مكتب المهمات الاحترافية للخدمات الالكترونية يقدم خدمات حكومية إلكترونية للأفراد والمنشآت عبر أبشر وناجز وبلدي وقوى والزكاة والتأمينات مع متابعة دقيقة حتى الإنجاز.",
 };
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${cairo.variable} font-cairo antialiased bg-white`}>
+      <body className={`${cairo.className} antialiased bg-background`}>
         {children}
       </body>
     </html>
