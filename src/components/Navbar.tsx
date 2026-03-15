@@ -15,8 +15,8 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'الرئيسية', href: '#hero' },
-    { label: 'من نحن', href: '#about' },
     { label: 'خدماتنا', href: '#services' },
+    { label: 'من نحن', href: '#about' },
     { label: 'شركاؤنا', href: '#partners' },
     { label: 'تقييماتنا', href: '#reviews' },
     { label: 'موقعنا', href: '#location' },

@@ -13,7 +13,7 @@ interface Service {
   items: string[];
 }
 
-const PIXELS_PER_SECOND = 36;
+const PIXELS_PER_SECOND = 54;
 
 const services: Service[] = [
   {

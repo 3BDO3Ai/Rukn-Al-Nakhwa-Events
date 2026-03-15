@@ -135,8 +135,8 @@ export default function Footer() {
                     </svg>
                   </div>
                   <div className="text-sm leading-relaxed">
-                    <div>المملكة العربية السعودية</div>
-                    <div className="text-white/50 text-xs mt-1">خدمات رقمية عن بُعد عبر المنصات الرسمية</div>
+                    <div>جدة حي الفلاح3 شارع ياسر بن عامر الكناني</div>
+                    <div className="text-white/50 text-xs mt-1">المملكة العربية السعودية</div>
                   </div>
                 </div>
               </li>

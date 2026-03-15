@@ -12,7 +12,7 @@ const details: {
   {
     icon: FaMapMarkerAlt,
     label: 'العنوان',
-    lines: ['حي السليمانية، الرياض 12214، المملكة العربية السعودية'],
+    lines: ['جدة حي الفلاح3 شارع ياسر بن عامر الكناني'],
   },
   {
     icon: FaPhone,
@@ -58,7 +58,7 @@ export default function Location() {
           <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 min-h-[380px]">
             <iframe
               title="موقع مكتب المهمات الاحترافية للخدمات الإلكترونية"
-              src="https://maps.google.com/maps?q=24.6882,46.6970&z=16&output=embed"
+              src="https://maps.google.com/maps?q=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A&z=16&output=embed"
               width="100%"
               height="100%"
               style={{ minHeight: '380px', border: 0 }}
@@ -103,7 +103,7 @@ export default function Location() {
 
             {/* Directions button */}
             <a
-              href="https://maps.app.goo.gl/WzrfUvtRXcX7p7AX6"
+              href="https://www.google.com/maps/search/?api=1&query=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 inline-flex items-center justify-center gap-3 bg-darkGreen hover:bg-gold text-white font-black text-base rounded-xl px-8 py-4 transition-colors duration-300 self-start"
