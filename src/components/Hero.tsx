@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { PHONE_HREF, WHATSAPP_MESSAGES, buildWhatsAppHref } from '@/lib/contact';
 
 export default function Hero() {
@@ -20,18 +19,13 @@ export default function Hero() {
         dir="rtl"
       >
         {/* RIGHT: Text Content */}
-        <div className="flex flex-col flex-1 text-right gap-6 w-full max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-white/90 text-sm font-medium w-fit">
-            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            خدمات حكومية إلكترونية موثوقة عبر المنصات الرسمية
-          </div>
-
-          <h1 className="text-white text-3xl lg:text-5xl font-extrabold leading-tight">
+        <div className="flex flex-col flex-1 text-right gap-6 w-full max-w-2xl mt-12 lg:mt-0">
+          <h1 className="text-white text-2xl lg:text-4xl font-extrabold leading-tight">
             مكتب المهمات الاحترافية
             <span className="block mt-3 text-gold">للخدمات الالكترونية</span>
           </h1>
 
-          <h2 className="text-white/80 text-xl lg:text-2xl font-bold">
+          <h2 className="text-white/80 text-lg lg:text-xl font-bold">
             إنجاز سريع ودقيق لمعاملات الأفراد والمنشآت
           </h2>
 
@@ -78,11 +72,10 @@ export default function Hero() {
               </p>
             </div>
 
-            <div className="border border-white/20 px-5 py-4 rounded-2xl text-center bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all group sm:w-40 sm:flex-none">
-              <div className="text-3xl font-black text-gold mb-1 group-hover:scale-110 transition-transform">
-                +5
+            <div className="border border-white/20 px-5 py-6 rounded-2xl text-center flex items-center justify-center bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all group sm:flex-none">
+              <div className="text-white/90 text-lg lg:text-xl font-medium">
+                نفتخر بثقة <span className="text-gold font-bold text-2xl lg:text-3xl mx-1">99%</span> من عملائنا
               </div>
-              <div className="text-white/80 text-sm font-medium">سنوات خبرة</div>
             </div>
           </div>
         </div>
@@ -92,22 +85,33 @@ export default function Hero() {
           <div className="relative">
             {/* Glow ring */}
             <div className="absolute inset-0 rounded-full bg-gold/10 blur-2xl scale-110" />
-            <div className="relative rounded-[28px] p-[1px] bg-gradient-to-br from-white/35 via-white/10 to-gold/35 shadow-2xl shadow-black/30">
-              <div className="relative rounded-[27px] bg-white/10 backdrop-blur-xl border border-white/15 px-8 py-10 lg:px-12 lg:py-14 overflow-hidden">
-                <div className="absolute top-4 left-4 h-10 w-10 rounded-full bg-gold/20 blur-xl" />
-                <div className="absolute bottom-6 right-6 h-12 w-12 rounded-full bg-teal/20 blur-xl" />
+            <div className="relative rounded-[28px] p-[1px] bg-gradient-to-br from-white/30 via-white/5 to-gold/30 shadow-2xl shadow-black/40 group">
+              <div className="relative rounded-[27px] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/10 px-8 py-12 lg:px-14 lg:py-16 overflow-hidden">
+                {/* Decorative glows */}
+                <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-gold/20 blur-[40px] transition-all duration-700 group-hover:bg-gold/30" />
+                <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-teal/20 blur-[40px] transition-all duration-700 group-hover:bg-teal/30" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-gradient-to-br from-transparent to-white/5 opacity-50" />
 
-                <div className="relative z-10 flex flex-col items-center">
-                  <Image
-                    src="/Logo.svg"
-                    alt="مكتب المهمات الاحترافية للخدمات الالكترونية"
-                    width={380}
-                    height={380}
-                    priority
-                    className="w-[230px] h-auto lg:w-[340px] object-contain drop-shadow-2xl"
-                  />
-                  <div className="mt-5 px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/85 text-xs lg:text-sm font-medium">
+                <div className="relative z-10 flex flex-col items-center justify-center text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 shadow-inner mb-6 border border-white/15">
+                    <img src="/Logo_icon.svg" alt="أيقونة الشعار" className="w-10 h-10 object-contain drop-shadow-md" />
+                  </div>
+                  
+                  <span className="text-gold/90 text-sm font-bold tracking-widest mb-3 uppercase">
                     مكتب المهمات الاحترافية
+                  </span>
+                  
+                  <h3 className="text-white text-3xl lg:text-4xl font-black mb-6 leading-[1.4]">
+                    وجهتكم الأولى<br />للخدمات العامة
+                  </h3>
+                  
+                  <div className="flex items-center gap-3 bg-white/10 hover:bg-white/15 transition-colors border border-white/10 px-6 py-3 rounded-full backdrop-blur-md">
+                    <svg className="w-5 h-5 text-gold animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    <div className="text-white text-xl lg:text-2xl font-bold tracking-widest" dir="ltr">
+                      +966 56 299 7035
+                    </div>
                   </div>
                 </div>
               </div>

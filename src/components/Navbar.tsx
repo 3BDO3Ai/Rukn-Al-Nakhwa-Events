@@ -36,7 +36,7 @@ export default function Navbar() {
         >
         {/* Logo */}
         <a href="#hero" className="flex items-center group cursor-pointer shrink-0">
-          <div className="relative h-12 w-[150px] sm:h-14 sm:w-[190px] transition-all duration-300">
+          <div className="relative h-10 w-[125px] sm:h-12 sm:w-[160px] transition-all duration-300">
             <Image
               src={scrolled ? '/Logo_2.svg' : '/Logo.svg'}
               alt="شعار مكتب المهمات الاحترافية للخدمات الالكترونية"
