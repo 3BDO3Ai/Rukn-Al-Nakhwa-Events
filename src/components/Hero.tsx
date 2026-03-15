@@ -70,9 +70,11 @@ export default function Hero() {
             <div className="border border-white/20 px-5 py-4 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all flex-1 text-right">
               <div className="text-gold text-sm font-bold mb-2">ساعات العمل</div>
               <p className="text-white/80 text-sm lg:text-base leading-relaxed">
-                السبت - الخميس: 9 ص - 2 م، 4 م - 11 م
+                السبت – الخميس: 9 صباحاً – 2 مساءً،
                 <br />
-                الجمعة: 4 م - 11 م
+                4 مساءً – 11 مساءً
+                <br />
+                الجمعة: 4 مساءً – 11 مساءً
               </p>
             </div>
 

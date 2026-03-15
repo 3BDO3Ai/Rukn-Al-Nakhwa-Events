@@ -19,6 +19,7 @@ export default function Navbar() {
     { label: 'خدماتنا', href: '#services' },
     { label: 'شركاؤنا', href: '#partners' },
     { label: 'تقييماتنا', href: '#reviews' },
+    { label: 'موقعنا', href: '#location' },
   ];
 
   return (

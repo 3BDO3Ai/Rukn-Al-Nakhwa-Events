@@ -1,0 +1,119 @@
+import React from 'react';
+import { FaMapMarkerAlt, FaPhone, FaClock, FaDirections } from 'react-icons/fa';
+import { CONTACT_NUMBER_DISPLAY, PHONE_HREF } from '@/lib/contact';
+
+const details: {
+  icon: React.ElementType;
+  label: string;
+  lines: string[];
+  href?: string;
+  ltr?: boolean;
+}[] = [
+  {
+    icon: FaMapMarkerAlt,
+    label: 'العنوان',
+    lines: ['حي السليمانية، الرياض 12214، المملكة العربية السعودية'],
+  },
+  {
+    icon: FaPhone,
+    label: 'الهاتف',
+    lines: [CONTACT_NUMBER_DISPLAY],
+    href: PHONE_HREF,
+    ltr: true,
+  },
+  {
+    icon: FaClock,
+    label: 'ساعات العمل',
+    lines: [
+      'السبت – الخميس: 9 صباحاً – 2 مساءً،',
+      '4 مساءً – 11 مساءً',
+      'الجمعة: 4 مساءً – 11 مساءً',
+    ],
+  },
+];
+
+export default function Location() {
+  return (
+    <section id="location" className="bg-white w-full py-20 lg:py-28 px-6 font-cairo">
+      <div className="max-w-[1290px] mx-auto" dir="rtl">
+
+        {/* Header */}
+        <div className="text-center mb-14">
+          <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
+            موقعنا
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">
+            تجدنا هنا
+          </h2>
+          <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-6" />
+          <p className="text-gray-500 max-w-xl mx-auto text-lg">
+            يسعدنا استقبالكم في مقر المكتب أو التواصل معنا عبر القنوات المتاحة
+          </p>
+        </div>
+
+        {/* Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+
+          {/* Map */}
+          <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 min-h-[380px]">
+            <iframe
+              title="موقع مكتب المهمات الاحترافية للخدمات الإلكترونية"
+              src="https://maps.google.com/maps?q=24.6882,46.6970&z=16&output=embed"
+              width="100%"
+              height="100%"
+              style={{ minHeight: '380px', border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+
+          {/* Info */}
+          <div className="flex flex-col justify-center gap-6">
+            {details.map(({ icon: Icon, label, lines, href, ltr }) => (
+              <div
+                key={label}
+                className="flex items-start gap-5 bg-light-section rounded-2xl p-6 border border-gray-100"
+              >
+                <div className="w-12 h-12 bg-darkGreen rounded-xl flex items-center justify-center text-white flex-shrink-0 mt-0.5">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">
+                    {label}
+                  </p>
+                  {href ? (
+                    <a
+                      href={href}
+                      dir={ltr ? 'ltr' : undefined}
+                      className="text-darkGreen font-bold text-base hover:text-gold transition-colors block"
+                    >
+                      {lines[0]}
+                    </a>
+                  ) : (
+                    <div className="flex flex-col gap-0.5">
+                      {lines.map((line, i) => (
+                        <p key={i} className="text-darkGreen font-bold text-base">{line}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Directions button */}
+            <a
+              href="https://maps.app.goo.gl/WzrfUvtRXcX7p7AX6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center justify-center gap-3 bg-darkGreen hover:bg-gold text-white font-black text-base rounded-xl px-8 py-4 transition-colors duration-300 self-start"
+            >
+              <FaDirections className="w-5 h-5" />
+              احصل على الاتجاهات
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

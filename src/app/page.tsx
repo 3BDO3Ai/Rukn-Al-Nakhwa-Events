@@ -5,6 +5,7 @@ import Services from '@/components/Services';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import Partners from '@/components/Partners';
 import Reviews from '@/components/Reviews';
+import Location from '@/components/Location';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <WhyChooseUs />
         <Partners />
         <Reviews />
+        <Location />
       </main>
       <Footer />
     </>
