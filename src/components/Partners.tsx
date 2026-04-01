@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useContent } from '@/content/useContent';
 
 const allLogos = [
   { src: '/Partners/Absher.png', alt: 'أبشر' },
@@ -35,6 +36,8 @@ function LogoCard({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function Partners() {
+  const { dictionary, dir } = useContent();
+
   const firstSetRef = useRef<HTMLDivElement | null>(null);
   const secondSetRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -124,17 +127,17 @@ export default function Partners() {
 
   return (
     <section id="partners" className="bg-gray-50/60 py-16 px-6 overflow-hidden">
-      <div className="max-w-[1290px] mx-auto" dir="rtl">
+      <div className="max-w-[1290px] mx-auto" dir={dir}>
         <div className="text-center mb-12">
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
-            شركاؤنا
+            {dictionary.partners.badge}
           </span>
           <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">
-            خدماتنا مع أهم الجهات في المملكة
+            {dictionary.partners.title}
           </h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4" />
           <p className="text-gray-500 max-w-2xl mx-auto text-lg mt-6">
-            نتعاون مع أبرز الجهات الحكومية والمنصات الإلكترونية لتقديم خدمات متكاملة وشاملة
+            {dictionary.partners.description}
           </p>
         </div>
 

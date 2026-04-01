@@ -1,6 +1,9 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import { PHONE_HREF } from '@/lib/contact';
+import { useContent } from '@/content/useContent';
 
 const features = [
   {
@@ -42,37 +45,42 @@ const features = [
 ];
 
 export default function About() {
+  const { dictionary, dir } = useContent();
+  const about = dictionary.about;
+  const isArabic = dir === 'rtl';
+
   return (
     <section id="about" className="bg-surface w-full py-20 lg:py-28 px-6 font-cairo">
       <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center" dir="ltr">
 
         {/* Text Content */}
-        <div className="flex-1 flex flex-col text-right">
+        <div className={`flex-1 flex flex-col ${isArabic ? 'text-right' : 'text-left'}`}>
           <div className="mb-10">
-            <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">نبذة عنا</span>
+            <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">{about.badge}</span>
             <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-2 leading-[1.35]">
-              حلول رقمية متخصصة في الخدمات الحكومية الإلكترونية
+              {about.title}
             </h2>
-            <div className="w-16 h-1 bg-gold rounded-full mt-3 mb-6 ml-auto" />
-            <p className="text-gray-600 text-lg leading-9 max-w-2xl text-right ml-auto">
-              في مكتب المهمات الاحترافية للخدمات الالكترونية، نساعدك على إنجاز المعاملات الحكومية
-              والتجارية عبر المنصات الرسمية بسرعة وموثوقية. نقدم متابعة دقيقة لكل طلب، من رفع المعاملة
-              حتى اكتمالها، مع التزام كامل بالجودة، السرية، والامتثال للإجراءات النظامية في المملكة.
+            <div className={`w-16 h-1 bg-gold rounded-full mt-3 mb-6 ${isArabic ? 'ml-auto' : 'mr-auto'}`} />
+            <p className={`text-gray-600 text-lg leading-9 max-w-2xl ${isArabic ? 'text-right ml-auto' : 'text-left mr-auto'}`}>
+              {about.description}
             </p>
           </div>
 
           <div className="flex flex-col gap-8">
-            {features.map((f, i) => (
-              <div key={i} className="flex flex-row-reverse items-start gap-5 group">
+            {features.map((f, i) => {
+              const localized = about.features?.[i] ?? f;
+              return (
+              <div key={i} className={`flex items-start gap-5 group ${isArabic ? 'flex-row-reverse' : ''}`}>
                 <div className="bg-darkGreen/10 p-4 rounded-2xl text-darkGreen flex-shrink-0 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300 shadow-sm">
                   {f.icon}
                 </div>
-                <div className="text-right flex-1">
-                  <h3 className="font-bold text-darkGreen text-lg mb-2">{f.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{f.desc}</p>
+                <div className={`flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>
+                  <h3 className="font-bold text-darkGreen text-lg mb-2">{localized.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{localized.desc}</p>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-10">
@@ -83,7 +91,7 @@ export default function About() {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              تواصل معنا الآن
+              {dictionary.common.ctaContactNow}
             </a>
           </div>
         </div>
@@ -99,7 +107,7 @@ export default function About() {
               <div className="bg-white/10 border border-white/20 rounded-3xl p-6">
                 <Image
                   src="/Logo.svg"
-                  alt="شعار مكتب المهمات الاحترافية للخدمات الالكترونية"
+                  alt={dictionary.common.brandName}
                   width={280}
                   height={280}
                   priority

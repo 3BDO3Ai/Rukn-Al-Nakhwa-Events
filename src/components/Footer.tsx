@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import { FaSnapchatGhost, FaTiktok, FaWhatsapp } from 'react-icons/fa';
@@ -6,22 +8,7 @@ import {
   CONTACT_NUMBER_DISPLAY,
   PHONE_HREF,
 } from '@/lib/contact';
-
-const quickLinks = [
-  { label: 'الرئيسية', href: '#hero' },
-  { label: 'من نحن', href: '#about' },
-  { label: 'خدماتنا', href: '#services' },
-  { label: 'شركاؤنا', href: '#partners' },
-];
-
-const mainServices = [
-  'الخدمات الحكومية الإلكترونية',
-  'ناجز والبورصة العقارية',
-  'منصة مدينتي والرخص البلدية',
-  'وزارة التجارة وتأسيس المنشآت',
-  'التأمينات الاجتماعية ومدد',
-  'الكهرباء والمياه والتأمين',
-];
+import { useContent } from '@/content/useContent';
 
 const socialLinks = [
   { name: 'X', href: 'https://x.com/MaeedMed', icon: FaXTwitter },
@@ -31,9 +18,11 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { dictionary, dir } = useContent();
+
   return (
     <footer className="bg-footer text-white pt-16 pb-6">
-      <div className="max-w-[1290px] mx-auto px-6" dir="rtl">
+      <div className="max-w-[1290px] mx-auto px-6" dir={dir}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/15">
 
           {/* About Column */}
@@ -41,24 +30,22 @@ export default function Footer() {
             <div className="mb-5">
               <Image
                 src="/Logo_white.svg"
-                alt="شعار مكتب المهمات الاحترافية للخدمات الالكترونية"
+                alt={dictionary.common.brandName}
                 width={220}
                 height={64}
                 className="object-contain"
               />
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
-                مكتب المهمات الاحترافية للخدمات الالكترونية متخصص في إنجاز المعاملات الحكومية والتجارية عبر
-                المنصات الرسمية في المملكة العربية السعودية. شريكك الموثوق للمتابعة الدقيقة، الإنجاز السريع،
-                والحلول الرقمية المتكاملة.
+              {dictionary.footer.description}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">روابط سريعة</h4>
+            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">{dictionary.footer.quickLinksTitle}</h4>
             <ul className="flex flex-col gap-3">
-              {quickLinks.map((link) => (
+              {dictionary.footer.quickLinks.map((link: { label: string; href: string }) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
@@ -74,9 +61,9 @@ export default function Footer() {
 
           {/* Main Services */}
           <div>
-            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">خدمات رئيسية</h4>
+            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">{dictionary.footer.mainServicesTitle}</h4>
             <ul className="flex flex-col gap-3">
-              {mainServices.map((s) => (
+              {dictionary.footer.mainServices.map((s: string) => (
                 <li key={s}>
                   <a
                     href="#services"
@@ -92,7 +79,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">معلومات التواصل</h4>
+            <h4 className="font-black text-gold mb-5 text-base border-b border-gold/30 pb-3">{dictionary.footer.contactTitle}</h4>
             <ul className="flex flex-col gap-4">
               <li>
                 <a
@@ -135,14 +122,14 @@ export default function Footer() {
                     </svg>
                   </div>
                   <div className="text-sm leading-relaxed">
-                    <div>جدة حي الفلاح3 شارع ياسر بن عامر الكناني</div>
-                    <div className="text-white/50 text-xs mt-1">المملكة العربية السعودية</div>
+                    <div>{dictionary.location.address[0]}</div>
+                    <div className="text-white/50 text-xs mt-1">{dictionary.footer.country}</div>
                   </div>
                 </div>
               </li>
               <li>
                 <div className="pt-1">
-                  <div className="text-white/60 text-xs mb-2">تابعنا على</div>
+                  <div className="text-white/60 text-xs mb-2">{dictionary.common.socialFollow}</div>
                   <div className="flex items-center gap-2">
                     {socialLinks.map((social) => {
                       const Icon = social.icon;
@@ -168,8 +155,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex items-center justify-center pt-8 text-white/50 text-sm text-center" dir="rtl">
-          <p>© 2026 جميع الحقوق محفوظة — مكتب المهمات الاحترافية للخدمات الالكترونية — المملكة العربية السعودية</p>
+        <div className="flex items-center justify-center pt-8 text-white/50 text-sm text-center" dir={dir}>
+          <p>{dictionary.footer.copyright}</p>
         </div>
       </div>
     </footer>

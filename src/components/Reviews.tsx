@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
+import { useContent } from '@/content/useContent';
 
 const reviews = [
   {
@@ -69,6 +70,10 @@ function StarRating({ count }: { count: number }) {
 }
 
 export default function Reviews() {
+  const { dictionary, dir } = useContent();
+  const localizedReviews = dictionary.reviews.list ?? reviews;
+  const isArabic = dir === 'rtl';
+
   const firstSetRef = useRef<HTMLDivElement | null>(null);
   const secondSetRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -215,18 +220,18 @@ export default function Reviews() {
         <div className="absolute bottom-10 left-10 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-[1290px] mx-auto relative z-10" dir="rtl">
+      <div className="max-w-[1290px] mx-auto relative z-10" dir={isArabic ? 'rtl' : 'ltr'}>
         {/* Header */}
         <div className="text-center mb-14">
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 border border-gold/20 px-3 py-1 rounded-full">
-            تقييماتنا
+            {dictionary.reviews.badge}
           </span>
           <h2 className="text-3xl lg:text-4xl font-black text-white mt-4 mb-3">
-            آراء عملائنا الكرام
+            {dictionary.reviews.title}
           </h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-4" />
           <p className="text-white/60 max-w-xl mx-auto text-base">
-            نفخر بثقة عملائنا وآرائهم الصادقة التي تعكس جودة خدماتنا والتزامنا بالتميز
+            {dictionary.reviews.description}
           </p>
         </div>
 
@@ -264,11 +269,11 @@ export default function Reviews() {
                 className="flex gap-6 flex-shrink-0"
                 aria-hidden={setIndex !== 0}
               >
-                {reviews.map((review, i) => (
+                {localizedReviews.map((review: { name: string; rating: number; text: string }, i: number) => (
                   <div
                     key={`${setIndex}-${review.name}-${i}`}
-                    className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-3xl p-7 flex flex-col gap-4 text-right w-[320px] sm:w-[360px] min-h-[260px]"
-                    dir="rtl"
+                    className={`bg-white/10 backdrop-blur-sm border border-white/15 rounded-3xl p-7 flex flex-col gap-4 w-[320px] sm:w-[360px] min-h-[260px] ${isArabic ? 'text-right' : 'text-left'}`}
+                    dir={dir}
                   >
                     <div className="text-gold/40 text-6xl font-serif leading-none -mb-2 select-none">&ldquo;</div>
 
@@ -276,13 +281,13 @@ export default function Reviews() {
 
                     <p className="text-white/85 text-sm leading-relaxed flex-1">{review.text}</p>
 
-                    <div className="border-t border-white/15 pt-4 flex flex-row-reverse items-center gap-3">
+                    <div className={`border-t border-white/15 pt-4 flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
                       <div className="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm flex-shrink-0">
                         {review.name.charAt(0)}
                       </div>
                       <div>
                         <div className="text-white font-bold text-sm">{review.name}</div>
-                        <div className="text-white/50 text-xs">عميل موثق</div>
+                        <div className="text-white/50 text-xs">{dictionary.common.verifiedCustomer}</div>
                       </div>
                     </div>
                   </div>

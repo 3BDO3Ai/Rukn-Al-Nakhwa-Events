@@ -1,53 +1,55 @@
+"use client";
+
 import React from 'react';
 import { FaMapMarkerAlt, FaPhone, FaClock, FaDirections } from 'react-icons/fa';
 import { CONTACT_NUMBER_DISPLAY, PHONE_HREF } from '@/lib/contact';
-
-const details: {
-  icon: React.ElementType;
-  label: string;
-  lines: string[];
-  href?: string;
-  ltr?: boolean;
-}[] = [
-  {
-    icon: FaMapMarkerAlt,
-    label: 'العنوان',
-    lines: ['جدة حي الفلاح3 شارع ياسر بن عامر الكناني'],
-  },
-  {
-    icon: FaPhone,
-    label: 'الهاتف',
-    lines: [CONTACT_NUMBER_DISPLAY],
-    href: PHONE_HREF,
-    ltr: true,
-  },
-  {
-    icon: FaClock,
-    label: 'ساعات العمل',
-    lines: [
-      'السبت – الخميس: 8 صباحاً – 2 مساءً،',
-      '4 مساءً – 11 مساءً',
-      'الجمعة: 4 مساءً – 11 مساءً',
-    ],
-  },
-];
+import { useContent } from '@/content/useContent';
 
 export default function Location() {
+  const { dictionary, dir } = useContent();
+  const location = dictionary.location;
+
+  const details: {
+    icon: React.ElementType;
+    label: string;
+    lines: string[];
+    href?: string;
+    ltr?: boolean;
+  }[] = [
+    {
+      icon: FaMapMarkerAlt,
+      label: dictionary.common.addressLabel,
+      lines: location.address,
+    },
+    {
+      icon: FaPhone,
+      label: dictionary.common.phoneLabel,
+      lines: [CONTACT_NUMBER_DISPLAY],
+      href: PHONE_HREF,
+      ltr: true,
+    },
+    {
+      icon: FaClock,
+      label: dictionary.common.workingHoursLabel,
+      lines: location.workingHours,
+    },
+  ];
+
   return (
     <section id="location" className="bg-white w-full py-20 lg:py-28 px-6 font-cairo">
-      <div className="max-w-[1290px] mx-auto" dir="rtl">
+      <div className="max-w-[1290px] mx-auto" dir={dir}>
 
         {/* Header */}
         <div className="text-center mb-14">
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
-            موقعنا
+            {location.badge}
           </span>
           <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">
-            تجدنا هنا
+            {location.title}
           </h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-6" />
           <p className="text-gray-500 max-w-xl mx-auto text-lg">
-            يسعدنا استقبالكم في مقر المكتب أو التواصل معنا عبر القنوات المتاحة
+            {location.description}
           </p>
         </div>
 
@@ -57,7 +59,7 @@ export default function Location() {
           {/* Map */}
           <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 min-h-[380px]">
             <iframe
-              title="موقع مكتب المهمات الاحترافية للخدمات الإلكترونية"
+              title={location.mapTitle}
               src="https://maps.google.com/maps?q=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A&z=16&output=embed"
               width="100%"
               height="100%"
@@ -109,7 +111,7 @@ export default function Location() {
               className="mt-2 inline-flex items-center justify-center gap-3 bg-darkGreen hover:bg-gold text-white font-black text-base rounded-xl px-8 py-4 transition-colors duration-300 self-start"
             >
               <FaDirections className="w-5 h-5" />
-              احصل على الاتجاهات
+              {location.directionsButton}
             </a>
           </div>
         </div>

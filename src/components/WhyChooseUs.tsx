@@ -1,4 +1,7 @@
+"use client";
+
 import React from 'react';
+import { useContent } from '@/content/useContent';
 
 const features = [
   {
@@ -40,35 +43,42 @@ const features = [
 ];
 
 export default function WhyChooseUs() {
+  const { dictionary, dir } = useContent();
+  const localizedFeatures = dictionary.whyChooseUs.features;
+  const isArabic = dir === 'rtl';
+
   return (
     <section className="bg-light-section w-full py-20 lg:py-28 px-6 font-cairo">
       <div className="max-w-[1290px] mx-auto" dir="ltr">
         {/* Header */}
         <div className="text-center mb-16">
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
-            مميزاتنا
+            {dictionary.whyChooseUs.badge}
           </span>
-          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">لماذا تختارنا؟</h2>
+          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">{dictionary.whyChooseUs.title}</h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-6" />
           <p className="text-gray-500 max-w-2xl mx-auto text-lg">
-            حلول سريعة وموثوقة لإتمام معاملاتك مع الجهات العامة بكل سهولة ويسر
+            {dictionary.whyChooseUs.description}
           </p>
         </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((f, i) => (
+          {features.map((f, i) => {
+            const localized = localizedFeatures?.[i] ?? f;
+            return (
             <div
               key={i}
-              className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 group text-right"
+              className={`bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 group ${isArabic ? 'text-right' : 'text-left'}`}
             >
               <div className="w-14 h-14 bg-darkGreen/10 rounded-2xl flex items-center justify-center text-darkGreen mb-5 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300">
                 {f.icon}
               </div>
-              <h3 className="font-black text-darkGreen text-lg mb-3">{f.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{f.desc}</p>
+              <h3 className="font-black text-darkGreen text-lg mb-3">{localized.title}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{localized.desc}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
