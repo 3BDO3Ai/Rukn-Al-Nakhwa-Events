@@ -1,43 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ADMIN_SESSION_COOKIE, isAdminSessionValid } from "@/lib/adminAuth";
 
 function unauthorizedApiResponse() {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
 
-function unauthorizedPageResponse() {
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="Admin Area"',
-    },
-  });
-}
-
-function isAuthorized(request: NextRequest): boolean {
-  const header = request.headers.get("authorization");
-  if (!header || !header.startsWith("Basic ")) {
-    return false;
+function isPublicAdminApi(pathname: string, method: string): boolean {
+  if (pathname === "/api/admin/content" && method === "GET") {
+    return true;
   }
 
-  const encoded = header.replace("Basic ", "").trim();
-  const decoded = Buffer.from(encoded, "base64").toString("utf8");
-  const separatorIndex = decoded.indexOf(":");
-
-  if (separatorIndex < 0) {
-    return false;
+  if (pathname === "/api/admin/login" && method === "POST") {
+    return true;
   }
 
-  const username = decoded.slice(0, separatorIndex);
-  const password = decoded.slice(separatorIndex + 1);
-
-  const adminUsername = process.env.ADMIN_USERNAME || "admin";
-  const adminPassword = process.env.ADMIN_PASSWORD;
-
-  if (!adminPassword) {
-    return false;
-  }
-
-  return username === adminUsername && password === adminPassword;
+  return false;
 }
 
 export function middleware(request: NextRequest) {
@@ -50,12 +27,21 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Keep content GET public so the site can still read content if it depends on this endpoint.
-  if (pathname === "/api/admin/content" && request.method === "GET") {
+  if (isPublicAdminApi(pathname, request.method)) {
     return NextResponse.next();
   }
 
-  if (isAuthorized(request)) {
+  const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+  const isAuthorized = isAdminSessionValid(token);
+
+  if (pathname === "/admin/login") {
+    if (isAuthorized) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return NextResponse.next();
+  }
+
+  if (isAuthorized) {
     return NextResponse.next();
   }
 
@@ -63,7 +49,9 @@ export function middleware(request: NextRequest) {
     return unauthorizedApiResponse();
   }
 
-  return unauthorizedPageResponse();
+  const loginUrl = new URL("/admin/login", request.url);
+  loginUrl.searchParams.set("next", pathname);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

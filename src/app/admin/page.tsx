@@ -719,6 +719,7 @@ export default function AdminPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [uploadingPath, setUploadingPath] = useState<string | null>(null);
   const [showNewServiceForm, setShowNewServiceForm] = useState(false);
@@ -955,6 +956,17 @@ export default function AdminPage() {
 
   const setReviews = (reviews: ReviewItem[]) => {
     handleChange(["reviews", "list"], reviews as unknown as JsonValue);
+  };
+
+  const logout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      window.location.href = "/admin/login";
+    }
   };
 
   const syncServiceSharedField = (index: number, field: "logoUrl" | "id" | "logoAlt", value: string) => {
@@ -1549,6 +1561,9 @@ export default function AdminPage() {
             </button>
             <button type="button" onClick={saveContent} disabled={isSaving} className="rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-white hover:bg-gold-dark disabled:opacity-50">
               {isSaving ? text.saveLoading : text.save}
+            </button>
+            <button type="button" onClick={logout} disabled={isLoggingOut} className="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-700 disabled:opacity-50">
+              {isLoggingOut ? (adminLocale === "ar" ? "جارٍ تسجيل الخروج..." : "Signing out...") : (adminLocale === "ar" ? "تسجيل الخروج" : "Sign Out")}
             </button>
           </div>
           <p className="mt-2 text-sm text-slate-500">{status || text.statusDefault}</p>
