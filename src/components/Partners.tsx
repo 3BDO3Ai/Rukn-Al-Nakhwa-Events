@@ -3,7 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useContent } from '@/content/useContent';
 
-const allLogos = [
+interface PartnerLogo {
+  src: string;
+  alt: string;
+}
+
+const fallbackLogos: PartnerLogo[] = [
   { src: '/Partners/Absher.png', alt: 'أبشر' },
   { src: '/Partners/Najiz.png', alt: 'ناجز' },
   { src: '/Partners/Mudad-1.png', alt: 'مدد' },
@@ -37,6 +42,9 @@ function LogoCard({ src, alt }: { src: string; alt: string }) {
 
 export default function Partners() {
   const { dictionary, dir } = useContent();
+  const dynamicLogos: PartnerLogo[] = Array.isArray(dictionary?.partners?.logos)
+    ? (dictionary.partners.logos as PartnerLogo[])
+    : fallbackLogos;
 
   const firstSetRef = useRef<HTMLDivElement | null>(null);
   const secondSetRef = useRef<HTMLDivElement | null>(null);
@@ -162,7 +170,7 @@ export default function Partners() {
                 className="flex gap-8 flex-shrink-0"
                 aria-hidden={setIndex !== 0}
               >
-                {allLogos.map((logo, logoIndex) => (
+                {dynamicLogos.map((logo, logoIndex) => (
                   <LogoCard
                     key={`${setIndex}-${logo.alt}-${logoIndex}`}
                     src={logo.src}

@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const DEFAULT_BUCKET_CANDIDATES = ['Content', 'content'];
+
+function getBucketCandidates(): string[] {
+  const explicit = process.env.SUPABASE_CONTENT_BUCKET?.trim();
+  if (explicit) {
+    return [explicit, ...DEFAULT_BUCKET_CANDIDATES.filter((bucket) => bucket !== explicit)];
+  }
+  return DEFAULT_BUCKET_CANDIDATES;
+}
+
 // Helper to get environment variables with validation
 function getEnvVars() {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
   const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
@@ -12,14 +22,12 @@ function getEnvVars() {
   return {
     SUPABASE_URL,
     SERVICE_ROLE_KEY,
-    PUBLIC_URL: `${SUPABASE_URL}/storage/v1/object/public/Content/content.json`,
-    STORAGE_API_URL: `${SUPABASE_URL}/storage/v1/object/Content/content.json`
   };
 }
 
 export async function PUT(request: NextRequest) {
   try {
-    const { PUBLIC_URL, STORAGE_API_URL, SERVICE_ROLE_KEY } = getEnvVars();
+    const { SUPABASE_URL, SERVICE_ROLE_KEY } = getEnvVars();
     const { priceData } = await request.json();
 
     if (!Array.isArray(priceData)) {
@@ -33,23 +41,38 @@ export async function PUT(request: NextRequest) {
     }
 
     // Fetch current remote content
-    const res = await fetch(PUBLIC_URL);
-    if (!res.ok) {
-      console.error('Failed to fetch remote content for price update:', res.statusText);
+    const bucketCandidates = getBucketCandidates();
+
+    let content: any = null;
+    let resolvedBucket: string | null = null;
+
+    for (const bucket of bucketCandidates) {
+      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/content.json`;
+      const res = await fetch(`${publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        content = await res.json();
+        resolvedBucket = bucket;
+        break;
+      }
+    }
+
+    if (!content || !resolvedBucket) {
+      console.error('Failed to fetch remote content for price update from all bucket candidates.');
       return NextResponse.json({ error: 'Failed to fetch remote content' }, { status: 502 });
     }
-    const content = await res.json();
 
     // Update priceData
     content.priceData = priceData;
 
     // Write updated content back to Supabase storage
-    const upsertRes = await fetch(STORAGE_API_URL, {
-      method: 'PUT',
+    const storageApiUrl = `${SUPABASE_URL}/storage/v1/object/${resolvedBucket}/content.json`;
+    const upsertRes = await fetch(storageApiUrl, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+        'x-upsert': 'true',
       },
       body: JSON.stringify(content),
     });

@@ -19,7 +19,9 @@ const PIXELS_PER_SECOND = 54;
 export default function Services() {
   const { dictionary, dir } = useContent();
   const isArabic = dir === 'rtl';
-  const services = dictionary.services.cards as Service[];
+  const services = Array.isArray(dictionary?.services?.cards)
+    ? (dictionary.services.cards as Service[])
+    : [];
 
   const firstSetRef = useRef<HTMLDivElement | null>(null);
   const secondSetRef = useRef<HTMLDivElement | null>(null);

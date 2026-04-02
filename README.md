@@ -83,6 +83,7 @@ Copy `.env.example` to `.env.local` and configure:
 
 ```bash
 # Admin Configuration
+ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your_admin_password
 
 # Supabase Configuration (optional)
@@ -90,6 +91,19 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 ```
+
+## Admin Panel
+
+- Admin URL: `/admin`
+- Protected by HTTP Basic Auth via `middleware.ts`
+- Protected API routes: `/api/admin/*` (except `GET /api/admin/content` remains public for content reads)
+
+### Admin capabilities
+
+- Quick managers for Services, Partners, and Reviews
+- Full JSON editor for all site dictionaries (`ar` and `en`)
+- Upload service/partner images directly to Supabase Storage buckets
+- Save and publish updates to site content
 
 ### Customization
 
