@@ -41,15 +41,15 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.8),_rgba(232,231,232,0.9)_35%,_rgba(232,231,232,1)_70%)] px-4 py-6 sm:px-6 lg:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-[#090C11] px-4 py-6 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-[-6rem] h-72 w-72 rounded-full bg-darkGreen/10 blur-3xl" />
-        <div className="absolute right-[-5rem] top-32 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
-        <div className="absolute bottom-[-7rem] left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-white/60 blur-3xl" />
+        <div className="absolute -top-24 left-[-6rem] h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
+        <div className="absolute right-[-5rem] top-32 h-80 w-80 rounded-full bg-[#2E3646]/55 blur-3xl" />
+        <div className="absolute bottom-[-7rem] left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[#121722] blur-3xl" />
       </div>
 
       <div className="relative mx-auto grid min-h-[calc(100vh-3rem)] max-w-7xl items-stretch gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <section className="relative overflow-hidden rounded-[32px] border border-white/60 bg-darkGreen p-8 text-white shadow-[0_30px_80px_rgba(15,15,35,0.22)] sm:p-10 lg:p-12">
+        <section className="relative overflow-hidden rounded-[32px] border border-white/15 bg-[#111723] p-8 text-white shadow-[0_30px_80px_rgba(0,0,0,0.4)] sm:p-10 lg:p-12">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute left-6 top-6 h-40 w-40 rounded-full border border-white/30" />
             <div className="absolute right-10 top-24 h-28 w-28 rounded-full border border-white/20" />
@@ -78,14 +78,14 @@ export default function AdminLoginPage() {
           </div>
         </section>
 
-        <section className="relative flex items-center rounded-[32px] border border-slate-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)] sm:p-8 lg:p-10">
+        <section className="relative flex items-center rounded-[32px] border border-white/15 bg-[#121722] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:p-8 lg:p-10">
           <div className="w-full">
             <div className="mb-8 flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-darkGreen/70">Authentication</p>
-                <h2 className="mt-2 text-2xl font-black text-darkGreen">Sign in to continue</h2>
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold/80">Authentication</p>
+                <h2 className="mt-2 text-2xl font-black text-white">Sign in to continue</h2>
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-darkGreen/10 text-darkGreen shadow-sm">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold/15 text-gold shadow-sm border border-gold/30">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
 
             <form className="space-y-5" onSubmit={onSubmit}>
               <div>
-                <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="password">
+                <label className="mb-2 block text-sm font-semibold text-white/85" htmlFor="password">
                   Admin Password
                 </label>
                 <div className="relative">
@@ -103,7 +103,7 @@ export default function AdminLoginPage() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3.5 pr-14 text-sm text-slate-900 outline-none transition focus:border-darkGreen focus:ring-4 focus:ring-darkGreen/10"
+                    className="w-full rounded-2xl border border-white/20 bg-[#0E131D] px-4 py-3.5 pr-14 text-sm text-white outline-none transition focus:border-gold focus:ring-4 focus:ring-gold/20"
                     placeholder="Enter admin password"
                     autoComplete="current-password"
                     required
@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
-                    className="absolute inset-y-0 right-2 my-auto flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-darkGreen"
+                    className="absolute inset-y-0 right-2 my-auto flex h-10 w-10 items-center justify-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-gold"
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,8 +126,8 @@ export default function AdminLoginPage() {
                     </svg>
                   </button>
                 </div>
-                <p className="mt-2 text-xs text-slate-500">
-                  The password is read from <span className="font-semibold text-slate-700">ADMIN_PASSWORD</span> in your environment.
+                <p className="mt-2 text-xs text-white/55">
+                  The password is read from <span className="font-semibold text-white/80">ADMIN_PASSWORD</span> in your environment.
                 </p>
               </div>
 
@@ -140,7 +140,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-darkGreen px-4 py-3.5 text-sm font-bold text-white transition hover:bg-darkGreen/90 hover:shadow-lg hover:shadow-darkGreen/20 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-4 py-3.5 text-sm font-bold text-[#101010] transition hover:bg-[#ddb987] hover:shadow-lg hover:shadow-black/25 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading ? (
                   <>

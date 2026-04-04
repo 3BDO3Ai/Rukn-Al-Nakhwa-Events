@@ -1511,9 +1511,9 @@ export default function AdminPage() {
   const uiDir = adminLocale === "ar" ? "rtl" : "ltr";
 
   return (
-    <main className="min-h-screen bg-surface p-4 sm:p-6" dir={uiDir}>
+    <main className="min-h-screen bg-[#090C11] p-4 sm:p-6" dir={uiDir}>
       <div className="mx-auto max-w-[1440px] space-y-4">
-        <section className="rounded-3xl border border-darkGreen/15 bg-gradient-to-r from-darkGreen to-[#28217a] p-5 text-white shadow-xl sm:p-6">
+        <section className="rounded-3xl border border-white/10 bg-gradient-to-r from-[#111723] to-[#161d2b] p-5 text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl font-black sm:text-3xl">{text.title}</h1>

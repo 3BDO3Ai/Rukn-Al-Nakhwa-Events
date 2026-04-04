@@ -13,12 +13,12 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-cairo), Arial, sans-serif;
 }
 
 /* Custom Arabic Typography */
 .arabic-text {
-  font-family: var(--font-tajawal), sans-serif;
+  font-family: var(--font-cairo), sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -223,4 +223,5 @@ html {
     transform: translateX(0);
   }
 }
+
 

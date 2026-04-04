@@ -56,7 +56,7 @@ export default function Location() {
   ];
 
   return (
-    <section id="location" className="bg-white w-full py-20 lg:py-28 px-6 font-cairo">
+    <section id="location" className="bg-[#0B0F16] w-full py-20 lg:py-28 px-6 font-cairo">
       <div className="max-w-[1290px] mx-auto" dir={dir}>
 
         {/* Header */}
@@ -64,11 +64,11 @@ export default function Location() {
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
             {location.badge}
           </span>
-          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">
+          <h2 className="text-3xl lg:text-4xl font-black text-white mt-4 mb-3">
             {location.title}
           </h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-6" />
-          <p className="text-gray-600 max-w-xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/65 max-w-xl mx-auto text-lg leading-relaxed">
             {location.description}
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function Location() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
 
           {/* Map */}
-          <div className="rounded-3xl overflow-hidden shadow-[0_20px_45px_rgba(15,23,42,0.12)] border border-gray-200 min-h-[380px]">
+          <div className="rounded-3xl overflow-hidden shadow-[0_20px_45px_rgba(0,0,0,0.35)] border border-white/10 min-h-[380px]">
             <iframe
               title={location.mapTitle}
               src="https://maps.google.com/maps?q=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A&z=16&output=embed"
@@ -95,27 +95,27 @@ export default function Location() {
             {details.map(({ icon: Icon, label, lines, href, ltr }) => (
               <div
                 key={label}
-                className="flex items-start gap-5 bg-[#F8FAFC] rounded-2xl p-6 border border-gray-200"
+                className="flex items-start gap-5 bg-[#121722] rounded-2xl p-6 border border-white/10"
               >
-                <div className="w-12 h-12 bg-darkGreen rounded-xl flex items-center justify-center text-white flex-shrink-0 mt-0.5">
+                <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold flex-shrink-0 mt-0.5 border border-gold/30">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">
+                  <p className="text-xs text-white/45 font-semibold uppercase tracking-wider mb-1">
                     {label}
                   </p>
                   {href ? (
                     <a
                       href={href}
                       dir={ltr ? 'ltr' : undefined}
-                      className="text-slate-800 font-bold text-base hover:text-gold transition-colors block"
+                      className="text-white font-bold text-base hover:text-gold transition-colors block"
                     >
                       {lines[0]}
                     </a>
                   ) : (
                     <div className="flex flex-col gap-0.5">
                       {lines.map((line, i) => (
-                        <p key={i} className="text-slate-700 font-semibold text-base">{line}</p>
+                        <p key={i} className="text-white/85 font-semibold text-base">{line}</p>
                       ))}
                     </div>
                   )}
@@ -128,7 +128,7 @@ export default function Location() {
               href="https://www.google.com/maps/search/?api=1&query=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center justify-center gap-3 bg-darkGreen hover:bg-gold text-white font-black text-base rounded-xl px-8 py-4 transition-colors duration-300 self-start shadow-[0_12px_24px_rgba(15,23,42,0.18)]"
+              className="mt-3 inline-flex items-center justify-center gap-3 bg-gold hover:bg-[#ddb987] text-[#101010] font-black text-base rounded-xl px-8 py-4 transition-colors duration-300 self-start shadow-[0_12px_24px_rgba(0,0,0,0.28)]"
             >
               <FaDirections className="w-5 h-5" />
               {location.directionsButton}

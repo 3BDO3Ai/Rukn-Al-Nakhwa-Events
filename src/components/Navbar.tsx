@@ -1,12 +1,19 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useContent } from '@/content/useContent';
+import { buildWhatsAppHref } from '@/lib/contact';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { dictionary, dir, toggleLocale } = useContent();
   const isArabic = dir === 'rtl';
+  const applyNowHref = buildWhatsAppHref(
+    isArabic
+      ? 'السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو.'
+      : 'Hello, I want to apply now and get started with Kafu.'
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -18,23 +25,26 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <div className="max-w-[1290px] mx-auto px-4 sm:px-6 pt-4" dir={dir}>
+      <div
+        className={scrolled ? 'max-w-[1290px] mx-auto px-4 sm:px-6 pt-4' : 'w-full px-0 pt-0'}
+        dir={dir}
+      >
         <div
-          className={`flex justify-between items-center rounded-[18px] px-4 sm:px-6 py-3.5 transition-all duration-300 ${
+          className={`flex justify-between items-center transition-all duration-300 ${
             scrolled
-              ? 'bg-[#0D1118]/95 backdrop-blur-xl border border-gold/40 shadow-[0_20px_45px_rgba(0,0,0,0.35)]'
-              : 'bg-[#0B0F16]/65 backdrop-blur-lg border border-white/10'
+              ? 'rounded-[18px] px-4 sm:px-6 py-3.5 bg-[#0D1118]/95 backdrop-blur-xl border border-gold/40 shadow-[0_20px_45px_rgba(0,0,0,0.35)]'
+              : 'w-full rounded-none px-4 sm:px-8 py-4 bg-[#0B0F16]/92 backdrop-blur-xl border-b border-white/10'
           }`}
         >
           <a href="#hero" className="flex items-center group cursor-pointer shrink-0">
-            <div className="flex flex-col">
-              <span className="text-[1.05rem] sm:text-xl font-extrabold text-white tracking-[0.04em] leading-tight">
-                {dictionary.common.brandName}
-              </span>
-              <span className="text-[10px] sm:text-xs text-gold/90 uppercase tracking-[0.28em]">
-                {dictionary.common.brandSubtext ?? 'Growth Marketing'}
-              </span>
-            </div>
+            <Image
+              src="/logo.svg"
+              alt={dictionary.common.brandName}
+              width={180}
+              height={52}
+              className="h-9 sm:h-11 w-auto object-contain"
+              priority
+            />
           </a>
 
           <div
@@ -55,7 +65,9 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href="#apply"
+              href={applyNowHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm bg-gold text-[#121212] hover:bg-[#ddb987] transition-all"
             >
               {dictionary.common.ctaApply}
@@ -85,7 +97,10 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden max-w-[1290px] mx-auto px-4 sm:px-6 mt-3" dir={dir}>
+        <div
+          className={`lg:hidden ${scrolled ? 'max-w-[1290px] mx-auto px-4 sm:px-6 mt-3' : 'w-full px-4 sm:px-8 mt-0'}`}
+          dir={dir}
+        >
           <div className="bg-[#10151F] border border-gold/30 rounded-[18px] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.45)] flex flex-col gap-3">
             {navLinks.map((link) => (
               <a
@@ -98,7 +113,9 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#apply"
+              href={applyNowHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center bg-gold text-[#101010] px-5 py-3 rounded-full font-bold mt-2"
             >
               {dictionary.common.ctaApply}

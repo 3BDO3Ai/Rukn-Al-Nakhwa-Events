@@ -4,7 +4,8 @@
       "brandName": "كفو",
       "brandSubtext": "تسويق النمو",
       "languageButton": "EN",
-      "ctaApply": "قدّم الآن"
+      "ctaApply": "قدّم الآن",
+      "socialFollow": "تابعنا على"
     },
     "navbar": {
       "links": [
@@ -35,7 +36,7 @@
       "bottomTagline": "من حملات عشوائية إلى نظام نمو احترافي"
     },
     "about": {
-      "badge": "عن كافو",
+      "badge": "عن كفو",
       "title": "نحوّل النمو إلى نظام يمكن قياسه وتكراره",
       "description": "Kafu Media هي وكالة نمو عالية المستوى تساعد العلامات الطموحة على بناء أنظمة استحواذ عملاء متكاملة تجمع بين الاستراتيجية والتنفيذ والتحسين المستمر.",
       "features": [
@@ -58,8 +59,8 @@
       ]
     },
     "services": {
-      "badge": "نظام كافو",
-      "title": "نظام نمو كافو",
+      "badge": "نظام كفو",
+      "title": "نظام نمو كفو",
       "subtitle": "سواء أردت القيادة بنفسك أو التفويض الكامل - نحن نبني النظام الذي يقود نموك.",
       "trackLabel": "المسار",
       "items": [
@@ -114,8 +115,21 @@
       "bottomCtaHeadline": "جاهز لتوسيع أعمالك بجدية؟",
       "bottomCtaButton": "قدّم الآن للتأهل"
     },
+    "location": {
+      "badge": "تواصل معنا",
+      "title": "معلومات التواصل والموقع",
+      "description": "يسعدنا تواصلكم معنا. يمكنكم زيارتنا أو الاتصال بنا خلال ساعات العمل.",
+      "address": ["Port Saeed - Zeenah Building- Deria Citycenter Dubai"],
+      "workingHours": [
+        "السبت - الخميس: 9:00 ص - 6:00 م",
+        "الجمعة: حسب الموعد"
+      ],
+      "directionsButton": "الحصول على الاتجاهات",
+      "mapTitle": "خريطة الموقع"
+    },
     "footer": {
       "description": "Kafu Media تبني أنظمة نمو تسويقي متكاملة لجلب عملاء مؤهلين بشكل مستمر وبجودة عالية.",
+      "quickLinksTitle": "روابط سريعة",
       "quickLinks": [
         { "label": "الرئيسية", "href": "#hero" },
         { "label": "النظام", "href": "#system" },
@@ -123,6 +137,15 @@
         { "label": "الشركاء", "href": "#partners" },
         { "label": "النتائج", "href": "#results" }
       ],
+      "mainServicesTitle": "الخدمات الرئيسية",
+      "mainServices": [
+        "الاستشارات الاستراتيجية",
+        "شراكة النمو",
+        "إدارة الحملات الإعلانية",
+        "تحليل البيانات والأداء"
+      ],
+      "contactTitle": "معلومات الاتصال",
+      "country": "الإمارات العربية المتحدة",
       "copyright": "© 2026 Kafu Media. جميع الحقوق محفوظة."
     }
   },
@@ -131,7 +154,20 @@
       "brandName": "Kafu Media",
       "brandSubtext": "Growth Marketing",
       "languageButton": "AR",
-      "ctaApply": "Apply Now"
+      "ctaApply": "Apply Now",
+      "socialFollow": "Follow us on"
+    },
+    "location": {
+      "badge": "Contact Us",
+      "title": "Contact & Location Information",
+      "description": "We are happy to hear from you. Visit us or call during working hours.",
+      "address": ["Port Saeed - Zeenah Building- Deria Citycenter Dubai"],
+      "workingHours": [
+        "Sat - Thu: 9:00 AM - 6:00 PM",
+        "Friday: By Appointment"
+      ],
+      "directionsButton": "Get Directions",
+      "mapTitle": "Location Map"
     },
     "navbar": {
       "links": [
@@ -243,6 +279,7 @@
     },
     "footer": {
       "description": "Kafu Media builds elite growth systems designed to consistently generate qualified clients.",
+      "quickLinksTitle": "Quick Links",
       "quickLinks": [
         { "label": "Home", "href": "#hero" },
         { "label": "The System", "href": "#system" },
@@ -250,6 +287,15 @@
         { "label": "Partners", "href": "#partners" },
         { "label": "Results", "href": "#results" }
       ],
+      "mainServicesTitle": "Main Services",
+      "mainServices": [
+        "Strategic Consulting",
+        "Growth Partnership",
+        "Campaign Management",
+        "Performance Analytics"
+      ],
+      "contactTitle": "Contact Information",
+      "country": "United Arab Emirates",
       "copyright": "© 2026 Kafu Media. All rights reserved."
     }
   }

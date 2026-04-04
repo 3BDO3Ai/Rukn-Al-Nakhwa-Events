@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useContent } from '@/content/useContent';
+import { buildWhatsAppHref } from '@/lib/contact';
 
 const features = [
   {
@@ -47,6 +48,11 @@ export default function About() {
   const { dictionary, dir } = useContent();
   const about = dictionary.about;
   const isArabic = dir === 'rtl';
+  const applyNowHref = buildWhatsAppHref(
+    isArabic
+      ? 'السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو.'
+      : 'Hello, I want to apply now and get started with Kafu.'
+  );
 
   return (
     <section id="about" className="bg-surface w-full py-20 lg:py-28 px-6 font-cairo">
@@ -84,7 +90,9 @@ export default function About() {
 
           <div className="mt-10">
             <a
-                href="#apply"
+                href={applyNowHref}
+                target="_blank"
+                rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-darkGreen hover:bg-darkGreen/90 text-white px-7 py-3.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -105,7 +113,7 @@ export default function About() {
             <div className="relative z-10 flex items-center justify-center w-full h-full">
               <div className="bg-white/10 border border-white/20 rounded-3xl p-6">
                 <Image
-                  src="/Logo.svg"
+                  src="/growth_logo.svg"
                   alt={dictionary.common.brandName}
                   width={280}
                   height={280}

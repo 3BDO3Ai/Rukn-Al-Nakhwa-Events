@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { Manrope, Tajawal } from "next/font/google";
+import { Cairo } from "next/font/google";
 import { LanguageProvider } from "@/content/LanguageProvider";
 import "./globals.css";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-  variable: "--font-manrope",
-});
-
-const tajawal = Tajawal({
+const cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "700", "800"],
   display: "swap",
-  variable: "--font-tajawal",
+  variable: "--font-cairo",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${manrope.variable} ${tajawal.variable} antialiased bg-background text-foreground`}>
+      <body className={`${cairo.variable} antialiased bg-background text-foreground`}>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
