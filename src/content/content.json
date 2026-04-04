@@ -1,344 +1,256 @@
 {
-	"ar": {
-		"common": {
-			"brandName": "مكتب المهمات الاحترافية للخدمات الالكترونية",
-			"languageButton": "EN",
-			"phoneLabel": "الهاتف",
-			"workingHoursLabel": "ساعات العمل",
-			"addressLabel": "العنوان",
-			"verifiedCustomer": "عميل موثق",
-			"socialFollow": "تابعنا على",
-			"ctaCall": "اتصل بنا",
-			"ctaCallNow": "اتصل الآن",
-			"ctaContactNow": "تواصل معنا الآن",
-			"ctaWhatsapp": "واتساب"
-		},
-		"navbar": {
-			"links": [
-				{ "label": "الرئيسية", "href": "#hero" },
-				{ "label": "خدماتنا", "href": "#services" },
-				{ "label": "من نحن", "href": "#about" },
-				{ "label": "شركاؤنا", "href": "#partners" },
-				{ "label": "تقييماتنا", "href": "#reviews" },
-				{ "label": "موقعنا", "href": "#location" }
-			]
-		},
-		"hero": {
-			"title": "مكتب المهمات الاحترافية",
-			"titleHighlight": "للخدمات الالكترونية",
-			"subtitle": "إنجاز سريع ودقيق لمعاملات الأفراد والمنشآت",
-			"description": "نقدم خدمات حكومية إلكترونية متكاملة تشمل التراخيص، التأمينات، العقود، والطلبات العدلية عبر المنصات الرسمية في المملكة العربية السعودية. فريقنا يتابع معاملتك خطوة بخطوة حتى الإتمام.",
-			"workHours": [
-				"السبت - الخميس: 8 صباحاً - 2 مساءً،",
-				"4 مساءً - 11 مساءً",
-				"الجمعة: 4 مساءً - 11 مساءً"
-			],
-			"trustText": "نفتخر بثقة 99% من عملائنا",
-			"visualTitle": "وجهتكم الأولى",
-			"visualSubtitle": "للخدمات العامة",
-			"whatsappMessage": "السلام عليكم، أرغب في الاستفسار عن خدماتكم الإلكترونية وبدء معاملة جديدة."
-		},
-		"about": {
-			"badge": "نبذة عنا",
-			"title": "حلول رقمية متخصصة في الخدمات الحكومية الإلكترونية",
-			"description": "في مكتب المهمات الاحترافية للخدمات الالكترونية، نساعدك على إنجاز المعاملات الحكومية والتجارية عبر المنصات الرسمية بسرعة وموثوقية. نقدم متابعة دقيقة لكل طلب، من رفع المعاملة حتى اكتمالها، مع التزام كامل بالجودة، السرية، والامتثال للإجراءات النظامية في المملكة.",
-			"features": [
-				{
-					"title": "السرعة والدقة في إنجاز الخدمات",
-					"desc": "نلتزم بتقديم خدماتنا في أسرع وقت ممكن مع الحفاظ على أعلى مستويات الجودة والدقة لضمان رضاكم التام وسرعة إنجاز معاملاتكم."
-				},
-				{
-					"title": "ضمان السرية التامة للوثائق",
-					"desc": "نؤمن بحق العميل في الخصوصية، ونضمن حفظ جميع معلوماتكم ووثائقكم الشخصية بأعلى درجات الأمان والسرية المطلقة."
-				},
-				{
-					"title": "المصداقية وإرضاء العملاء",
-					"desc": "رضا عملائنا هو أولويتنا الأولى. نحرص على بناء علاقات طويلة الأمد قائمة على الثقة والشفافية، مع التزام تام بتحقيق أفضل النتائج."
-				},
-				{
-					"title": "الأمان في تنفيذ جميع الإجراءات",
-					"desc": "نطبق أعلى معايير الأمان والحماية في كل مراحل تنفيذ خدماتنا لضمان سلامة حقوق عملائنا الكرام وحماية مصالحهم."
-				}
-			]
-		},
-		"services": {
-			"badge": "خدماتنا",
-			"title": "خدماتنا الإلكترونية للأفراد والمنشآت في المملكة",
-			"description": "باقة متكاملة من الخدمات الحكومية والتجارية عبر المنصات الرسمية مع متابعة احترافية حتى اكتمال الطلب",
-			"whatsappTemplate": "السلام عليكم، أرغب في الاستفسار عن {{serviceTitle}} ومعرفة المتطلبات وطريقة البدء.",
-			"cards": [
-				{
-					"id": "balady",
-					"title": "خدمات البلدية",
-					"subtitle": "إنجاز معاملات البلدية بكل سهولة",
-					"description": "نوفر جميع خدمات البلديات إلكترونياً وحضورياً لإنجاز معاملاتك بسرعة واحترافية وبأعلى مستوى من الدقة.",
-					"logoUrl": "/Services/balady.png",
-					"logoAlt": "منصة بلدي",
-					"items": ["إصدار رخصة بلدية تجارية", "تجديد رخصة بلدية تجارية", "تعديل رخصة بلدية تجارية", "نقل ملكية رخصة البلدية التجارية", "إلغاء أو إيقاف رخصة بلدية تجارية"]
-				},
-				{
-					"id": "najiz-real-estate",
-					"title": "البورصة العقارية والسجل العقاري",
-					"subtitle": "معاملات قانونية وعقارية إلكترونية",
-					"description": "ننفذ خدمات ناجز والمعاملات العقارية المرتبطة بالصكوك والإفراغات والتسجيل العيني مع متابعة متخصصة.",
-					"logoUrl": "/Services/rer.png",
-					"logoAlt": "خدمات ناجز والعقارات",
-					"items": ["تحديث الصكوك", "التسجيل العيني للعقار", "تجديد وإنهاء عقود الإيجار", "تسوية دفعات الإيجار", "الإفراغ العقاري"]
-				},
-				{
-					"id": "gov-e-services",
-					"title": "الخدمات الحكومية الإلكترونية",
-					"subtitle": "تنفيذ معاملاتك عبر المنصات الرسمية",
-					"description": "نوفر باقة شاملة من الخدمات الحكومية الإلكترونية للأفراد والمنشآت مع متابعة دقيقة حتى اكتمال الطلب.",
-					"logoUrl": "/Services/absher.png",
-					"logoAlt": "الخدمات الحكومية الإلكترونية",
-					"items": ["أبشر: تفعيل وإصدار، نقل خدمات، تفويضات، تحديث معلومات", "قوى: إصدار رخص عمل وتوثيق عقود", "التأمينات الاجتماعية ومدد", "الغرف التجارية والتصديقات"]
-				},
-				{
-					"id": "business-establishment",
-					"title": "خدمات الأعمال وتأسيس المنشآت",
-					"subtitle": "حلول متكاملة لتأسيس وتشغيل الأعمال",
-					"description": "نساعدك في بدء نشاطك التجاري وإدارته نظامياً عبر خدمات تأسيس الشركات والسجلات والملفات الحكومية.",
-					"logoUrl": "/Services/Ministry-of-Commerce.png",
-					"logoAlt": "تأسيس المنشآت",
-					"items": ["حجز الأسماء التجارية", "إصدار السجل التجاري", "الملف الضريبي والتأمينات", "إضافة واستبعاد الشركاء", "التأكيد السنوي للسجلات"]
-				},
-				{
-					"id": "insurance",
-					"title": "خدمات التأمين",
-					"subtitle": "حلول تأمينية شاملة",
-					"description": "نقدم حلول تأمينية للأفراد والشركات تشمل التأمين الطبي وتأمين المركبات وخدمات الإقامة.",
-					"logoUrl": "/Services/a-guarantee.png",
-					"logoAlt": "خدمات التأمين",
-					"items": ["تأمين طبي", "تأمين المركبات", "تأمين إصدار إقامة", "رفع مطالبات شركات التأمين"]
-				},
-				{
-					"id": "utilities-insurance-support",
-					"title": "الكهرباء والمياه",
-					"subtitle": "حلول تشغيلية متكاملة",
-					"description": "نوفر خدمات العدادات والتأمين والخدمات المساندة عبر الجهات المختصة مع تنسيق كامل للطلبات.",
-					"logoUrl": "/Services/water_electricity.png",
-					"logoAlt": "خدمات الكهرباء والمياه",
-					"items": ["إصدار أو تركيب عداد", "نقل ملكية عداد", "ترقية القدرة", "طلبات التقسيط"]
-				}
-			]
-		},
-		"whyChooseUs": {
-			"badge": "مميزاتنا",
-			"title": "لماذا تختارنا؟",
-			"description": "حلول سريعة وموثوقة لإتمام معاملاتك مع الجهات العامة بكل سهولة ويسر",
-			"features": [
-				{ "title": "السرعة في الإنجاز", "desc": "إنجاز المعاملات بعمليات محسنة وإجراءات واضحة لتوفير الوقت وتقليل الانتظار." },
-				{ "title": "أسعار تنافسية وواضحة", "desc": "سعر واضح ومناسب مع خيارات باقات دون رسوم مخفية." },
-				{ "title": "خبرة واسعة مع الجهات الحكومية", "desc": "فريق متمرس يفهم متطلبات الجهات الحكومية ويسهل التواصل الرسمي." },
-				{ "title": "خدمة عملاء متميزة", "desc": "دعم متواصل للرد على الاستفسارات والمساعدة في كل خطوة." }
-			]
-		},
-		"partners": {
-			"badge": "شركاؤنا",
-			"title": "خدماتنا مع أهم الجهات في المملكة",
-			"description": "نتعاون مع أبرز الجهات الحكومية والمنصات الإلكترونية لتقديم خدمات متكاملة وشاملة"
-		},
-		"reviews": {
-			"badge": "تقييماتنا",
-			"title": "آراء عملائنا الكرام",
-			"description": "نفخر بثقة عملائنا وآرائهم الصادقة التي تعكس جودة خدماتنا والتزامنا بالتميز",
-			"list": [
-				{ "name": "Salem Alidros", "rating": 5, "text": "مكتب قمة في الاحترافية، إنجاز سريع جدًا ودقة عالية في العمل." },
-				{ "name": "FUTUN Q", "rating": 5, "text": "تعامل راقٍ وأخلاق عالية، الخدمة تمت بكل احترافية وسلاسة." },
-				{ "name": "Yosry Hamza", "rating": 5, "text": "لديهم مثابرة في حل مشكلة العميل وتقديم خدمة ممتازة وسريعة." },
-				{ "name": "فيصل الحربي", "rating": 5, "text": "تعاون واحترافية وسرعة وإنجاز في كافة الخدمات الإلكترونية." },
-				{ "name": "Mostafa Mahdy", "rating": 5, "text": "تجربة جميلة جدًا والمصداقية والأمانة في التعامل." }
-			]
-		},
-		"location": {
-			"badge": "موقعنا",
-			"title": "تجدنا هنا",
-			"description": "يسعدنا استقبالكم في مقر المكتب أو التواصل معنا عبر القنوات المتاحة",
-			"mapTitle": "موقع مكتب المهمات الاحترافية للخدمات الإلكترونية",
-			"address": ["جدة حي الفلاح3 شارع ياسر بن عامر الكناني"],
-			"workingHours": ["السبت - الخميس: 8 صباحاً - 2 مساءً،", "4 مساءً - 11 مساءً", "الجمعة: 4 مساءً - 11 مساءً"],
-			"directionsButton": "احصل على الاتجاهات"
-		},
-		"footer": {
-			"description": "مكتب المهمات الاحترافية للخدمات الالكترونية متخصص في إنجاز المعاملات الحكومية والتجارية عبر المنصات الرسمية في المملكة العربية السعودية.",
-			"quickLinksTitle": "روابط سريعة",
-			"quickLinks": [
-				{ "label": "الرئيسية", "href": "#hero" },
-				{ "label": "من نحن", "href": "#about" },
-				{ "label": "خدماتنا", "href": "#services" },
-				{ "label": "شركاؤنا", "href": "#partners" }
-			],
-			"mainServicesTitle": "خدمات رئيسية",
-			"mainServices": ["الخدمات الحكومية الإلكترونية", "ناجز والبورصة العقارية", "منصة مدينتي والرخص البلدية", "وزارة التجارة وتأسيس المنشآت", "التأمينات الاجتماعية ومدد", "الكهرباء والمياه والتأمين"],
-			"contactTitle": "معلومات التواصل",
-			"country": "المملكة العربية السعودية",
-			"copyright": "© 2026 جميع الحقوق محفوظة - مكتب المهمات الاحترافية للخدمات الالكترونية - المملكة العربية السعودية"
-		}
-	},
-	"en": {
-		"common": {
-			"brandName": "Professional Tasks Office for Electronic Services",
-			"languageButton": "AR",
-			"phoneLabel": "Phone",
-			"workingHoursLabel": "Working Hours",
-			"addressLabel": "Address",
-			"verifiedCustomer": "Verified customer",
-			"socialFollow": "Follow us",
-			"ctaCall": "Call Us",
-			"ctaCallNow": "Call Now",
-			"ctaContactNow": "Contact Us Now",
-			"ctaWhatsapp": "WhatsApp"
-		},
-		"navbar": {
-			"links": [
-				{ "label": "Home", "href": "#hero" },
-				{ "label": "Services", "href": "#services" },
-				{ "label": "About", "href": "#about" },
-				{ "label": "Partners", "href": "#partners" },
-				{ "label": "Reviews", "href": "#reviews" },
-				{ "label": "Location", "href": "#location" }
-			]
-		},
-		"hero": {
-			"title": "Professional Tasks Office",
-			"titleHighlight": "for Electronic Services",
-			"subtitle": "Fast and accurate completion for individual and business transactions",
-			"description": "We provide complete government e-services including licensing, insurance, contracts, and legal requests through official platforms in Saudi Arabia.",
-			"workHours": [
-				"Saturday - Thursday: 8:00 AM - 2:00 PM,",
-				"4:00 PM - 11:00 PM",
-				"Friday: 4:00 PM - 11:00 PM"
-			],
-			"trustText": "Trusted by 99% of our clients",
-			"visualTitle": "Your First Destination",
-			"visualSubtitle": "for Public Services",
-			"whatsappMessage": "Hello, I would like to ask about your services and start a new request."
-		},
-		"about": {
-			"badge": "About Us",
-			"title": "Specialized digital solutions for government e-services",
-			"description": "At Professional Tasks Office, we help you complete government and business transactions through official platforms with speed and reliability.",
-			"features": [
-				{ "title": "Speed and accuracy", "desc": "We deliver services quickly while maintaining top quality and precision." },
-				{ "title": "Full document confidentiality", "desc": "We protect all client data and documents with strict security practices." },
-				{ "title": "Credibility and client satisfaction", "desc": "We build long-term relationships based on trust and transparency." },
-				{ "title": "Secure procedures", "desc": "We apply strong security standards in every stage of service execution." }
-			]
-		},
-		"services": {
-			"badge": "Our Services",
-			"title": "Electronic services for individuals and businesses",
-			"description": "A complete package of government and business services with professional follow-up until completion",
-			"whatsappTemplate": "Hello, I would like to ask about {{serviceTitle}} and the required steps to start.",
-			"cards": [
-				{
-					"id": "balady",
-					"title": "Municipality Services",
-					"subtitle": "Easy completion of municipal transactions",
-					"description": "We provide municipal services online and in person for fast and accurate completion.",
-					"logoUrl": "/Services/balady.png",
-					"logoAlt": "Balady platform",
-					"items": ["Issue commercial municipal license", "Renew commercial municipal license", "Modify municipal license", "Transfer municipal license ownership", "Cancel or suspend municipal license"]
-				},
-				{
-					"id": "najiz-real-estate",
-					"title": "Real Estate Exchange and Registry",
-					"subtitle": "Legal and real estate e-transactions",
-					"description": "We handle Najiz and property transactions related to deeds, transfers, and registration.",
-					"logoUrl": "/Services/rer.png",
-					"logoAlt": "Najiz and real estate services",
-					"items": ["Deed updates", "Property registration", "Lease contract renewals and closures", "Rent payment settlements", "Property transfer"]
-				},
-				{
-					"id": "gov-e-services",
-					"title": "Government Electronic Services",
-					"subtitle": "Complete your requests through official platforms",
-					"description": "A full set of government e-services for individuals and businesses with precise follow-up.",
-					"logoUrl": "/Services/absher.png",
-					"logoAlt": "Government e-services",
-					"items": ["Absher services", "Qiwa work permits and contracts", "GOSI and Mudad services", "Chamber of commerce attestations"]
-				},
-				{
-					"id": "business-establishment",
-					"title": "Business Setup Services",
-					"subtitle": "Integrated solutions to launch and operate businesses",
-					"description": "We help you start and manage your business with proper legal and government setup.",
-					"logoUrl": "/Services/Ministry-of-Commerce.png",
-					"logoAlt": "Business setup services",
-					"items": ["Reserve trade name", "Issue commercial registration", "Tax and insurance files", "Add/remove partners", "Annual confirmation"]
-				},
-				{
-					"id": "insurance",
-					"title": "Insurance Services",
-					"subtitle": "Comprehensive insurance solutions",
-					"description": "We offer insurance services for individuals and companies, including health and vehicle insurance.",
-					"logoUrl": "/Services/a-guarantee.png",
-					"logoAlt": "Insurance services",
-					"items": ["Health insurance", "Vehicle insurance", "Residence permit insurance", "Insurance claims support"]
-				},
-				{
-					"id": "utilities-insurance-support",
-					"title": "Electricity and Water",
-					"subtitle": "Integrated utility solutions",
-					"description": "We provide utility meter and related support services with full request coordination.",
-					"logoUrl": "/Services/water_electricity.png",
-					"logoAlt": "Electricity and water services",
-					"items": ["Issue or install meter", "Transfer meter ownership", "Upgrade capacity", "Installment requests"]
-				}
-			]
-		},
-		"whyChooseUs": {
-			"badge": "Why Us",
-			"title": "Why choose us?",
-			"description": "Fast and reliable solutions to complete your transactions with ease",
-			"features": [
-				{ "title": "Fast execution", "desc": "Optimized workflows and clear procedures to save your time." },
-				{ "title": "Transparent pricing", "desc": "Clear and competitive pricing with no hidden fees." },
-				{ "title": "Government expertise", "desc": "An experienced team that understands official requirements." },
-				{ "title": "Excellent support", "desc": "Responsive support to guide you through every step." }
-			]
-		},
-		"partners": {
-			"badge": "Our Partners",
-			"title": "Working with key entities in Saudi Arabia",
-			"description": "We collaborate with leading government entities and digital platforms"
-		},
-		"reviews": {
-			"badge": "Reviews",
-			"title": "What our clients say",
-			"description": "We are proud of client trust and testimonials that reflect our service quality",
-			"list": [
-				{ "name": "Salem Alidros", "rating": 5, "text": "A highly professional office with very fast completion and excellent quality." },
-				{ "name": "FUTUN Q", "rating": 5, "text": "Professional, respectful, and smooth service with great attention to detail." },
-				{ "name": "Yosry Hamza", "rating": 5, "text": "They are persistent in solving client issues and delivering fast service." },
-				{ "name": "Faisal Alharbi", "rating": 5, "text": "Great cooperation, speed, and quality across all electronic services." },
-				{ "name": "Mostafa Mahdy", "rating": 5, "text": "Excellent experience with honesty and credibility in every interaction." }
-			]
-		},
-		"location": {
-			"badge": "Our Location",
-			"title": "Find us here",
-			"description": "You are welcome to visit our office or contact us through available channels",
-			"mapTitle": "Professional Tasks Office Location",
-			"address": ["Jeddah, Al Falah District 3, Yasser Bin Amer Al Kenani Street"],
-			"workingHours": ["Saturday - Thursday: 8:00 AM - 2:00 PM,", "4:00 PM - 11:00 PM", "Friday: 4:00 PM - 11:00 PM"],
-			"directionsButton": "Get Directions"
-		},
-		"footer": {
-			"description": "Professional Tasks Office for Electronic Services specializes in government and business transactions through official platforms in Saudi Arabia.",
-			"quickLinksTitle": "Quick Links",
-			"quickLinks": [
-				{ "label": "Home", "href": "#hero" },
-				{ "label": "About", "href": "#about" },
-				{ "label": "Services", "href": "#services" },
-				{ "label": "Partners", "href": "#partners" }
-			],
-			"mainServicesTitle": "Main Services",
-			"mainServices": ["Government e-services", "Najiz and real estate exchange", "Madinaty and municipal licensing", "Commerce and business setup", "GOSI and Mudad", "Electricity, water, and insurance"],
-			"contactTitle": "Contact Information",
-			"country": "Kingdom of Saudi Arabia",
-			"copyright": "© 2026 All rights reserved - Professional Tasks Office for Electronic Services - Saudi Arabia"
-		}
-	}
+  "ar": {
+    "common": {
+      "brandName": "كفو",
+      "brandSubtext": "تسويق النمو",
+      "languageButton": "EN",
+      "ctaApply": "قدّم الآن"
+    },
+    "navbar": {
+      "links": [
+        { "label": "الرئيسية", "href": "#hero" },
+        { "label": "النظام", "href": "#system" },
+        { "label": "من نحن", "href": "#about" },
+        { "label": "الشركاء", "href": "#partners" },
+        { "label": "النتائج", "href": "#results" }
+      ]
+    },
+    "hero": {
+      "headline": "شريك نموك",
+      "subheadline": "نحن لا نشغّل إعلانات فقط. نحن نبني أنظمة تجلب لك العملاء باستمرار.",
+      "description": "توقف عن إهدار الميزانية على حملات عشوائية. احصل على نظام منظم مصمم لجلب عملاء مؤهلين عند الطلب.",
+      "cta": "قدّم الآن للتأهل",
+      "badge": "كفو",
+      "badgeSubtext": "تسويق نمو",
+      "engineTitle": "منظومة استقطاب العملاء",
+      "engineStatus": "النظام فعّال",
+      "positioningLabel": "التموضع",
+      "metrics": ["أنظمة نمو متوقعة", "عملاء مؤهلون", "تنفيذ يعتمد على البيانات"],
+      "systemPoints": [
+        "تحديد عرض قوي يرفع جودة العملاء المحتملين.",
+        "بناء رحلة تحويل متكاملة من الإعلان إلى الإغلاق.",
+        "متابعة الأداء أسبوعيًا مع تحسينات مستمرة.",
+        "تعاون مباشر مع فريقك لتحقيق نمو ثابت."
+      ],
+      "bottomTagline": "من حملات عشوائية إلى نظام نمو احترافي"
+    },
+    "about": {
+      "badge": "عن كافو",
+      "title": "نحوّل النمو إلى نظام يمكن قياسه وتكراره",
+      "description": "Kafu Media هي وكالة نمو عالية المستوى تساعد العلامات الطموحة على بناء أنظمة استحواذ عملاء متكاملة تجمع بين الاستراتيجية والتنفيذ والتحسين المستمر.",
+      "features": [
+        {
+          "title": "استراتيجية قبل الإنفاق",
+          "desc": "نبدأ بتحليل العروض والجمهور والرسائل قبل أي إطلاق إعلاني لضمان جودة النتائج."
+        },
+        {
+          "title": "تحسينات مبنية على البيانات",
+          "desc": "كل قرار يتم عبر قراءات أداء دقيقة مع اختبارات مستمرة لرفع التحويلات."
+        },
+        {
+          "title": "شراكة تشغيلية حقيقية",
+          "desc": "نندمج مع فريقك مثل ذراع نمو داخلي لتنفيذ خطط واضحة وقابلة للتوسع."
+        },
+        {
+          "title": "تركيز على الإيرادات",
+          "desc": "هدفنا ليس التفاعل فقط، بل رفع المبيعات وجودة العملاء واستدامة النمو."
+        }
+      ]
+    },
+    "services": {
+      "badge": "نظام كافو",
+      "title": "نظام نمو كافو",
+      "subtitle": "سواء أردت القيادة بنفسك أو التفويض الكامل - نحن نبني النظام الذي يقود نموك.",
+      "trackLabel": "المسار",
+      "items": [
+        {
+          "title": "الاستشارات الاستراتيجية",
+          "description": "توجيه خبير لبناء خارطة نمو واضحة، تحسين القرارات التسويقية، وتوسيع النتائج بثقة."
+        },
+        {
+          "title": "شراكة النمو",
+          "description": "تنفيذ كامل للاستحواذ على العملاء نيابةً عنك، من التخطيط إلى التحسين المستمر."
+        }
+      ]
+    },
+    "partners": {
+      "badge": "شركاء وثقة",
+      "title": "شركاء يعكسون مستوى التنفيذ",
+      "description": "نعمل مع علامات طموحة وقطاعات متنوعة لبناء نمو فعلي قابل للقياس.",
+      "names": ["NAKHEEL", "HYUNDAI", "SOBHA REALTY", "JustLife"],
+      "logos": [
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg", "alt": "FLOROOM" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg", "alt": "SALAM" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg", "alt": "ADAM Car Service" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg", "alt": "Al Wardiah Nursery" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg", "alt": "Darwin Accounting Services" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg", "alt": "ZJ Brand" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg", "alt": "Idea Smart" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
+      ]
+    },
+    "reviews": {
+      "badge": "النتائج",
+      "title": "قصص نجاح العملاء: نتائج حقيقية ونمو حقيقي",
+      "items": [
+        {
+          "quote": "300+ عميل محتمل في أول شهر!",
+          "author": "Mohamed A.",
+          "company": "EMAAR"
+        },
+        {
+          "quote": "عائد 10X ومبيعات بسبعة أرقام!",
+          "author": "Sarah K.",
+          "company": "LuxuryBags"
+        },
+        {
+          "quote": "مواعيدنا امتلأت بعملاء جدد!",
+          "author": "Ahmed R.",
+          "company": "GymPro"
+        }
+      ],
+      "bottomCtaHeadline": "جاهز لتوسيع أعمالك بجدية؟",
+      "bottomCtaButton": "قدّم الآن للتأهل"
+    },
+    "footer": {
+      "description": "Kafu Media تبني أنظمة نمو تسويقي متكاملة لجلب عملاء مؤهلين بشكل مستمر وبجودة عالية.",
+      "quickLinks": [
+        { "label": "الرئيسية", "href": "#hero" },
+        { "label": "النظام", "href": "#system" },
+        { "label": "من نحن", "href": "#about" },
+        { "label": "الشركاء", "href": "#partners" },
+        { "label": "النتائج", "href": "#results" }
+      ],
+      "copyright": "© 2026 Kafu Media. جميع الحقوق محفوظة."
+    }
+  },
+  "en": {
+    "common": {
+      "brandName": "Kafu Media",
+      "brandSubtext": "Growth Marketing",
+      "languageButton": "AR",
+      "ctaApply": "Apply Now"
+    },
+    "navbar": {
+      "links": [
+        { "label": "Home", "href": "#hero" },
+        { "label": "The System", "href": "#system" },
+        { "label": "About", "href": "#about" },
+        { "label": "Partners", "href": "#partners" },
+        { "label": "Results", "href": "#results" }
+      ]
+    },
+    "hero": {
+      "headline": "Your Growth Partner",
+      "subheadline": "We don't run ads. We build systems that bring you clients - consistently.",
+      "description": "Stop wasting on random campaigns. Get a structured system designed to generate qualified clients on demand.",
+      "cta": "Apply Now to Qualify",
+      "badge": "Kafu Media",
+      "badgeSubtext": "Growth Marketing",
+      "engineTitle": "Client Acquisition Engine",
+      "engineStatus": "System Active",
+      "positioningLabel": "Positioning",
+      "metrics": ["Predictable growth systems", "Qualified client flow", "Data-led execution"],
+      "systemPoints": [
+        "Positioning and offer clarity to attract better-fit clients.",
+        "Funnel architecture from traffic to conversion.",
+        "Weekly optimization loops to improve results.",
+        "Hands-on partnership with your internal team."
+      ],
+      "bottomTagline": "From random campaigns to a scalable growth system"
+    },
+    "about": {
+      "badge": "About Kafu",
+      "title": "We turn growth into a measurable, repeatable system",
+      "description": "Kafu Media is an elite growth marketing agency helping ambitious brands build high-performing client acquisition systems through strategy, execution, and relentless optimization.",
+      "features": [
+        {
+          "title": "Strategy before spend",
+          "desc": "We align offer, audience, and messaging before launch to maximize quality outcomes."
+        },
+        {
+          "title": "Performance-led optimization",
+          "desc": "Every decision is guided by data, testing, and conversion-focused iteration."
+        },
+        {
+          "title": "Real operating partnership",
+          "desc": "We work like your internal growth arm, not just an external vendor."
+        },
+        {
+          "title": "Revenue-first focus",
+          "desc": "Our goal is not vanity metrics, but sustainable client and revenue growth."
+        }
+      ]
+    },
+    "services": {
+      "badge": "The Kafu System",
+      "title": "The Kafu Growth System",
+      "subtitle": "Whether you want to lead or delegate - we build the system that drives your growth.",
+      "trackLabel": "Track",
+      "items": [
+        {
+          "title": "Strategic Consulting",
+          "description": "Guide and scale with expert direction, clear priorities, and confident execution."
+        },
+        {
+          "title": "Growth Partnership",
+          "description": "Done-for-you client acquisition with full-funnel ownership and continuous optimization."
+        }
+      ]
+    },
+    "partners": {
+      "badge": "Trusted Partners",
+      "title": "Brands that trust execution",
+      "description": "We support ambitious businesses across industries with measurable growth systems.",
+      "names": ["NAKHEEL", "HYUNDAI", "SOBHA REALTY", "JustLife"],
+      "logos": [
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg", "alt": "FLOROOM" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg", "alt": "SALAM" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg", "alt": "ADAM Car Service" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg", "alt": "Al Wardiah Nursery" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg", "alt": "Darwin Accounting Services" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg", "alt": "ZJ Brand" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg", "alt": "Idea Smart" },
+        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
+      ]
+    },
+    "reviews": {
+      "badge": "Results",
+      "title": "Client Success Stories: Real Results, Real Growth",
+      "items": [
+        {
+          "quote": "300+ leads in first month!",
+          "author": "Mohamed A.",
+          "company": "EMAAR"
+        },
+        {
+          "quote": "10X ROAS and 7-Figure Sales!",
+          "author": "Sarah K.",
+          "company": "LuxuryBags"
+        },
+        {
+          "quote": "Booked Solid with New Clients!",
+          "author": "Ahmed R.",
+          "company": "GymPro"
+        }
+      ],
+      "bottomCtaHeadline": "Serious about scaling your business?",
+      "bottomCtaButton": "Apply Now to Qualify"
+    },
+    "footer": {
+      "description": "Kafu Media builds elite growth systems designed to consistently generate qualified clients.",
+      "quickLinks": [
+        { "label": "Home", "href": "#hero" },
+        { "label": "The System", "href": "#system" },
+        { "label": "About", "href": "#about" },
+        { "label": "Partners", "href": "#partners" },
+        { "label": "Results", "href": "#results" }
+      ],
+      "copyright": "© 2026 Kafu Media. All rights reserved."
+    }
+  }
 }

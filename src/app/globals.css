@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --background: #E8E7E8;
-  --foreground: #1E1D31;
-  --secondary: #C63D00;
-  --accent: #C63D00;
-  --light: #E8E7E8;
+  --background: #0A0C10;
+  --foreground: #F5F1E9;
+  --secondary: #CBA16D;
+  --accent: #CBA16D;
+  --light: #141821;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-cairo), Arial, sans-serif;
+  font-family: var(--font-manrope), Arial, sans-serif;
 }
 
 /* Custom Arabic Typography */
 .arabic-text {
-  font-family: var(--font-cairo), 'Tajawal', sans-serif;
+  font-family: var(--font-tajawal), sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -34,25 +34,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #0b0e13;
 }
 
 /* Custom scrollbar handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #3d4350;
   border-radius: 4px;
 }
 
 /* Custom scrollbar handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Modern light theme hero gradient */
-.hero-gradient {
-  background: linear-gradient(135deg, #E8E7E8 0%, #f3f2f3 25%, #ebe9eb 50%, #f4f3f4 75%, #E8E7E8 100%);
-  background-size: 400% 400%;
-  animation: gradientAnimation 12s ease infinite;
+  background: #5f6674;
 }
 
 /* Modern floating animation */

@@ -1,6 +1,6 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+
+import React from 'react';
 import { useContent } from '@/content/useContent';
 
 interface PartnerLogo {
@@ -8,175 +8,56 @@ interface PartnerLogo {
   alt: string;
 }
 
-const fallbackLogos: PartnerLogo[] = [
-  { src: '/Partners/Absher.png', alt: 'أبشر' },
-  { src: '/Partners/Najiz.png', alt: 'ناجز' },
-  { src: '/Partners/Mudad-1.png', alt: 'مدد' },
-  { src: '/Partners/GOSI-2.png', alt: 'التأمينات الاجتماعية' },
-  { src: '/Partners/balady.png', alt: 'بلدي' },
-  { src: '/Partners/Ministry-of-Commerce.png', alt: 'وزارة التجارة' },
-  { src: '/Partners/QIWA-011.png', alt: 'قوى' },
-  { src: '/Partners/Musaned-_011.png', alt: 'مساند' },
-  { src: '/Partners/General_Directorate_of_Passports-1.png', alt: 'المديرية العامة للجوازات' },
-  { src: '/Partners/Ministry-of-Foreign-Affairs-01.png', alt: 'وزارة الخارجية' },
-  { src: '/Partners/Sadad-01.png', alt: 'سداد' },
-  { src: '/Partners/zakat-rax-and-customs-authority-1.png', alt: 'هيئة الزكاة والضريبة والجمارك' },
-  { src: '/Partners/Jeddah-Chamber-01.png', alt: 'الغرفة التجارية' },
-];
-
-const PIXELS_PER_SECOND = 42;
-
-function LogoCard({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="flex items-center justify-center bg-white hover:bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 w-[240px] h-32 flex-shrink-0 transition-all shadow-sm hover:shadow-md">
-      <Image
-        src={src}
-        alt={alt}
-        width={220}
-        height={110}
-        className="object-contain w-full h-full"
-      />
-    </div>
-  );
-}
-
 export default function Partners() {
   const { dictionary, dir } = useContent();
-  const dynamicLogos: PartnerLogo[] = Array.isArray(dictionary?.partners?.logos)
-    ? (dictionary.partners.logos as PartnerLogo[])
-    : fallbackLogos;
-
-  const firstSetRef = useRef<HTMLDivElement | null>(null);
-  const secondSetRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const frameRef = useRef<number | null>(null);
-  const previousTimestampRef = useRef<number | null>(null);
-  const offsetRef = useRef(0);
-  const setWidthRef = useRef(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    const updateSetWidth = () => {
-      if (!firstSetRef.current) {
-        return;
-      }
-
-      if (secondSetRef.current) {
-        const measured = secondSetRef.current.offsetLeft - firstSetRef.current.offsetLeft;
-        setWidthRef.current = measured > 0 ? measured : firstSetRef.current.scrollWidth;
-      } else {
-        setWidthRef.current = firstSetRef.current.scrollWidth;
-      }
-
-      if (trackRef.current) {
-        trackRef.current.style.transform = 'translateX(0px)';
-      }
-
-      offsetRef.current = 0;
-      previousTimestampRef.current = null;
-    };
-
-    updateSetWidth();
-
-    const resizeObserver = new ResizeObserver(() => {
-      updateSetWidth();
-    });
-
-    if (firstSetRef.current) {
-      resizeObserver.observe(firstSetRef.current);
-    }
-
-    window.addEventListener('resize', updateSetWidth);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateSetWidth);
-    };
-  }, []);
-
-  useEffect(() => {
-    const animate = (timestamp: number) => {
-      if (!trackRef.current || !setWidthRef.current) {
-        frameRef.current = window.requestAnimationFrame(animate);
-        return;
-      }
-
-      if (isPaused) {
-        previousTimestampRef.current = timestamp;
-        frameRef.current = window.requestAnimationFrame(animate);
-        return;
-      }
-
-      if (previousTimestampRef.current === null) {
-        previousTimestampRef.current = timestamp;
-      }
-
-      const elapsed = timestamp - previousTimestampRef.current;
-      previousTimestampRef.current = timestamp;
-
-      offsetRef.current -= (PIXELS_PER_SECOND * elapsed) / 1000;
-
-      while (offsetRef.current <= -setWidthRef.current) {
-        offsetRef.current += setWidthRef.current;
-      }
-
-      trackRef.current.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
-      frameRef.current = window.requestAnimationFrame(animate);
-    };
-
-    frameRef.current = window.requestAnimationFrame(animate);
-
-    return () => {
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, [isPaused]);
+  const names: string[] = Array.isArray(dictionary?.partners?.names) ? dictionary.partners.names : [];
+  const logos: PartnerLogo[] = Array.isArray(dictionary?.partners?.logos) ? dictionary.partners.logos : [];
+  const marqueeLogos = logos.length ? [...logos, ...logos] : [];
 
   return (
-    <section id="partners" className="bg-gray-50/60 py-16 px-6 overflow-hidden">
+    <section id="partners" className="bg-[#0A0D13] py-20 px-6 border-y border-white/5">
       <div className="max-w-[1290px] mx-auto" dir={dir}>
         <div className="text-center mb-12">
-          <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
+          <span className="text-gold font-bold text-xs sm:text-sm tracking-[0.2em] uppercase bg-gold/10 border border-gold/25 px-4 py-2 rounded-full">
             {dictionary.partners.badge}
           </span>
-          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">
-            {dictionary.partners.title}
-          </h2>
-          <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4" />
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg mt-6">
-            {dictionary.partners.description}
-          </p>
+          <h2 className="text-3xl lg:text-5xl font-black text-white mt-5 mb-4">{dictionary.partners.title}</h2>
+          <p className="text-white/65 max-w-3xl mx-auto text-base lg:text-lg">{dictionary.partners.description}</p>
         </div>
 
-        <div
-          dir="ltr"
-          className="relative overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-gray-50/95 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-gray-50/95 to-transparent" />
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {names.map((name) => (
+            <span
+              key={name}
+              className="px-4 py-2 rounded-full bg-[#151A24] border border-gold/25 text-white/90 text-sm font-semibold"
+            >
+              {name}
+            </span>
+          ))}
+        </div>
 
-          <div
-            ref={trackRef}
-            className="flex gap-8 w-max will-change-transform"
-            style={{ transform: 'translate3d(0px, 0, 0)' }}
-          >
-            {[0, 1].map((setIndex) => (
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#111722] p-4">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#111722] to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#111722] to-transparent z-10" />
+
+          <div className="flex w-max animate-scroll gap-4 mb-4">
+            {marqueeLogos.map((logo, index) => (
               <div
-                key={setIndex}
-                ref={setIndex === 0 ? firstSetRef : setIndex === 1 ? secondSetRef : undefined}
-                className="flex gap-8 flex-shrink-0"
-                aria-hidden={setIndex !== 0}
+                key={`${logo.src}-${index}`}
+                className="h-24 w-44 rounded-2xl border border-white/10 bg-white/95 flex items-center justify-center p-3"
               >
-                {dynamicLogos.map((logo, logoIndex) => (
-                  <LogoCard
-                    key={`${setIndex}-${logo.alt}-${logoIndex}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                  />
-                ))}
+                <img src={logo.src} alt={logo.alt} className="max-h-full w-auto object-contain" loading="lazy" />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex w-max animate-scroll-reverse gap-4">
+            {marqueeLogos.map((logo, index) => (
+              <div
+                key={`${logo.alt}-${index}`}
+                className="h-24 w-44 rounded-2xl border border-white/10 bg-white/95 flex items-center justify-center p-3"
+              >
+                <img src={logo.src} alt={logo.alt} className="max-h-full w-auto object-contain" loading="lazy" />
               </div>
             ))}
           </div>

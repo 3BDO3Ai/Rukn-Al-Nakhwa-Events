@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { PHONE_HREF } from '@/lib/contact';
 import { useContent } from '@/content/useContent';
 
 const features = [
@@ -57,11 +56,11 @@ export default function About() {
         <div className={`flex-1 flex flex-col ${isArabic ? 'text-right' : 'text-left'}`}>
           <div className="mb-10">
             <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">{about.badge}</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-2 leading-[1.35]">
+            <h2 className="text-3xl lg:text-4xl font-black text-white mt-4 mb-2 leading-[1.35]">
               {about.title}
             </h2>
             <div className={`w-16 h-1 bg-gold rounded-full mt-3 mb-6 ${isArabic ? 'ml-auto' : 'mr-auto'}`} />
-            <p className={`text-gray-600 text-lg leading-9 max-w-2xl ${isArabic ? 'text-right ml-auto' : 'text-left mr-auto'}`}>
+            <p className={`text-white/72 text-lg leading-9 max-w-2xl ${isArabic ? 'text-right ml-auto' : 'text-left mr-auto'}`}>
               {about.description}
             </p>
           </div>
@@ -71,12 +70,12 @@ export default function About() {
               const localized = about.features?.[i] ?? f;
               return (
               <div key={i} className={`flex items-start gap-5 group ${isArabic ? 'flex-row-reverse' : ''}`}>
-                <div className="bg-darkGreen/10 p-4 rounded-2xl text-darkGreen flex-shrink-0 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300 shadow-sm">
+                <div className="bg-darkGreen/10 p-4 rounded-2xl text-gold flex-shrink-0 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300 shadow-sm">
                   {f.icon}
                 </div>
                 <div className={`flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>
-                  <h3 className="font-bold text-darkGreen text-lg mb-2">{localized.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{localized.desc}</p>
+                  <h3 className="font-bold text-white text-lg mb-2">{localized.title}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{localized.desc}</p>
                 </div>
               </div>
               );
@@ -85,13 +84,13 @@ export default function About() {
 
           <div className="mt-10">
             <a
-              href={PHONE_HREF}
+                href="#apply"
               className="inline-flex items-center gap-2 bg-darkGreen hover:bg-darkGreen/90 text-white px-7 py-3.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              {dictionary.common.ctaContactNow}
+                {dictionary.common.ctaApply}
             </a>
           </div>
         </div>

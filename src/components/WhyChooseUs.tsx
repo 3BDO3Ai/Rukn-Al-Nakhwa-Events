@@ -55,9 +55,9 @@ export default function WhyChooseUs() {
           <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">
             {dictionary.whyChooseUs.badge}
           </span>
-          <h2 className="text-3xl lg:text-4xl font-black text-darkGreen mt-4 mb-3">{dictionary.whyChooseUs.title}</h2>
+          <h2 className="text-3xl lg:text-4xl font-black text-white mt-4 mb-3">{dictionary.whyChooseUs.title}</h2>
           <div className="w-16 h-1 bg-gold rounded-full mx-auto mt-4 mb-6" />
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="text-white/70 max-w-2xl mx-auto text-lg">
             {dictionary.whyChooseUs.description}
           </p>
         </div>
@@ -71,11 +71,11 @@ export default function WhyChooseUs() {
               key={i}
               className={`bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 group ${isArabic ? 'text-right' : 'text-left'}`}
             >
-              <div className="w-14 h-14 bg-darkGreen/10 rounded-2xl flex items-center justify-center text-darkGreen mb-5 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300">
+              <div className="w-14 h-14 bg-darkGreen/10 rounded-2xl flex items-center justify-center text-gold mb-5 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300">
                 {f.icon}
               </div>
-              <h3 className="font-black text-darkGreen text-lg mb-3">{localized.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{localized.desc}</p>
+              <h3 className="font-black text-slate-700 text-lg mb-3">{localized.title}</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">{localized.desc}</p>
             </div>
             );
           })}

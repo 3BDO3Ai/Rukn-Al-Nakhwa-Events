@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Manrope, Tajawal } from "next/font/google";
 import { LanguageProvider } from "@/content/LanguageProvider";
 import "./globals.css";
 
-const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--font-cairo",
+  variable: "--font-manrope",
+});
+
+const tajawal = Tajawal({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "700", "800"],
+  display: "swap",
+  variable: "--font-tajawal",
 });
 
 export const metadata: Metadata = {
-  title: "مكتب المهمات الاحترافية للخدمات الالكترونية | خدمات حكومية إلكترونية",
-  description: "مكتب المهمات الاحترافية للخدمات الالكترونية يقدم خدمات حكومية إلكترونية للأفراد والمنشآت عبر أبشر وناجز وبلدي وقوى والزكاة والتأمينات مع متابعة دقيقة حتى الإنجاز.",
+  title: "Kafu Media | Elite Growth Marketing Systems",
+  description:
+    "Kafu Media builds elite growth systems that consistently generate qualified clients for ambitious brands.",
 };
 
 export default function RootLayout({
@@ -22,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${cairo.className} antialiased bg-background`}>
+      <body className={`${manrope.variable} ${tajawal.variable} antialiased bg-background text-foreground`}>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

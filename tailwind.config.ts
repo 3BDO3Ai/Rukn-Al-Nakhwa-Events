@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'cairo': ['Cairo', 'sans-serif'],
-        'tajawal': ['Tajawal', 'sans-serif'],
+        sans: ['var(--font-manrope)', 'sans-serif'],
+        arabic: ['var(--font-tajawal)', 'sans-serif'],
       },
       colors: {
-        darkGreen: '#151252',
-        gold: '#C63D00',
-        teal: '#C63D00',
-        surface: '#E8E7E8',
-        'primary-teal': '#151252',
-        'gold-dark': '#A43300',
-        'light-section': '#E8E7E8',
-        footer: '#1E1D31',
+        darkGreen: '#0E1014',
+        gold: '#CBA16D',
+        teal: '#CBA16D',
+        surface: '#15181F',
+        'primary-teal': '#0E1014',
+        'gold-dark': '#A38054',
+        'light-section': '#15181F',
+        footer: '#0A0C10',
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {

@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { PHONE_HREF, buildWhatsAppHref } from '@/lib/contact';
 import { useContent } from '@/content/useContent';
 
 export default function Hero() {
@@ -12,114 +11,84 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="bg-darkGreen w-full min-h-screen pt-24 pb-12 lg:pt-28 lg:pb-16 overflow-hidden relative flex items-center"
+      className="w-full min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden relative flex items-center bg-[#090C11]"
     >
-      {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-teal/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full" />
+        <div className="absolute -top-20 -right-16 w-[420px] h-[420px] bg-gold/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-28 -left-10 w-[420px] h-[420px] bg-[#2E3646]/60 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(203,161,109,0.14),transparent_42%)]" />
       </div>
 
       <div
-        className="max-w-[1290px] mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16 relative z-10 w-full"
+        className="max-w-[1290px] mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20 relative z-10 w-full"
         dir={dir}
       >
-        {/* RIGHT: Text Content */}
-        <div className={`flex flex-col flex-1 gap-6 w-full max-w-2xl mt-12 lg:mt-0 ${isArabic ? 'text-right' : 'text-left'}`}>
-          <h1 className="text-white text-2xl lg:text-4xl font-extrabold leading-tight">
-            {hero.title}
-            <span className="block mt-3 text-gold">{hero.titleHighlight}</span>
+        <div className={`flex flex-col flex-1 gap-6 w-full max-w-3xl ${isArabic ? 'text-right font-arabic' : 'text-left'}`}>
+          <span className="inline-flex w-fit text-gold text-xs sm:text-sm tracking-[0.24em] uppercase border border-gold/35 rounded-full px-4 py-2">
+            {hero.badge ?? dictionary.common.brandName}
+          </span>
+
+          <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.05]">
+            {hero.headline}
           </h1>
 
-          <h2 className="text-white/80 text-lg lg:text-xl font-bold">
-            {hero.subtitle}
+          <h2 className="text-white/82 text-lg lg:text-2xl font-semibold max-w-2xl leading-relaxed">
+            {hero.subheadline}
           </h2>
 
-          <p className="text-white/70 max-w-xl text-base lg:text-lg leading-relaxed">
+          <p className="text-white/66 max-w-2xl text-base lg:text-lg leading-relaxed">
             {hero.description}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 mt-2">
+          <div className="flex flex-wrap gap-4 mt-4" id="apply">
             <a
-              href={PHONE_HREF}
-              className="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-gold/20 transition-all hover:shadow-xl hover:shadow-gold/30 hover:-translate-y-0.5 text-base"
+              href="#results"
+              className="inline-flex items-center justify-center bg-gold hover:bg-[#ddb987] text-[#101010] px-8 py-4 rounded-full font-bold tracking-wide transition-all"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-              </svg>
-              {dictionary.common.ctaCallNow}
-            </a>
-            <a
-              href={buildWhatsAppHref(hero.whatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8 py-4 rounded-xl font-bold transition-all text-base backdrop-blur-sm"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.113 1.522 5.851L0 24l6.293-1.489A11.947 11.947 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.955 0-3.783-.553-5.333-1.508L3.5 21.5l1.008-3.167A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fillRule="evenodd" clipRule="evenodd"/>
-              </svg>
-              {dictionary.common.ctaWhatsapp}
+              {hero.cta}
             </a>
           </div>
 
-          {/* Key Info */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full max-w-3xl items-stretch">
-            <div className={`border border-white/20 px-5 py-4 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>
-              <div className="text-gold text-sm font-bold mb-2">{dictionary.common.workingHoursLabel}</div>
-              <p className="text-white/80 text-sm lg:text-base leading-relaxed">
-                {hero.workHours[0]}
-                <br />
-                {hero.workHours[1]}
-                <br />
-                {hero.workHours[2]}
-              </p>
-            </div>
-
-            <div className="border border-white/20 px-5 py-6 rounded-2xl text-center flex items-center justify-center bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all group sm:flex-none">
-              <div className="text-white/90 text-lg lg:text-xl font-medium">
-                {hero.trustText}
+          <div className="flex flex-wrap gap-3 pt-3">
+            {hero.metrics.map((metric: string) => (
+              <div
+                key={metric}
+                className="px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/80 text-sm"
+              >
+                {metric}
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* LEFT: Logo / Visual */}
         <div className="flex-1 flex justify-center items-center w-full">
-          <div className="relative">
-            {/* Glow ring */}
-            <div className="absolute inset-0 rounded-full bg-gold/10 blur-2xl scale-110" />
-            <div className="relative rounded-[28px] p-[1px] bg-gradient-to-br from-white/30 via-white/5 to-gold/30 shadow-2xl shadow-black/40 group">
-              <div className="relative rounded-[27px] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/10 px-8 py-12 lg:px-14 lg:py-16 overflow-hidden">
-                {/* Decorative glows */}
-                <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-gold/20 blur-[40px] transition-all duration-700 group-hover:bg-gold/30" />
-                <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-teal/20 blur-[40px] transition-all duration-700 group-hover:bg-teal/30" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-gradient-to-br from-transparent to-white/5 opacity-50" />
+          <div className="relative w-full max-w-[520px]">
+            <div className="absolute inset-0 rounded-[30px] bg-gradient-to-br from-gold/20 to-transparent blur-xl" />
+            <div className={`relative rounded-[30px] border border-gold/40 bg-[#111723] p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.45)] ${isArabic ? 'font-arabic' : ''}`}>
+              <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
+                <p className="text-white text-lg sm:text-xl font-extrabold">{hero.engineTitle ?? 'Client Acquisition Engine'}</p>
+                <span className={`inline-flex items-center px-3 py-1.5 rounded-full border border-gold/35 bg-gold/10 text-gold font-bold ${isArabic ? 'text-sm sm:text-base' : 'text-xs sm:text-sm tracking-wide'}`}>
+                  {hero.engineStatus ?? 'System Active'}
+                </span>
+              </div>
 
-                <div className="relative z-10 flex flex-col items-center justify-center text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 shadow-inner mb-6 border border-white/15">
-                    <img src="/Logo_icon.svg" alt={dictionary.common.brandName} className="w-10 h-10 object-contain drop-shadow-md" />
+              <div className="space-y-3">
+                {hero.systemPoints.map((point: string) => (
+                  <div
+                    key={point}
+                    className={`flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 ${isArabic ? 'text-right' : ''}`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-gold mt-2" />
+                    <p className={`text-white/90 leading-relaxed ${isArabic ? 'text-base lg:text-lg' : 'text-sm sm:text-base'}`}>{point}</p>
                   </div>
-                  
-                  <span className="text-gold/90 text-sm font-bold tracking-widest mb-3 uppercase">
-                    {hero.title}
-                  </span>
-                  
-                  <h3 className="text-white text-3xl lg:text-4xl font-black mb-6 leading-[1.4]">
-                    {hero.visualTitle}<br />{hero.visualSubtitle}
-                  </h3>
-                  
-                  <div className="flex items-center gap-3 bg-white/10 hover:bg-white/15 transition-colors border border-white/10 px-6 py-3 rounded-full backdrop-blur-md">
-                    <svg className="w-5 h-5 text-gold animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                    </svg>
-                    <div className="text-white text-xl lg:text-2xl font-bold tracking-widest" dir="ltr">
-                      +966 56 299 7035
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </div>
+
+              <div className="mt-7 rounded-2xl border border-gold/25 bg-black/20 p-5 sm:p-6">
+                <p className={`text-gold/90 mb-2 ${isArabic ? 'text-sm sm:text-base font-semibold' : 'text-xs uppercase tracking-[0.2em]'}`}>
+                  {hero.positioningLabel ?? 'Positioning'}
+                </p>
+                <p className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">{hero.bottomTagline}</p>
               </div>
             </div>
           </div>
