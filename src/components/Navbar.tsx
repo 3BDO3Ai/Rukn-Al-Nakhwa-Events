@@ -38,7 +38,7 @@ export default function Navbar() {
         >
           <a href="#hero" className="flex items-center group cursor-pointer shrink-0">
             <Image
-              src="/logo.svg"
+              src="/Logo.svg"
               alt={dictionary.common.brandName}
               width={180}
               height={52}

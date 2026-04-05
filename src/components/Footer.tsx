@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-5">
               <Image
-                src="/logo.svg"
+                src="/Logo.svg"
                 alt={dictionary.common.brandName}
                 width={220}
                 height={64}
