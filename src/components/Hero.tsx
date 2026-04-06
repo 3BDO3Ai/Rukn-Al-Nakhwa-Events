@@ -1,104 +1,114 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { useContent } from '@/content/useContent';
 import { buildWhatsAppHref } from '@/lib/contact';
+import { useContent } from '@/content/useContent';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
   const { dictionary, dir } = useContent();
-  const hero = dictionary.hero;
   const isArabic = dir === 'rtl';
-  const applyNowHref = buildWhatsAppHref(
-    isArabic
-      ? 'السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو.'
-      : 'Hello, I want to apply now and get started with Kafu.'
-  );
+  const alignClass = isArabic ? 'text-right' : 'text-left';
+  const hero = dictionary.hero;
+  const fullTitle = hero?.title ?? '';
+  const fullSubtitle = hero?.subtitle ?? '';
+  const [typedTitle, setTypedTitle] = useState('');
+  const [typedSubtitle, setTypedSubtitle] = useState('');
+
+  useEffect(() => {
+    if (!fullTitle && !fullSubtitle) {
+      setTypedTitle('');
+      setTypedSubtitle('');
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setTypedTitle(fullTitle);
+      setTypedSubtitle(fullSubtitle);
+      return;
+    }
+
+    let timeoutId: number | undefined;
+    let titleIndex = 0;
+    let subtitleIndex = 0;
+
+    setTypedTitle('');
+    setTypedSubtitle('');
+
+    const typeSubtitle = () => {
+      if (subtitleIndex < fullSubtitle.length) {
+        subtitleIndex += 1;
+        setTypedSubtitle(fullSubtitle.slice(0, subtitleIndex));
+        timeoutId = window.setTimeout(typeSubtitle, 35);
+      }
+    };
+
+    const typeTitle = () => {
+      if (titleIndex < fullTitle.length) {
+        titleIndex += 1;
+        setTypedTitle(fullTitle.slice(0, titleIndex));
+        timeoutId = window.setTimeout(typeTitle, 45);
+      } else {
+        timeoutId = window.setTimeout(typeSubtitle, 120);
+      }
+    };
+
+    timeoutId = window.setTimeout(typeTitle, 80);
+
+    return () => {
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [fullTitle, fullSubtitle]);
+
+  const primaryMessage =
+    hero?.primaryButton?.whatsappMessage ??
+    (dir === 'rtl'
+      ? 'السلام عليكم، أرغب في حجز مناسبة لدى مؤسسة ركن النخوة للحفلات.'
+      : 'Hello, I would like to book an event with Rukn Al-Nakhwa.');
+  const primaryHref = buildWhatsAppHref(primaryMessage);
 
   return (
-    <section
-      id="hero"
-      className="w-full min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden relative flex items-center bg-[#090C11]"
-    >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -right-16 w-[420px] h-[420px] bg-gold/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-28 -left-10 w-[420px] h-[420px] bg-[#2E3646]/60 rounded-full blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(203,161,109,0.14),transparent_42%)]" />
-      </div>
+    <section id="hero" className="section-soft-gradient min-h-[100svh] py-28 text-white md:py-32">
+      <div className="mx-auto w-full max-w-7xl px-6" dir={dir}>
+        <div className="grid items-center gap-10 lg:gap-14">
+          <div className={`order-1 max-w-5xl space-y-8 ${alignClass}`}>
+            <p className="hero-reveal hero-delay-1 inline-flex items-center rounded-full border border-[#d6aa54]/80 bg-[rgba(7,10,8,0.45)] px-4 py-2 text-xs font-bold tracking-[0.04em] text-[#f6d28a] shadow-[0_8px_20px_rgba(0,0,0,0.28)]">
+              {hero?.badge}
+            </p>
 
-      <div
-        className="max-w-[1290px] mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20 relative z-10 w-full"
-        dir={dir}
-      >
-        <div className={`flex flex-col flex-1 gap-6 w-full max-w-3xl ${isArabic ? 'text-right font-arabic' : 'text-left'}`}>
-          <span className="inline-flex w-fit text-gold text-xs sm:text-sm tracking-[0.24em] uppercase border border-gold/35 rounded-full px-4 py-2">
-            {hero.badge ?? dictionary.common.brandName}
-          </span>
+            <h1 className="hero-reveal hero-delay-2 text-4xl font-black leading-[1.16] text-[#f9f2de] drop-shadow-[0_10px_24px_rgba(0,0,0,0.4)] md:text-7xl md:leading-[1.05]">
+              {typedTitle}
+            </h1>
 
-          <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.05]">
-            {hero.headline}
-          </h1>
-
-          <h2 className="text-white/82 text-lg lg:text-2xl font-semibold max-w-2xl leading-relaxed">
-            {hero.subheadline}
-          </h2>
-
-          <p className="text-white/66 max-w-2xl text-base lg:text-lg leading-relaxed">
-            {hero.description}
-          </p>
-
-          <div className="flex flex-wrap gap-4 mt-4" id="apply">
-            <a
-              href={applyNowHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-gold hover:bg-[#ddb987] text-[#101010] px-8 py-4 rounded-full font-bold tracking-wide transition-all"
-            >
-              {hero.cta}
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-3 pt-3">
-            {hero.metrics.map((metric: string) => (
-              <div
-                key={metric}
-                className="px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/80 text-sm"
-              >
-                {metric}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex-1 flex justify-center items-center w-full">
-          <div className="relative w-full max-w-[520px]">
-            <div className="absolute inset-0 rounded-[30px] bg-gradient-to-br from-gold/20 to-transparent blur-xl" />
-            <div className={`relative rounded-[30px] border border-gold/40 bg-[#111723] p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.45)] ${isArabic ? 'font-arabic' : ''}`}>
-              <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
-                <p className="text-white text-lg sm:text-xl font-extrabold">{hero.engineTitle ?? 'Client Acquisition Engine'}</p>
-                <span className={`inline-flex items-center px-3 py-1.5 rounded-full border border-gold/35 bg-gold/10 text-gold font-bold ${isArabic ? 'text-sm sm:text-base' : 'text-xs sm:text-sm tracking-wide'}`}>
-                  {hero.engineStatus ?? 'System Active'}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                {hero.systemPoints.map((point: string) => (
-                  <div
-                    key={point}
-                    className={`flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 ${isArabic ? 'text-right' : ''}`}
-                  >
-                    <span className="w-2.5 h-2.5 rounded-full bg-gold mt-2" />
-                    <p className={`text-white/90 leading-relaxed ${isArabic ? 'text-base lg:text-lg' : 'text-sm sm:text-base'}`}>{point}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-7 rounded-2xl border border-gold/25 bg-black/20 p-5 sm:p-6">
-                <p className={`text-gold/90 mb-2 ${isArabic ? 'text-sm sm:text-base font-semibold' : 'text-xs uppercase tracking-[0.2em]'}`}>
-                  {hero.positioningLabel ?? 'Positioning'}
-                </p>
-                <p className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">{hero.bottomTagline}</p>
-              </div>
+            <div className="hero-reveal hero-delay-3 flex justify-start">
+              <h2 className="max-w-4xl border-s-4 border-[var(--elite-primary)] ps-4 text-2xl font-extrabold leading-[1.22] text-[var(--elite-primary)] drop-shadow-[0_8px_20px_rgba(122,84,25,0.35)] md:text-5xl md:leading-[1.12]">
+                {typedSubtitle}
+              </h2>
             </div>
+
+            <p className="hero-reveal hero-delay-4 max-w-4xl text-base leading-8 text-[#ece1cc] md:text-xl md:leading-9">
+              {hero?.description}
+            </p>
+
+            <div className="hero-reveal hero-delay-5 flex w-full flex-row gap-3 justify-start sm:w-auto sm:gap-4">
+              <a
+                href={hero?.secondaryButton?.href ?? '#packages'}
+                className="inline-flex min-w-0 flex-1 items-center justify-center rounded-2xl border border-[#6bb484] bg-[rgba(8,56,41,0.65)] px-4 py-3 text-center text-sm font-extrabold leading-5 text-[#ecfff4] shadow-[0_8px_20px_rgba(1,20,15,0.35)] transition hover:brightness-110 sm:min-w-[160px] sm:flex-none sm:px-7 sm:text-lg"
+              >
+                {hero?.secondaryButton?.label}
+              </a>
+              <a
+                href={primaryHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-w-0 flex-1 items-center justify-center rounded-2xl border border-[#f3c571]/80 bg-[linear-gradient(180deg,#e7b347_0%,#bf8731_100%)] px-4 py-3 text-center text-sm font-extrabold leading-5 text-[#1a1e12] shadow-[0_10px_26px_rgba(122,84,25,0.35)] transition hover:brightness-105 sm:min-w-[190px] sm:flex-none sm:px-7 sm:text-lg"
+              >
+                {hero?.primaryButton?.label}
+              </a>
+            </div>
+
           </div>
         </div>
       </div>

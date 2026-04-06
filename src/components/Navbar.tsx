@@ -1,135 +1,163 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+
+import { useEffect, useRef, useState } from 'react';
 import { useContent } from '@/content/useContent';
 import { buildWhatsAppHref } from '@/lib/contact';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState('#hero');
+  const scrollFrameRef = useRef<number | null>(null);
   const { dictionary, dir, toggleLocale } = useContent();
-  const isArabic = dir === 'rtl';
-  const applyNowHref = buildWhatsAppHref(
-    isArabic
-      ? 'السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو.'
-      : 'Hello, I want to apply now and get started with Kafu.'
-  );
+  const navbar = dictionary.navbar;
+  const brandName = dictionary.common?.brandName;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    const updateScrolledState = () => {
+      setScrolled(window.scrollY > 14);
+      scrollFrameRef.current = null;
+    };
+
+    const onScroll = () => {
+      if (scrollFrameRef.current !== null) {
+        return;
+      }
+
+      scrollFrameRef.current = window.requestAnimationFrame(updateScrolledState);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
   }, []);
 
-  const navLinks: { label: string; href: string }[] = dictionary.navbar.links;
+  useEffect(() => {
+    const onHashChange = () => {
+      setActiveHash(window.location.hash || '#hero');
+      setMobileOpen(false);
+    };
+
+    onHashChange();
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const whatsappHref = buildWhatsAppHref(navbar?.ctaMessage ?? '');
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <div
-        className={scrolled ? 'max-w-[1290px] mx-auto px-4 sm:px-6 pt-4' : 'w-full px-0 pt-0'}
-        dir={dir}
-      >
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className={scrolled ? 'mx-auto max-w-7xl px-4 pt-3 md:px-6' : 'w-full'} dir={dir}>
         <div
-          className={`flex justify-between items-center transition-all duration-300 ${
+          className={
             scrolled
-              ? 'rounded-[18px] px-4 sm:px-6 py-3.5 bg-[#0D1118]/95 backdrop-blur-xl border border-gold/40 shadow-[0_20px_45px_rgba(0,0,0,0.35)]'
-              : 'w-full rounded-none px-4 sm:px-8 py-4 bg-[#0B0F16]/92 backdrop-blur-xl border-b border-white/10'
-          }`}
+              ? 'mx-auto flex items-center justify-between rounded-[1rem] border border-[#ccb06f]/65 bg-[linear-gradient(90deg,rgba(8,38,32,0.96)_0%,rgba(5,27,23,0.97)_45%,rgba(8,38,32,0.96)_100%)] px-4 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur md:px-5'
+              : 'flex w-full items-center justify-between bg-transparent px-6 py-3 md:px-10'
+          }
         >
-          <a href="#hero" className="flex items-center group cursor-pointer shrink-0">
+          <a href="#hero" className="group flex min-w-0 items-center gap-2 text-right md:gap-3">
             <Image
-              src="/Logo.svg"
-              alt={dictionary.common.brandName}
-              width={180}
-              height={52}
-              className="h-9 sm:h-11 w-auto object-contain"
+              src="/logo_2.svg"
+              alt={dictionary.common?.brandShort ?? 'Logo'}
+              width={40}
+              height={40}
               priority
+              sizes="40px"
+              className="h-8 w-8 rounded-full border border-white/20 bg-white/10 p-1.5 md:h-10 md:w-10"
             />
+            <span className="hidden text-xs font-black leading-tight text-white md:block lg:text-sm">
+              {brandName}
+              <span className="mt-0.5 block text-xs font-semibold tracking-wide text-white/80">Al-Nakhwah</span>
+            </span>
+            <span className="text-sm font-black text-white md:hidden">{dictionary.common?.brandShort}</span>
           </a>
 
-          <div
-            className={`hidden lg:flex items-center gap-1 xl:gap-2 rounded-full px-2 py-2 transition-all duration-300 ${
-              scrolled ? 'bg-white/5' : 'bg-black/15'
-            }`}
-          >
-            {navLinks.map((link) => (
+          <nav className="hidden items-center gap-1 md:flex">
+            {navbar?.links?.map((link: { label: string; href: string }, index: number) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
-                className="relative px-4 py-2 rounded-full font-semibold text-sm text-white/90 hover:text-white hover:bg-white/6 transition-all after:absolute after:bottom-[6px] after:left-4 after:w-0 after:h-px after:bg-gold after:transition-all hover:after:w-[calc(100%-2rem)]"
+                className={
+                  link.href === activeHash || (index === 0 && !activeHash)
+                    ? 'rounded-full bg-[var(--elite-primary)] px-4 py-1.5 text-sm font-black text-[#1a1f14] shadow-[0_4px_18px_rgba(231,173,30,0.24)]'
+                    : 'rounded-full px-4 py-1.5 text-sm font-black text-white/95 transition hover:bg-white/12'
+                }
               >
                 {link.label}
               </a>
             ))}
-          </div>
+          </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <a
-              href={applyNowHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm bg-gold text-[#121212] hover:bg-[#ddb987] transition-all"
-            >
-              {dictionary.common.ctaApply}
-            </a>
-
-          <button
-            type="button"
-            onClick={toggleLocale}
-            className="hidden sm:flex items-center px-3.5 py-2 rounded-full font-bold text-xs border border-gold/40 text-gold hover:bg-gold/10 transition-all"
-          >
-            {dictionary.common.languageButton}
-          </button>
-
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden p-2.5 rounded-full text-white hover:bg-white/10 transition-colors"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              }
-            </svg>
-          </button>
-          </div>
-        </div>
-      </div>
-
-      {menuOpen && (
-        <div
-          className={`lg:hidden ${scrolled ? 'max-w-[1290px] mx-auto px-4 sm:px-6 mt-3' : 'w-full px-4 sm:px-8 mt-0'}`}
-          dir={dir}
-        >
-          <div className="bg-[#10151F] border border-gold/30 rounded-[18px] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.45)] flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-white/85 font-semibold hover:text-gold transition-all py-2 border-b border-white/10"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href={applyNowHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center bg-gold text-[#101010] px-5 py-3 rounded-full font-bold mt-2"
-            >
-              {dictionary.common.ctaApply}
+          <div className="flex min-w-0 items-center gap-2 md:gap-3">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="hidden btn-primary-gold text-xs sm:inline-flex sm:text-sm">
+              <span className="inline sm:hidden">احجز الآن</span>
+              <span className="hidden sm:inline">{navbar?.ctaLabel}</span>
             </a>
             <button
               type="button"
               onClick={toggleLocale}
-              className="w-full border border-gold/35 text-gold rounded-full px-5 py-3 font-bold"
+              className="rounded-full border border-[#d8c594]/65 bg-black/15 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-white/10 sm:px-3 sm:py-1.5 sm:text-[11px]"
             >
-              {dictionary.common.languageButton}
+              {dictionary.common?.languageButton}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#d8c594]/65 bg-black/20 text-white transition hover:bg-white/10 md:hidden"
+              aria-label="Toggle navigation"
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? (
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
-      )}
-    </nav>
+
+        {mobileOpen && (
+          <div
+            className={
+              scrolled
+                ? 'mx-auto mt-2 rounded-2xl border border-[#d8c594]/45 bg-[rgba(6,31,26,0.98)] p-3 shadow-2xl backdrop-blur md:hidden'
+                : 'mx-auto max-w-7xl border-b border-[#ccb06f]/45 bg-[rgba(6,31,26,0.98)] p-3 shadow-2xl backdrop-blur md:hidden'
+            }
+          >
+            <div className="grid gap-2">
+              {navbar?.links?.map((link: { label: string; href: string }, index: number) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={
+                    link.href === activeHash || (index === 0 && !activeHash)
+                      ? 'rounded-xl bg-[var(--elite-primary)] px-4 py-2 text-sm font-extrabold text-[#1a1f14]'
+                      : 'rounded-xl bg-white/5 px-4 py-2 text-sm font-bold text-white'
+                  }
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-primary-gold mt-1 text-xs sm:text-sm">
+                <span className="inline sm:hidden">احجز الآن</span>
+                <span className="hidden sm:inline">{navbar?.ctaLabel}</span>
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
 }

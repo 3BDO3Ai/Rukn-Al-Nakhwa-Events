@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useSyncExternalStore } from "react";
 import fallbackContent from "./content.json";
 import { useLanguage } from "./LanguageProvider";
 
@@ -19,6 +19,25 @@ export const CONTENT_UPDATED_EVENT = "site-content-updated";
 let cachedContent: BilingualContent | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 5000;
+let pendingFetch: Promise<BilingualContent> | null = null;
+let listenersAttached = false;
+
+const subscribers = new Set<() => void>();
+
+const contentStore = {
+  value: fallbackContent as BilingualContent,
+};
+
+const emitStoreChange = () => {
+  subscribers.forEach((listener) => listener());
+};
+
+const setStoreContent = (content: BilingualContent) => {
+  contentStore.value = content;
+  cachedContent = content;
+  cacheTimestamp = Date.now();
+  emitStoreChange();
+};
 
 async function fetchRemoteContent(): Promise<BilingualContent | null> {
   try {
@@ -52,6 +71,7 @@ function notifyContentUpdated(): void {
 export function invalidateContentCache(): void {
   cachedContent = null;
   cacheTimestamp = 0;
+  pendingFetch = null;
 }
 
 export function announceContentUpdated(): void {
@@ -59,69 +79,74 @@ export function announceContentUpdated(): void {
   notifyContentUpdated();
 }
 
-export function useRawContent(): BilingualContent {
-  const [content, setContent] = useState<BilingualContent>(() => {
-    const now = Date.now();
-    const isCacheValid = cachedContent && now - cacheTimestamp < CACHE_DURATION;
-    if (isCacheValid) {
-      return cachedContent as BilingualContent;
+const getSnapshot = () => contentStore.value;
+const getServerSnapshot = () => fallbackContent as BilingualContent;
+
+const subscribe = (listener: () => void) => {
+  subscribers.add(listener);
+  return () => {
+    subscribers.delete(listener);
+  };
+};
+
+async function refreshContent(force = false): Promise<BilingualContent> {
+  const now = Date.now();
+  const isCacheValid = cachedContent && now - cacheTimestamp < CACHE_DURATION;
+
+  if (!force && isCacheValid) {
+    const valid = cachedContent as BilingualContent;
+    if (contentStore.value !== valid) {
+      contentStore.value = valid;
+      emitStoreChange();
     }
-    return fallbackContent as BilingualContent;
-  });
+    return valid;
+  }
+
+  if (pendingFetch) {
+    return pendingFetch;
+  }
+
+  pendingFetch = (async () => {
+    const remote = await fetchRemoteContent();
+    const nextContent = remote ?? (fallbackContent as BilingualContent);
+    setStoreContent(nextContent);
+    return nextContent;
+  })();
+
+  try {
+    return await pendingFetch;
+  } finally {
+    pendingFetch = null;
+  }
+}
+
+function attachGlobalContentListeners() {
+  if (listenersAttached || typeof window === "undefined") {
+    return;
+  }
+
+  const onContentUpdated = () => {
+    invalidateContentCache();
+    void refreshContent(true);
+  };
+
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === CONTENT_VERSION_KEY) {
+      onContentUpdated();
+    }
+  };
+
+  window.addEventListener(CONTENT_UPDATED_EVENT, onContentUpdated);
+  window.addEventListener("storage", onStorage);
+  listenersAttached = true;
+}
+
+export function useRawContent(): BilingualContent {
+  const content = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    let mounted = true;
-
-    const applyRemoteContent = async () => {
-      const remote = await fetchRemoteContent();
-      if (remote) {
-        cachedContent = remote;
-        cacheTimestamp = Date.now();
-        if (mounted) {
-          setContent(remote);
-        }
-        return;
-      }
-
-      cachedContent = fallbackContent as BilingualContent;
-      cacheTimestamp = Date.now();
-      if (mounted) {
-        setContent(fallbackContent as BilingualContent);
-      }
-    };
-
-    (async () => {
-      const now = Date.now();
-      const isCacheValid = cachedContent && now - cacheTimestamp < CACHE_DURATION;
-      if (isCacheValid) {
-        if (mounted) {
-          setContent(cachedContent as BilingualContent);
-        }
-        return;
-      }
-
-      await applyRemoteContent();
-    })();
-
-    const onContentUpdated = () => {
-      invalidateContentCache();
-      void applyRemoteContent();
-    };
-
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === CONTENT_VERSION_KEY) {
-        onContentUpdated();
-      }
-    };
-
-    window.addEventListener(CONTENT_UPDATED_EVENT, onContentUpdated);
-    window.addEventListener("storage", onStorage);
-
-    return () => {
-      mounted = false;
-      window.removeEventListener(CONTENT_UPDATED_EVENT, onContentUpdated);
-      window.removeEventListener("storage", onStorage);
-    };
+    attachGlobalContentListeners();
+    void refreshContent();
   }, []);
 
   return content;

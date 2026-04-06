@@ -11,9 +11,9 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "Kafu Media | Elite Growth Marketing Systems",
+  title: "مؤسسة ركن النخوة للحفلات | ضيافة راقية وتجهيز مناسبات",
   description:
-    "Kafu Media builds elite growth systems that consistently generate qualified clients for ambitious brands.",
+    "مؤسسة ركن النخوة للحفلات تقدم ضيافة فاخرة، قهوجيين وصبابين محترفين، وديكورات ملكية لتجهيز مناسبات الرجال والنساء بأعلى جودة.",
 };
 
 export default function RootLayout({

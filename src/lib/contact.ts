@@ -1,13 +1,13 @@
-export const CONTACT_NUMBER_DISPLAY = '+971 52 708 8363';
-export const CONTACT_NUMBER_LINK = '971527088363';
-export const CONTACT_EMAIL = 'grow@kafumedia.com';
+export const CONTACT_NUMBER_DISPLAY = '+966 55 659 0007';
+export const CONTACT_NUMBER_LINK = '966556590007';
+export const CONTACT_EMAIL = 'info@rukn-alnakhwa.com';
 
 export const PHONE_HREF = `tel:${CONTACT_NUMBER_LINK}`;
 
 export const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/kafumediauae?igsh=MmZheWhkZGhnbDJl',
-  facebook: 'https://www.facebook.com/share/18DJfhsAZ7/',
-  tiktok: 'https://www.tiktok.com/@kafumediauae?_r=1&_t=ZS-95GNRjHpwKy',
+  instagram: 'https://www.instagram.com/ruknalnakhwa556590007?igsh=bmxwN3RxcjR1dTM4',
+  x: 'https://x.com/ab123ma?t=p0OZB1GA2NNFkfzebfikEA&s=09',
+  tiktok: 'https://www.tiktok.com/@rukn_alnakw?_r=1&_t=ZS-95EfUgTg8FF',
   whatsapp: `https://wa.me/${CONTACT_NUMBER_LINK}`,
 };
 
@@ -16,8 +16,8 @@ export function buildWhatsAppHref(message: string) {
 }
 
 export const WHATSAPP_MESSAGES = {
-  hero: 'Hello, I would like to know more about your services and place an order.',
-  footer: 'Hello, I would like to contact Kafu Media and get started.',
+  hero: 'السلام عليكم، أرغب في حجز مناسبة لدى مؤسسة ركن النخوة للحفلات.',
+  footer: 'السلام عليكم، أرغب في التواصل مع مؤسسة ركن النخوة للحفلات.',
   service: (serviceTitle: string) =>
-    `Hello, I am interested in ${serviceTitle}. Please share requirements and next steps.`,
+    `السلام عليكم، مهتم بـ ${serviceTitle}. يرجى تزويدي بالتفاصيل وخطوات الحجز.`,
 };

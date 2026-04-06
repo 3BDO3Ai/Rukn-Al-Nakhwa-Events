@@ -1,52 +1,86 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useContent } from "@/content/useContent";
+import { useContent } from '@/content/useContent';
+import { buildWhatsAppHref } from '@/lib/contact';
 
-interface ServiceItem {
+interface PackageItem {
   title: string;
-  description: string;
+  price: string;
+  featured?: boolean;
+  items: string[];
+  whatsappMessage?: string;
 }
 
 export default function Services() {
   const { dictionary, dir } = useContent();
-  const isArabic = dir === "rtl";
-  const services: ServiceItem[] = Array.isArray(dictionary?.services?.items)
-    ? dictionary.services.items
-    : [];
+  const isArabic = dir === 'rtl';
+  const services = dictionary.services;
+  const packages: PackageItem[] = Array.isArray(services?.packages) ? services.packages : [];
 
   return (
-    <section id="system" className="bg-[#0E1219] w-full py-20 lg:py-28 px-6">
-      <div className="max-w-[1290px] mx-auto" dir={dir}>
-        <div className="text-center mb-14">
-          <span className="text-gold font-bold text-xs sm:text-sm tracking-[0.2em] uppercase bg-gold/10 border border-gold/25 px-4 py-2 rounded-full">
-            {dictionary.services.badge}
-          </span>
-          <h2 className="text-3xl lg:text-5xl font-black text-white mt-5 mb-4">
-            {dictionary.services.title}
-          </h2>
-          <p className="text-white/65 max-w-3xl mx-auto text-base lg:text-lg">
-            {dictionary.services.subtitle}
+    <section id="packages" className="section-luxe-dark py-16 md:py-20 text-[#f2e8d2]">
+      <div className="section-shell" dir={dir}>
+        <div className={isArabic ? 'mb-12 text-right' : 'mb-12 text-left'}>
+          <p className="section-badge-dark">{services?.badge}</p>
+          <h2 className="section-title-balance section-heading-dark">{services?.title}</h2>
+          <p className="section-subtext-dark">
+            {services?.subtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {services.map((service, idx) => (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {packages.map((pkg) => (
             <article
-              key={service.title}
-              className={`rounded-3xl border border-gold/20 bg-[#121722] p-8 lg:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.25)] ${
-                isArabic ? "text-right" : "text-left"
-              }`}
+              key={pkg.title}
+              className={
+                pkg.featured
+                  ? 'reveal-card relative overflow-hidden rounded-3xl border border-[var(--elite-primary)]/45 bg-[linear-gradient(140deg,#2c2317_0%,#1f2f10_100%)] p-7 pt-16 text-white shadow-[0_24px_50px_rgba(0,0,0,0.35)] md:col-span-2 md:pt-7 lg:col-span-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)]'
+                  : 'surface-card-dark reveal-card p-7 text-[#f4e6ca] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]'
+              }
             >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-8 h-8 rounded-full bg-gold text-white font-extrabold flex items-center justify-center">
-                  {idx + 1}
-                </div>
-                <span className="text-gold/90 text-sm uppercase tracking-[0.18em]">{dictionary.services.trackLabel ?? 'Track'}</span>
-              </div>
+              {pkg.featured && (
+                <span className="absolute left-5 top-5 rounded-full bg-[var(--elite-primary)] px-3 py-1 text-xs font-bold text-[var(--elite-dark)]">
+                  {services?.featuredBadge}
+                </span>
+              )}
 
-              <h3 className="text-white text-2xl font-extrabold leading-tight mb-4">{service.title}</h3>
-              <p className="text-white/72 text-base leading-relaxed">{service.description}</p>
+              <div className={isArabic ? 'text-right' : 'text-left'}>
+                <h3 className={pkg.featured ? 'text-2xl font-extrabold' : 'text-2xl font-extrabold text-[#f8f0de]'}>
+                  {pkg.title}
+                </h3>
+                <p className={pkg.featured ? 'mt-2 text-4xl font-black text-[var(--elite-primary)]' : 'mt-2 text-4xl font-black text-[#8dd4ab]'}>
+                  {pkg.price}
+                  <span className="mr-2 text-lg font-bold">{services?.currency}</span>
+                </p>
+
+                <ul className="mt-6 space-y-3 text-sm leading-7">
+                  {pkg.items.map((item) => (
+                    <li key={item} className="flex w-full items-start gap-2">
+                      <span
+                        className={
+                          pkg.featured
+                            ? 'mt-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--elite-primary)]'
+                            : 'mt-2 inline-block h-2.5 w-2.5 rounded-full bg-[#83c49f]'
+                        }
+                      />
+                      <span className={`flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={buildWhatsAppHref(pkg.whatsappMessage ?? '')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={
+                    pkg.featured
+                      ? 'mt-6 inline-flex rounded-xl bg-[var(--elite-primary)] px-5 py-3 text-sm font-bold text-[var(--elite-dark)] transition hover:brightness-95'
+                      : 'mt-6 inline-flex rounded-xl border border-[#6cb88b] bg-[rgba(12,70,50,0.75)] px-5 py-3 text-sm font-bold text-white transition hover:brightness-110'
+                  }
+                >
+                  {services?.buttonLabel}
+                </a>
+              </div>
             </article>
           ))}
         </div>

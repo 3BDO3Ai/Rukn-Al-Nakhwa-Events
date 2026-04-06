@@ -1,84 +1,196 @@
 {
   "ar": {
     "common": {
-      "brandName": "كفو",
-      "brandSubtext": "تسويق النمو",
+      "brandName": "مؤسسة ركن النخوة للحفلات",
+      "brandShort": "ركن النخوة",
       "languageButton": "EN",
-      "ctaApply": "قدّم الآن",
       "socialFollow": "تابعنا على"
     },
     "navbar": {
       "links": [
         { "label": "الرئيسية", "href": "#hero" },
-        { "label": "النظام", "href": "#system" },
-        { "label": "من نحن", "href": "#about" },
+        { "label": "أرقامنا", "href": "#stats" },
+        { "label": "باقاتنا", "href": "#packages" },
+        { "label": "عن المؤسسة", "href": "#about" },
         { "label": "الشركاء", "href": "#partners" },
-        { "label": "النتائج", "href": "#results" }
-      ]
+        { "label": "تواصل معنا", "href": "#contact" }
+      ],
+      "ctaLabel": "احجز مناسبتك الآن",
+      "ctaMessage": "السلام عليكم، أرغب في حجز مناسبة لدى مؤسسة ركن النخوة للحفلات."
     },
     "hero": {
-      "headline": "شريك نموك",
-      "subheadline": "نحن لا نشغّل إعلانات فقط. نحن نبني أنظمة تجلب لك العملاء باستمرار.",
-      "description": "توقف عن إهدار الميزانية على حملات عشوائية. احصل على نظام منظم مصمم لجلب عملاء مؤهلين عند الطلب.",
-      "cta": "قدّم الآن للتأهل",
-      "badge": "كفو",
-      "badgeSubtext": "تسويق نمو",
-      "engineTitle": "منظومة استقطاب العملاء",
-      "engineStatus": "النظام فعّال",
-      "positioningLabel": "التموضع",
-      "metrics": ["أنظمة نمو متوقعة", "عملاء مؤهلون", "تنفيذ يعتمد على البيانات"],
-      "systemPoints": [
-        "تحديد عرض قوي يرفع جودة العملاء المحتملين.",
-        "بناء رحلة تحويل متكاملة من الإعلان إلى الإغلاق.",
-        "متابعة الأداء أسبوعيًا مع تحسينات مستمرة.",
-        "تعاون مباشر مع فريقك لتحقيق نمو ثابت."
-      ],
-      "bottomTagline": "من حملات عشوائية إلى نظام نمو احترافي"
+      "badge": "مؤسسة ركن النخوة للحفلات",
+      "title": "مؤسسة ركن النخوة للحفلات",
+      "subtitle": "شريك مناسباتك الفاخرة.. ضيافة تليق بك",
+      "description": "نحن لا نقدم مجرد ضيافة؛ بل نصنع واجهة مشرفة لمناسبتك. نقدم خدمات ضيافة راقية للرجال والنساء، مع طاقم محترف من القهوجيين والصبابين، وديكورات ملكية، وأشهى أنواع القهوة والحلا لتكون مناسبتك استثنائية.",
+      "primaryButton": {
+        "label": "احجز مناسبتك الآن",
+        "whatsappMessage": "السلام عليكم، أرغب في حجز مناسبتي مع مؤسسة ركن النخوة للحفلات."
+      },
+      "secondaryButton": {
+        "label": "استعرض الباقات",
+        "href": "#packages"
+      },
+      "highlightsTitle": "ضيافة ملكية متكاملة",
+      "highlightsHeading": "تنفيذ أنيق يبدأ من الاستقبال حتى ختام المناسبة",
+      "highlights": [
+        "طاقم قهوجيين وصبابين محترف بزي موحد.",
+        "ديكورات ملكية مرنة للمساحات من 2 إلى 8 متر.",
+        "مقاديع تمر وحلا وقهوة عربية وأمريكية بطابع فاخر."
+      ]
     },
-    "about": {
-      "badge": "عن كفو",
-      "title": "نحوّل النمو إلى نظام يمكن قياسه وتكراره",
-      "description": "Kafu Media هي وكالة نمو عالية المستوى تساعد العلامات الطموحة على بناء أنظمة استحواذ عملاء متكاملة تجمع بين الاستراتيجية والتنفيذ والتحسين المستمر.",
-      "features": [
-        {
-          "title": "استراتيجية قبل الإنفاق",
-          "desc": "نبدأ بتحليل العروض والجمهور والرسائل قبل أي إطلاق إعلاني لضمان جودة النتائج."
-        },
-        {
-          "title": "تحسينات مبنية على البيانات",
-          "desc": "كل قرار يتم عبر قراءات أداء دقيقة مع اختبارات مستمرة لرفع التحويلات."
-        },
-        {
-          "title": "شراكة تشغيلية حقيقية",
-          "desc": "نندمج مع فريقك مثل ذراع نمو داخلي لتنفيذ خطط واضحة وقابلة للتوسع."
-        },
-        {
-          "title": "تركيز على الإيرادات",
-          "desc": "هدفنا ليس التفاعل فقط، بل رفع المبيعات وجودة العملاء واستدامة النمو."
-        }
+    "stats": {
+      "badge": "أرقام تميزنا",
+      "title": "مسيرة من العطاء في خدمة مناسباتكم",
+      "description": "نفخر بمسيرة من العطاء تعكس التزامنا بتقديم أرقى مستويات الضيافة في كافة المناسبات.",
+      "items": [
+        { "target": 10, "prefix": "+", "label": "سنوات من الأصالة" },
+        { "value": "24/7", "label": "جاهزية لتلبية مناسباتكم" },
+        { "target": 500, "prefix": "+", "label": "مناسبة وحفل ناجح" },
+        { "value": "طاقم متكامل", "label": "للرجال والنساء" }
       ]
     },
     "services": {
-      "badge": "نظام كفو",
-      "title": "نظام نمو كفو",
-      "subtitle": "سواء أردت القيادة بنفسك أو التفويض الكامل - نحن نبني النظام الذي يقود نموك.",
-      "trackLabel": "المسار",
-      "items": [
+      "badge": "باقات الضيافة",
+      "title": "باقات ملكية بمستويات تناسب حجم مناسبتك",
+      "subtitle": "نقدم تشكيلة من الباقات الملكية المصممة لتناسب حجم مناسبتك، مع ديكور ملكي يمتد من مترين حتى 8 أمتار حسب مساحتك.",
+      "featuredBadge": "الباقة الأعلى",
+      "currency": "ريال",
+      "buttonLabel": "احجز هذه الباقة",
+      "packages": [
         {
-          "title": "الاستشارات الاستراتيجية",
-          "description": "توجيه خبير لبناء خارطة نمو واضحة، تحسين القرارات التسويقية، وتوسيع النتائج بثقة."
+          "title": "باقة الاستقبال الملكي",
+          "price": "8000",
+          "featured": true,
+          "whatsappMessage": "السلام عليكم، أرغب في حجز باقة الاستقبال الملكي (8000 ريال).",
+          "items": [
+            "ديكور ملكي فاخر مع 2 أعلام الراية.",
+            "10 أنواع شاي + قهوة عربية وأمريكية + عصير 4 أشكال لـ 200 شخص.",
+            "طاقم: قهوجي معلم + 10 صبابين بزي موحد + 1 مشرف.",
+            "الضيافة: 15 صينية حلا مشكل، 1 محمل حلا، 1 محمل فطاير، 60 مقداع تمر مع المضير، 4 صياني كبيرة مع الزبد والخواضة."
+          ]
         },
         {
-          "title": "شراكة النمو",
-          "description": "تنفيذ كامل للاستحواذ على العملاء نيابةً عنك، من التخطيط إلى التحسين المستمر."
+          "title": "الباقة الماسية",
+          "price": "6500",
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الماسية (6500 ريال).",
+          "items": [
+            "طاقم: 1 قهوجي و 9 صبابين.",
+            "10 أنواع شاي + قهوة عربية وأمريكية.",
+            "مدخل خزامي 25 متر.",
+            "الضيافة: 60 صحن تمور في صحون ذهبية + 20 صحن حلا شرقي مشكل."
+          ]
+        },
+        {
+          "title": "الباقة الذهبية",
+          "price": "4500",
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الذهبية (4500 ريال).",
+          "items": [
+            "طاقم: 1 قهوجي و 6 صبابين.",
+            "10 أنواع شاي + قهوة عربية وأمريكية.",
+            "مدخل خزامي 25 متر.",
+            "الضيافة: 40 صحن تمور + 2 صحن محامل كبيرة + 10 صحون حلا شرقي."
+          ]
+        },
+        {
+          "title": "الباقة الفضية",
+          "price": "3500",
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الفضية (3500 ريال).",
+          "items": [
+            "طاقم: 1 قهوجي و 4 صبابين.",
+            "10 أنواع شاي + قهوة عربية وأمريكية.",
+            "مدخل خزامي 25 متر.",
+            "الضيافة: 25 صحن تمور + 6 صحون حلا شرقي مشكلة."
+          ]
+        },
+        {
+          "title": "الباقة الأساسية",
+          "price": "2500",
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الأساسية (2500 ريال).",
+          "items": [
+            "طاقم: 1 قهوجي و 3 صبابين.",
+            "10 أنواع شاي + قهوة عربية وأمريكية.",
+            "ديكور ملكي فاخر."
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "package-royal",
+          "title": "باقة الاستقبال الملكي",
+          "subtitle": "8000 ريال",
+          "description": "أعلى باقة ضيافة ملكية مع طاقم كامل وتجهيزات فاخرة.",
+          "logoUrl": "",
+          "logoAlt": "",
+          "items": ["ضيافة ملكية", "ديكور فاخر", "طاقم متكامل"]
+        },
+        {
+          "id": "package-diamond",
+          "title": "الباقة الماسية",
+          "subtitle": "6500 ريال",
+          "description": "تجهيز متوازن لمناسبات فاخرة بطابع راقٍ.",
+          "logoUrl": "",
+          "logoAlt": "",
+          "items": ["قهوجي وصبابين", "مدخل خزامي", "تمور وحلا"]
+        }
+      ]
+    },
+    "about": {
+      "badge": "عن مؤسسة ركن النخوة",
+      "title": "نحوّل مناسبتك إلى لوحة فنية من الكرم والأصالة",
+      "description": "ركن النخوة هي مؤسسة رائدة في إدارة وتجهيز حفلات الضيافة، تجمع بين التراث العريق والتقديم العصري الفاخر.",
+      "cards": [
+        {
+          "title": "ضيافة شاملة",
+          "description": "نوفر مقاديع التمر والحلا بجميع أشكاله، إلى جانب أركان وعربات الضيافة الراقية."
+        },
+        {
+          "title": "كوادر متخصصة",
+          "description": "طواقم مدربة من القهوجيين والصبابين رجال ونساء بزي موحد يعكس الفخامة."
+        },
+        {
+          "title": "مرونة في التجهيز",
+          "description": "ديكورات تتكيف مع مساحتك من 2 إلى 8 متر، ومداخل خزامية ساحرة."
+        }
+      ],
+      "panel": {
+        "badge": "فلسفة المؤسسة",
+        "title": "ضيافة راقية، وتجهيز مناسبات متكامل",
+        "description": "نهتم بأدق التفاصيل من جودة التقديم إلى أناقة الديكور لضمان تجربة تشرف مناسبتك وضيوفك.",
+        "tags": [
+          "قهوجيون وصبابون محترفون",
+          "ديكورات ملكية مرنة",
+          "حلا وتمور فاخرة",
+          "تجهيزات متكاملة للحفل"
+        ]
+      }
+    },
+    "whyChooseUs": {
+      "badge": "لماذا تختارنا؟",
+      "title": "تفاصيل فاخرة تصنع الفرق في كل مناسبة",
+      "items": [
+        {
+          "title": "فخامة التقديم",
+          "description": "نستخدم أواني وصحون ذهبية فاخرة للتمور والمحامل."
+        },
+        {
+          "title": "تنوع الخيارات",
+          "description": "من الشاي المتعدد إلى القهوة العربية والأمريكية والعصائر المتنوعة."
+        },
+        {
+          "title": "أسعار واضحة",
+          "description": "باقات مدروسة تناسب جميع الاحتياجات بدون رسوم مخفية."
+        },
+        {
+          "title": "خدمة عملاء مميزة",
+          "description": "تواصل مباشر وسريع لضمان راحة بالك يوم المناسبة."
         }
       ]
     },
     "partners": {
-      "badge": "شركاء وثقة",
-      "title": "شركاء يعكسون مستوى التنفيذ",
-      "description": "نعمل مع علامات طموحة وقطاعات متنوعة لبناء نمو فعلي قابل للقياس.",
-      "names": ["NAKHEEL", "HYUNDAI", "SOBHA REALTY", "JustLife"],
+      "badge": "شركاؤنا",
+      "title": "ثقة شركائنا مصدر فخرنا",
+      "description": "نفخر بالشراكة مع جهات وعلامات تعكس جودة التنفيذ واحترافية الخدمة.",
       "logos": [
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
@@ -92,155 +204,260 @@
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
       ]
     },
+    "contact": {
+      "badge": "تواصل معنا",
+      "title": "يسعدنا أن نكون جزءاً من مناسباتكم السعيدة",
+      "description": "تواصلوا معنا الآن لحجز باقتكم. متاحون على مدار الساعة 24/7 لخدمتكم.",
+      "mapEmbedUrl": "https://www.google.com/maps?q=Saudi+Arabia&z=6&output=embed",
+      "cards": [
+        { "title": "الهاتف والواتساب", "value": "__PHONE__" },
+        { "title": "ساعات العمل", "value": "متاحون 24/7" },
+        { "title": "الموقع", "value": "سكاكا طريق الشيخ جابر, Al Olaya, Riyadh 72341, Saudi Arabia" }
+      ],
+      "buttons": [
+        {
+          "label": "فتح الموقع",
+          "type": "map",
+          "href": "https://maps.app.goo.gl/prhk6UhjMMj6jKgu7"
+        }
+      ]
+    },
+    "footer": {
+      "description": "نقدّم ضيافة راقية وتنفيذًا متكاملًا للمناسبات وفق أعلى معايير الاحتراف والجودة.",
+      "quickLinksTitle": "روابط سريعة",
+      "quickLinks": [
+        { "label": "الرئيسية", "href": "#hero" },
+        { "label": "باقاتنا", "href": "#packages" },
+        { "label": "عن المؤسسة", "href": "#about" },
+        { "label": "الشركاء", "href": "#partners" },
+        { "label": "تواصل معنا", "href": "#contact" }
+      ],
+      "contactTitle": "تواصل مباشر",
+      "phoneLabel": "الهاتف والواتساب",
+      "copyright": "© 2026 مؤسسة ركن النخوة للحفلات. جميع الحقوق محفوظة."
+    },
     "reviews": {
-      "badge": "النتائج",
-      "title": "قصص نجاح العملاء: نتائج حقيقية ونمو حقيقي",
+      "badge": "آراء العملاء",
+      "title": "قصص نجاح العملاء",
       "items": [
         {
-          "quote": "300+ عميل محتمل في أول شهر!",
-          "author": "Mohamed A.",
-          "company": "EMAAR"
+          "name": "أحمد",
+          "text": "تنفيذ راقٍ وخدمة احترافية من البداية إلى النهاية."
         },
         {
-          "quote": "عائد 10X ومبيعات بسبعة أرقام!",
-          "author": "Sarah K.",
-          "company": "LuxuryBags"
+          "name": "سارة",
+          "text": "الباقة كانت فخمة والضيافة لاقت إعجاب جميع الحضور."
         },
         {
-          "quote": "مواعيدنا امتلأت بعملاء جدد!",
-          "author": "Ahmed R.",
-          "company": "GymPro"
+          "name": "محمد",
+          "text": "التواصل سريع والتجهيز كان أعلى من التوقعات."
         }
       ],
-      "bottomCtaHeadline": "جاهز لتوسيع أعمالك بجدية؟",
-      "bottomCtaButton": "قدّم الآن للتأهل"
+      "bottomCtaHeadline": "هل ترغب بحجز مناسبة تليق بك؟",
+      "bottomCtaButton": "تواصل الآن"
     },
     "location": {
       "badge": "تواصل معنا",
       "title": "معلومات التواصل والموقع",
       "description": "يسعدنا تواصلكم معنا. يمكنكم زيارتنا أو الاتصال بنا خلال ساعات العمل.",
-      "address": ["Port Saeed - Zeenah Building- Deria Citycenter Dubai"],
-      "workingHours": [
-        "السبت - الخميس: 9:00 ص - 6:00 م",
-        "الجمعة: حسب الموعد"
-      ],
+      "address": ["المملكة العربية السعودية"],
+      "workingHours": ["متاحون 24/7", "الزيارات حسب التنسيق"],
       "directionsButton": "الحصول على الاتجاهات",
       "mapTitle": "خريطة الموقع"
-    },
-    "footer": {
-      "description": "Kafu Media تبني أنظمة نمو تسويقي متكاملة لجلب عملاء مؤهلين بشكل مستمر وبجودة عالية.",
-      "quickLinksTitle": "روابط سريعة",
-      "quickLinks": [
-        { "label": "الرئيسية", "href": "#hero" },
-        { "label": "النظام", "href": "#system" },
-        { "label": "من نحن", "href": "#about" },
-        { "label": "الشركاء", "href": "#partners" },
-        { "label": "النتائج", "href": "#results" }
-      ],
-      "mainServicesTitle": "الخدمات الرئيسية",
-      "mainServices": [
-        "الاستشارات الاستراتيجية",
-        "شراكة النمو",
-        "إدارة الحملات الإعلانية",
-        "تحليل البيانات والأداء"
-      ],
-      "contactTitle": "معلومات الاتصال",
-      "country": "الإمارات العربية المتحدة",
-      "copyright": "© 2026 Kafu Media. جميع الحقوق محفوظة."
     }
   },
   "en": {
     "common": {
-      "brandName": "Kafu Media",
-      "brandSubtext": "Growth Marketing",
+      "brandName": "Rukn Al-Nakhwa Events",
+      "brandShort": "Rukn Al-Nakhwa",
       "languageButton": "AR",
-      "ctaApply": "Apply Now",
-      "socialFollow": "Follow us on"
-    },
-    "location": {
-      "badge": "Contact Us",
-      "title": "Contact & Location Information",
-      "description": "We are happy to hear from you. Visit us or call during working hours.",
-      "address": ["Port Saeed - Zeenah Building- Deria Citycenter Dubai"],
-      "workingHours": [
-        "Sat - Thu: 9:00 AM - 6:00 PM",
-        "Friday: By Appointment"
-      ],
-      "directionsButton": "Get Directions",
-      "mapTitle": "Location Map"
+      "socialFollow": "Follow us"
     },
     "navbar": {
       "links": [
         { "label": "Home", "href": "#hero" },
-        { "label": "The System", "href": "#system" },
+        { "label": "Stats", "href": "#stats" },
+        { "label": "Packages", "href": "#packages" },
         { "label": "About", "href": "#about" },
         { "label": "Partners", "href": "#partners" },
-        { "label": "Results", "href": "#results" }
-      ]
+        { "label": "Contact", "href": "#contact" }
+      ],
+      "ctaLabel": "Book Your Event",
+      "ctaMessage": "Hello, I would like to book an event with Rukn Al-Nakhwa Events."
     },
     "hero": {
-      "headline": "Your Growth Partner",
-      "subheadline": "We don't run ads. We build systems that bring you clients - consistently.",
-      "description": "Stop wasting on random campaigns. Get a structured system designed to generate qualified clients on demand.",
-      "cta": "Apply Now to Qualify",
-      "badge": "Kafu Media",
-      "badgeSubtext": "Growth Marketing",
-      "engineTitle": "Client Acquisition Engine",
-      "engineStatus": "System Active",
-      "positioningLabel": "Positioning",
-      "metrics": ["Predictable growth systems", "Qualified client flow", "Data-led execution"],
-      "systemPoints": [
-        "Positioning and offer clarity to attract better-fit clients.",
-        "Funnel architecture from traffic to conversion.",
-        "Weekly optimization loops to improve results.",
-        "Hands-on partnership with your internal team."
-      ],
-      "bottomTagline": "From random campaigns to a scalable growth system"
+      "badge": "Rukn Al-Nakhwa Events",
+      "title": "Rukn Al-Nakhwa Events",
+      "subtitle": "Your Luxury Hospitality Partner",
+      "description": "We do more than serving hospitality. We create a prestigious image for your event with trained coffee servers, elegant decor, and premium Arabic hospitality.",
+      "primaryButton": {
+        "label": "Book Your Event",
+        "whatsappMessage": "Hello, I would like to book my event with Rukn Al-Nakhwa Events."
+      },
+      "secondaryButton": {
+        "label": "View Packages",
+        "href": "#packages"
+      },
+      "highlightsTitle": "Royal Hospitality",
+      "highlightsHeading": "Elegant execution from reception to final service",
+      "highlights": [
+        "Professional male and female serving teams.",
+        "Flexible royal decor from 2m to 8m.",
+        "Premium Arabic and American coffee with desserts."
+      ]
     },
-    "about": {
-      "badge": "About Kafu",
-      "title": "We turn growth into a measurable, repeatable system",
-      "description": "Kafu Media is an elite growth marketing agency helping ambitious brands build high-performing client acquisition systems through strategy, execution, and relentless optimization.",
-      "features": [
-        {
-          "title": "Strategy before spend",
-          "desc": "We align offer, audience, and messaging before launch to maximize quality outcomes."
-        },
-        {
-          "title": "Performance-led optimization",
-          "desc": "Every decision is guided by data, testing, and conversion-focused iteration."
-        },
-        {
-          "title": "Real operating partnership",
-          "desc": "We work like your internal growth arm, not just an external vendor."
-        },
-        {
-          "title": "Revenue-first focus",
-          "desc": "Our goal is not vanity metrics, but sustainable client and revenue growth."
-        }
+    "stats": {
+      "badge": "Our Numbers",
+      "title": "A strong hospitality track record",
+      "description": "Our journey reflects commitment to luxury hospitality in all occasions.",
+      "items": [
+        { "target": 10, "prefix": "+", "label": "Years of authenticity" },
+        { "value": "24/7", "label": "Event readiness" },
+        { "target": 500, "prefix": "+", "label": "Successful events" },
+        { "value": "Full Teams", "label": "For men and women" }
       ]
     },
     "services": {
-      "badge": "The Kafu System",
-      "title": "The Kafu Growth System",
-      "subtitle": "Whether you want to lead or delegate - we build the system that drives your growth.",
-      "trackLabel": "Track",
-      "items": [
+      "badge": "Hospitality Packages",
+      "title": "Royal packages tailored to your event size",
+      "subtitle": "A curated selection of luxury hospitality packages with flexible royal decor setup.",
+      "featuredBadge": "Top Package",
+      "currency": "SAR",
+      "buttonLabel": "Book This Package",
+      "packages": [
         {
-          "title": "Strategic Consulting",
-          "description": "Guide and scale with expert direction, clear priorities, and confident execution."
+          "title": "Royal Reception Package",
+          "price": "8000",
+          "featured": true,
+          "whatsappMessage": "Hello, I would like to book the Royal Reception Package (8000 SAR).",
+          "items": [
+            "Luxury royal decor with 2 flag banners.",
+            "10 tea types + Arabic and American coffee + 4 juice varieties for 200 guests.",
+            "Team: Master coffee maker + 10 uniform pourers + 1 supervisor.",
+            "Full luxury dessert and dates setup."
+          ]
         },
         {
-          "title": "Growth Partnership",
-          "description": "Done-for-you client acquisition with full-funnel ownership and continuous optimization."
+          "title": "Diamond Package",
+          "price": "6500",
+          "whatsappMessage": "Hello, I would like to book the Diamond Package (6500 SAR).",
+          "items": [
+            "Team: 1 coffee maker + 9 pourers.",
+            "10 tea types + Arabic and American coffee.",
+            "25m lavender entrance.",
+            "Premium dates and oriental desserts distributed in hall."
+          ]
+        },
+        {
+          "title": "Gold Package",
+          "price": "4500",
+          "whatsappMessage": "Hello, I would like to book the Gold Package (4500 SAR).",
+          "items": [
+            "Team: 1 coffee maker + 6 pourers.",
+            "10 tea types + Arabic and American coffee.",
+            "25m lavender entrance.",
+            "Dates and oriental sweets setup."
+          ]
+        },
+        {
+          "title": "Silver Package",
+          "price": "3500",
+          "whatsappMessage": "Hello, I would like to book the Silver Package (3500 SAR).",
+          "items": [
+            "Team: 1 coffee maker + 4 pourers.",
+            "10 tea types + Arabic and American coffee.",
+            "25m lavender entrance.",
+            "Dates and sweets distributed across hall."
+          ]
+        },
+        {
+          "title": "Basic Package",
+          "price": "2500",
+          "whatsappMessage": "Hello, I would like to book the Basic Package (2500 SAR).",
+          "items": [
+            "Team: 1 coffee maker + 3 pourers.",
+            "10 tea types + Arabic and American coffee.",
+            "Luxury royal decor."
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "package-royal-en",
+          "title": "Royal Reception Package",
+          "subtitle": "8000 SAR",
+          "description": "Top tier package with full hospitality team and premium decor.",
+          "logoUrl": "",
+          "logoAlt": "",
+          "items": ["Royal hospitality", "Luxury decor", "Full serving team"]
+        },
+        {
+          "id": "package-diamond-en",
+          "title": "Diamond Package",
+          "subtitle": "6500 SAR",
+          "description": "Balanced premium package for elegant events.",
+          "logoUrl": "",
+          "logoAlt": "",
+          "items": ["Coffee team", "Lavender entrance", "Dates and desserts"]
+        }
+      ]
+    },
+    "about": {
+      "badge": "About Rukn Al-Nakhwa",
+      "title": "We transform your event into a portrait of generosity and heritage",
+      "description": "Rukn Al-Nakhwa is a leading hospitality event provider combining rich tradition with modern luxury presentation.",
+      "cards": [
+        {
+          "title": "Comprehensive Hospitality",
+          "description": "Premium dates and sweets with elegant hospitality corners and carts."
+        },
+        {
+          "title": "Specialized Teams",
+          "description": "Trained male and female coffee servers in elegant unified uniforms."
+        },
+        {
+          "title": "Flexible Setup",
+          "description": "Decor adapts to your space from 2m to 8m with lavender-style entrances."
+        }
+      ],
+      "panel": {
+        "badge": "Our Philosophy",
+        "title": "Elegant hospitality and complete event setup",
+        "description": "We care about details that shape a memorable and prestigious hospitality experience.",
+        "tags": [
+          "Professional serving teams",
+          "Flexible royal decor",
+          "Premium sweets and dates",
+          "Complete event setup"
+        ]
+      }
+    },
+    "whyChooseUs": {
+      "badge": "Why Choose Us",
+      "title": "Luxury details that make every event stand out",
+      "items": [
+        {
+          "title": "Premium Presentation",
+          "description": "Luxury golden serveware for dates and hospitality trays."
+        },
+        {
+          "title": "Diverse Options",
+          "description": "From 10 tea types to Arabic and American coffee and juices."
+        },
+        {
+          "title": "Transparent Pricing",
+          "description": "Clear packages for different needs with no hidden fees."
+        },
+        {
+          "title": "Outstanding Support",
+          "description": "Direct, responsive communication for stress-free event planning."
         }
       ]
     },
     "partners": {
-      "badge": "Trusted Partners",
-      "title": "Brands that trust execution",
-      "description": "We support ambitious businesses across industries with measurable growth systems.",
-      "names": ["NAKHEEL", "HYUNDAI", "SOBHA REALTY", "JustLife"],
+      "badge": "Our Partners",
+      "title": "Trusted by valued partners",
+      "description": "We take pride in collaborating with brands and entities that value quality execution.",
       "logos": [
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
@@ -254,49 +471,66 @@
         { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
       ]
     },
-    "reviews": {
-      "badge": "Results",
-      "title": "Client Success Stories: Real Results, Real Growth",
-      "items": [
-        {
-          "quote": "300+ leads in first month!",
-          "author": "Mohamed A.",
-          "company": "EMAAR"
-        },
-        {
-          "quote": "10X ROAS and 7-Figure Sales!",
-          "author": "Sarah K.",
-          "company": "LuxuryBags"
-        },
-        {
-          "quote": "Booked Solid with New Clients!",
-          "author": "Ahmed R.",
-          "company": "GymPro"
-        }
+    "contact": {
+      "badge": "Contact Us",
+      "title": "We are happy to be part of your special occasions",
+      "description": "Reach us now to reserve your package. Our team is available 24/7.",
+      "mapEmbedUrl": "https://www.google.com/maps?q=Saudi+Arabia&z=6&output=embed",
+      "cards": [
+        { "title": "Phone & WhatsApp", "value": "__PHONE__" },
+        { "title": "Working Hours", "value": "Available 24/7" },
+        { "title": "Location", "value": "Sakaka, Sheikh Jaber Street, Al Olaya, Riyadh 72341, Saudi Arabia" }
       ],
-      "bottomCtaHeadline": "Serious about scaling your business?",
-      "bottomCtaButton": "Apply Now to Qualify"
+      "buttons": [
+        {
+          "label": "Open Map",
+          "type": "map",
+          "href": "https://maps.app.goo.gl/prhk6UhjMMj6jKgu7"
+        }
+      ]
     },
     "footer": {
-      "description": "Kafu Media builds elite growth systems designed to consistently generate qualified clients.",
+      "description": "We craft every event detail with refined hospitality and full-service execution, from planning to flawless delivery.",
       "quickLinksTitle": "Quick Links",
       "quickLinks": [
         { "label": "Home", "href": "#hero" },
-        { "label": "The System", "href": "#system" },
+        { "label": "Packages", "href": "#packages" },
         { "label": "About", "href": "#about" },
         { "label": "Partners", "href": "#partners" },
-        { "label": "Results", "href": "#results" }
+        { "label": "Contact", "href": "#contact" }
       ],
-      "mainServicesTitle": "Main Services",
-      "mainServices": [
-        "Strategic Consulting",
-        "Growth Partnership",
-        "Campaign Management",
-        "Performance Analytics"
+      "contactTitle": "Direct Contact",
+      "phoneLabel": "Phone & WhatsApp",
+      "copyright": "© 2026 Rukn Al-Nakhwa Events. All rights reserved."
+    },
+    "reviews": {
+      "badge": "Customer Reviews",
+      "title": "Client Success Stories",
+      "items": [
+        {
+          "name": "Ahmed",
+          "text": "Elegant execution and professional service from start to finish."
+        },
+        {
+          "name": "Sarah",
+          "text": "The package was luxurious and the hospitality impressed all guests."
+        },
+        {
+          "name": "Mohammed",
+          "text": "Fast communication and the setup exceeded expectations."
+        }
       ],
-      "contactTitle": "Contact Information",
-      "country": "United Arab Emirates",
-      "copyright": "© 2026 Kafu Media. All rights reserved."
+      "bottomCtaHeadline": "Ready to book an event that matches your standards?",
+      "bottomCtaButton": "Contact Now"
+    },
+    "location": {
+      "badge": "Contact Us",
+      "title": "Contact & Location Information",
+      "description": "We are happy to hear from you. Visit us or call during working hours.",
+      "address": ["Saudi Arabia"],
+      "workingHours": ["Available 24/7", "Visits by appointment"],
+      "directionsButton": "Get Directions",
+      "mapTitle": "Location Map"
     }
   }
 }

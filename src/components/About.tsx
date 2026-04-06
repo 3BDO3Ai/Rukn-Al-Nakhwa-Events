@@ -1,125 +1,87 @@
-"use client";
+'use client';
 
-import React from 'react';
-import Image from 'next/image';
 import { useContent } from '@/content/useContent';
-import { buildWhatsAppHref } from '@/lib/contact';
+import { BuildingLibraryIcon, SparklesIcon, UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
-const features = [
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    title: 'السرعة والدقة في إنجاز الخدمات',
-    desc: 'نلتزم بتقديم خدماتنا في أسرع وقت ممكن مع الحفاظ على أعلى مستويات الجودة والدقة لضمان رضاكم التام وسرعة إنجاز معاملاتكم.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    ),
-    title: 'ضمان السرية التامة للوثائق',
-    desc: 'نؤمن بحق العميل في الخصوصية، ونضمن حفظ جميع معلوماتكم ووثائقكم الشخصية بأعلى درجات الأمان والسرية المطلقة.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: 'المصداقية وإرضاء العملاء',
-    desc: 'رضا عملائنا هو أولويتنا الأولى. نحرص على بناء علاقات طويلة الأمد قائمة على الثقة والشفافية، مع التزام تام بتحقيق أفضل النتائج.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    title: 'الأمان في تنفيذ جميع الإجراءات',
-    desc: 'نطبق أعلى معايير الأمان والحماية في كل مراحل تنفيذ خدماتنا لضمان سلامة حقوق عملائنا الكرام وحماية مصالحهم.',
-  },
-];
+interface AboutCard {
+  title: string;
+  description: string;
+}
 
 export default function About() {
   const { dictionary, dir } = useContent();
-  const about = dictionary.about;
   const isArabic = dir === 'rtl';
-  const applyNowHref = buildWhatsAppHref(
-    isArabic
-      ? 'السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو.'
-      : 'Hello, I want to apply now and get started with Kafu.'
-  );
+  const about = dictionary.about;
+  const cards: AboutCard[] = Array.isArray(about?.cards) ? about.cards : [];
+  const cardIcons = [BuildingLibraryIcon, UserGroupIcon, SparklesIcon];
 
   return (
-    <section id="about" className="bg-surface w-full py-20 lg:py-28 px-6 font-cairo">
-      <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center" dir="ltr">
-
-        {/* Text Content */}
-        <div className={`flex-1 flex flex-col ${isArabic ? 'text-right' : 'text-left'}`}>
+    <section id="about" className="section-about-heritage w-full px-6 py-20 lg:py-28">
+      <div className="mx-auto flex max-w-[1290px] flex-col items-center gap-12 lg:flex-row-reverse lg:gap-20" dir={dir}>
+        <div className={`flex flex-1 flex-col ${isArabic ? 'text-right' : 'text-left'}`}>
           <div className="mb-10">
-            <span className="text-gold font-bold text-sm tracking-widest uppercase bg-gold/10 px-3 py-1 rounded-full">{about.badge}</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-white mt-4 mb-2 leading-[1.35]">
-              {about.title}
-            </h2>
-            <div className={`w-16 h-1 bg-gold rounded-full mt-3 mb-6 ${isArabic ? 'ml-auto' : 'mr-auto'}`} />
-            <p className={`text-white/72 text-lg leading-9 max-w-2xl ${isArabic ? 'text-right ml-auto' : 'text-left mr-auto'}`}>
-              {about.description}
+            <span className="inline-flex rounded-full border border-[#cab27f] bg-[rgba(231,173,30,0.14)] px-3 py-1 text-sm font-bold tracking-widest text-[#7a5b24]">
+              {about?.badge}
+            </span>
+            <div className="mt-6 flex w-full items-center justify-center lg:hidden">
+              <div className="relative aspect-square w-full max-w-sm overflow-hidden rounded-[2.5rem] bg-[linear-gradient(145deg,#1f3413_0%,#243f15_48%,#16250f_100%)] p-8 shadow-2xl">
+                <div className="absolute top-0 right-0 h-28 w-28 rounded-bl-full bg-white/5" />
+                <div className="absolute bottom-0 left-0 h-40 w-40 rounded-tr-full bg-[rgba(30,145,120,0.16)]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[rgba(42,64,18,0.2)]" />
+
+                <div className="relative z-10 flex h-full w-full items-center justify-center">
+                  <div className="rounded-3xl border border-white/20 bg-white/10 p-8">
+                    <Image src="/logo_3.svg" alt={dictionary.common?.brandName ?? 'Brand'} width={240} height={120} sizes="240px" className="h-auto w-full max-w-[240px] object-contain" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h2 className="mt-4 text-3xl font-black leading-[1.12] text-[#294215] lg:text-5xl">{about?.title}</h2>
+            <div className={`mt-3 mb-6 h-1 w-16 rounded-full bg-[var(--elite-primary)] ${isArabic ? 'ml-auto' : 'mr-auto'}`} />
+            <p className={`max-w-2xl text-lg leading-9 text-[#5f634f] ${isArabic ? 'ml-auto text-right' : 'mr-auto text-left'}`}>
+              {about?.description}
             </p>
           </div>
 
           <div className="flex flex-col gap-8">
-            {features.map((f, i) => {
-              const localized = about.features?.[i] ?? f;
+            {cards.map((point, index) => {
+              const Icon = cardIcons[index] ?? ShieldCheckIcon;
+
               return (
-              <div key={i} className={`flex items-start gap-5 group ${isArabic ? 'flex-row-reverse' : ''}`}>
-                <div className="bg-darkGreen/10 p-4 rounded-2xl text-gold flex-shrink-0 group-hover:bg-darkGreen group-hover:text-white transition-all duration-300 shadow-sm">
-                  {f.icon}
-                </div>
-                <div className={`flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>
-                  <h3 className="font-bold text-white text-lg mb-2">{localized.title}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{localized.desc}</p>
-                </div>
-              </div>
+                <article key={point.title} className="group flex items-start gap-5">
+                  <div className="flex-shrink-0 rounded-2xl bg-[rgba(42,64,18,0.12)] p-4 text-[#2A4012] shadow-sm transition-all duration-300 group-hover:bg-[#2A4012] group-hover:text-white">
+                    <Icon className="h-7 w-7" />
+                  </div>
+
+                  <div className={`flex-1 ${isArabic ? 'text-right' : 'text-left'}`}>
+                    <h3 className="mb-2 text-lg font-bold text-[#2A4012]">{point.title}</h3>
+                    <p className="text-sm leading-relaxed text-[#61685b]">{point.description}</p>
+                  </div>
+                </article>
               );
             })}
           </div>
 
-          <div className="mt-10">
+          <div className={`mt-10 ${isArabic ? 'text-right' : 'text-left'}`}>
             <a
-                href={applyNowHref}
-                target="_blank"
-                rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-darkGreen hover:bg-darkGreen/90 text-white px-7 py-3.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2A4012] px-7 py-3.5 font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-[rgba(42,64,18,0.92)] hover:shadow-xl"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-              </svg>
-                {dictionary.common.ctaApply}
+              {isArabic ? 'تواصل معنا الآن' : 'Contact Us Now'}
             </a>
           </div>
         </div>
 
-        {/* Visual */}
-        <div className="flex-1 flex justify-center items-center w-full max-w-md mx-auto lg:mx-0">
-          <div className="bg-darkGreen w-full rounded-[3rem] p-12 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden aspect-square">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full" />
-            <div className="absolute bottom-0 left-0 w-56 h-56 bg-teal/15 rounded-tr-full" />
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-teal/10" />
+        <div className="mx-auto hidden w-full max-w-md flex-1 items-center justify-center lg:mx-0 lg:flex">
+          <div className="relative aspect-square w-full overflow-hidden rounded-[3rem] bg-[linear-gradient(145deg,#1f3413_0%,#243f15_48%,#16250f_100%)] p-10 shadow-2xl md:p-12">
+            <div className="absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-white/5" />
+            <div className="absolute bottom-0 left-0 h-56 w-56 rounded-tr-full bg-[rgba(30,145,120,0.16)]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[rgba(42,64,18,0.2)]" />
 
-            <div className="relative z-10 flex items-center justify-center w-full h-full">
-              <div className="bg-white/10 border border-white/20 rounded-3xl p-6">
-                <Image
-                  src="/growth_logo.svg"
-                  alt={dictionary.common.brandName}
-                  width={280}
-                  height={280}
-                  priority
-                  className="w-full h-auto max-w-[280px] object-contain"
-                />
+            <div className="relative z-10 flex h-full w-full items-center justify-center">
+              <div className="rounded-3xl border border-white/20 bg-white/10 p-8 md:p-10">
+                <Image src="/logo_3.svg" alt={dictionary.common?.brandName ?? 'Brand'} width={300} height={150} sizes="(max-width: 1024px) 240px, 300px" className="h-auto w-full max-w-[260px] object-contain md:max-w-[300px]" />
               </div>
             </div>
           </div>

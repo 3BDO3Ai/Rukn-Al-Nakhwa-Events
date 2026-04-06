@@ -16,8 +16,8 @@ export default function Reviews() {
   const isArabic = dir === "rtl";
   const applyNowHref = buildWhatsAppHref(
     isArabic
-      ? "السلام عليكم، أرغب في التقديم الآن وبدء العمل مع كفو."
-      : "Hello, I want to apply now and get started with Kafu."
+      ? "السلام عليكم، أرغب في التواصل مع مؤسسة ركن النخوة للحفلات."
+      : "Hello, I would like to contact Rukn Al-Nakhwa Events."
   );
   const reviewSource = Array.isArray(dictionary?.reviews?.list)
     ? dictionary.reviews.list
@@ -185,10 +185,10 @@ export default function Reviews() {
   };
 
   return (
-    <section id="results" className="bg-[#0D121B] w-full py-20 lg:py-28 px-6 relative overflow-hidden">
+    <section id="results" className="section-white text-gray-900 w-full py-20 lg:py-28 px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-80 h-80 bg-gold/10 blur-3xl rounded-full" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#2A3040]/70 blur-3xl rounded-full" />
+        <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-[var(--elite-primary)]/12 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-[var(--elite-secondary)]/12 blur-3xl" />
       </div>
 
       <div className="max-w-[1290px] mx-auto relative z-10" dir={dir}>
@@ -196,7 +196,7 @@ export default function Reviews() {
           <span className="text-gold font-bold text-xs sm:text-sm tracking-[0.2em] uppercase bg-gold/10 border border-gold/25 px-4 py-2 rounded-full">
             {isArabic ? "آراء العملاء" : "Testimonials"}
           </span>
-          <h2 className="text-3xl lg:text-5xl font-black text-white mt-5 mb-4">
+          <h2 className="text-3xl lg:text-5xl font-black leading-[1.12] text-gray-900 mt-5 mb-4">
             {isArabic ? "قصص نجاح العملاء" : "Client Success Stories"}
           </h2>
         </div>
@@ -233,19 +233,19 @@ export default function Reviews() {
                 {localizedReviews.map((review, index) => (
                   <article
                     key={`${setIndex}-${review.name}-${index}`}
-                    className={`w-[330px] sm:w-[360px] lg:w-[390px] min-h-[260px] shrink-0 rounded-3xl border border-gold/25 bg-gradient-to-br from-white/[0.1] via-white/[0.06] to-transparent backdrop-blur-xl p-7 shadow-[0_18px_36px_rgba(0,0,0,0.28)] flex flex-col justify-between ${isArabic ? "text-right" : "text-left"}`}
+                    className={`w-[330px] min-h-[260px] shrink-0 rounded-3xl border border-[var(--elite-secondary)]/18 bg-white p-7 shadow-[0_18px_36px_rgba(42,64,18,0.12)] sm:w-[360px] lg:w-[390px] ${isArabic ? "text-right" : "text-left"}`}
                     lang={isArabic ? "ar" : "en"}
                     dir={isArabic ? "rtl" : "ltr"}
                   >
                     <div>
                       <p className="text-gold text-5xl leading-none mb-4">“</p>
-                      <p className={`text-white/90 leading-relaxed ${isArabic ? "text-[1.02rem] font-semibold" : "text-base"}`}>
+                      <p className={`text-gray-600 leading-relaxed ${isArabic ? "text-[1.02rem] font-semibold" : "text-base"}`}>
                         {review.text}
                       </p>
                     </div>
 
                     <div className="pt-6 mt-6 border-t border-gold/20">
-                      <span className="inline-flex items-center rounded-full border border-gold/35 bg-gold/12 px-4 py-1.5 text-gold font-extrabold tracking-wide">
+                      <span className="inline-flex items-center rounded-full border border-[var(--elite-primary)]/30 bg-[var(--elite-primary)]/10 px-4 py-1.5 text-gold font-extrabold tracking-wide">
                         {review.name}
                       </span>
                     </div>
@@ -256,13 +256,13 @@ export default function Reviews() {
           </div>
         </div>
 
-        <div id="apply" className="rounded-3xl border border-gold/35 bg-[#111722] p-8 lg:p-12 text-center">
-          <h3 className="text-2xl lg:text-4xl font-black text-white mb-6">{dictionary.reviews.bottomCtaHeadline}</h3>
+        <div id="apply" className="rounded-3xl border border-[var(--elite-secondary)]/16 bg-white p-8 text-center shadow-[0_14px_28px_rgba(42,64,18,0.08)] lg:p-12">
+          <h3 className="text-2xl lg:text-4xl font-black text-gray-900 mb-6">{dictionary.reviews.bottomCtaHeadline}</h3>
           <a
             href={applyNowHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-gold hover:bg-[#ddb987] text-[#111] px-8 py-4 rounded-full font-bold transition-colors"
+            className="inline-flex items-center justify-center bg-gold hover:bg-[#ddb987] text-gray-900 px-8 py-4 rounded-full font-bold transition-colors"
           >
             {dictionary.reviews.bottomCtaButton}
           </a>

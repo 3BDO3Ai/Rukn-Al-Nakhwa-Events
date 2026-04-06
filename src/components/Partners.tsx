@@ -13,12 +13,15 @@ const PIXELS_PER_SECOND = 42;
 
 function LogoCard({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="flex items-center justify-center bg-white hover:bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 w-[240px] h-32 flex-shrink-0 transition-all shadow-sm hover:shadow-md">
+    <div className="flex h-32 w-[240px] flex-shrink-0 items-center justify-center rounded-2xl border border-[var(--elite-secondary)]/20 bg-[linear-gradient(180deg,#ffffff_0%,#f8fcf4_100%)] px-4 py-3 shadow-[0_10px_24px_rgba(20,30,14,0.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(20,30,14,0.14)]">
       <Image
         src={src}
         alt={alt}
         width={220}
         height={110}
+        sizes="(max-width: 640px) 180px, 220px"
+        loading="lazy"
+        decoding="async"
         className="object-contain w-full h-full"
       />
     </div>
@@ -31,6 +34,7 @@ export default function Partners() {
     ? (dictionary.partners.logos as PartnerLogo[])
     : [];
 
+  const sectionRef = useRef<HTMLElement | null>(null);
   const firstSetRef = useRef<HTMLDivElement | null>(null);
   const secondSetRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -39,6 +43,7 @@ export default function Partners() {
   const offsetRef = useRef(0);
   const setWidthRef = useRef(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const updateSetWidth = () => {
@@ -80,15 +85,27 @@ export default function Partners() {
   }, []);
 
   useEffect(() => {
+    if (!sectionRef.current) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0.15 });
+
+    observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const animate = (timestamp: number) => {
       if (!trackRef.current || !setWidthRef.current) {
-        frameRef.current = window.requestAnimationFrame(animate);
         return;
       }
 
-      if (isPaused) {
+      if (isPaused || !isInView) {
         previousTimestampRef.current = timestamp;
-        frameRef.current = window.requestAnimationFrame(animate);
         return;
       }
 
@@ -109,34 +126,36 @@ export default function Partners() {
       frameRef.current = window.requestAnimationFrame(animate);
     };
 
-    frameRef.current = window.requestAnimationFrame(animate);
+    if (isInView && !isPaused) {
+      frameRef.current = window.requestAnimationFrame(animate);
+    }
 
     return () => {
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);
       }
     };
-  }, [isPaused]);
+  }, [isPaused, isInView]);
 
   return (
-    <section id="partners" className="bg-[#0A0D13] py-20 px-6 border-y border-white/5 overflow-hidden">
-      <div className="max-w-[1290px] mx-auto" dir={dir}>
-        <div className="text-center mb-12">
-          <span className="text-gold font-bold text-xs sm:text-sm tracking-[0.2em] uppercase bg-gold/10 border border-gold/25 px-4 py-2 rounded-full">
+    <section ref={sectionRef} id="partners" className="section-luxe-dark overflow-hidden px-6 py-16 text-[#f3ead6] md:py-20">
+      <div className="section-shell" dir={dir}>
+        <div className="mb-12 text-center">
+          <span className="section-badge-dark">
             {dictionary.partners.badge}
           </span>
-          <h2 className="text-3xl lg:text-5xl font-black text-white mt-5 mb-4">{dictionary.partners.title}</h2>
-          <p className="text-white/65 max-w-3xl mx-auto text-base lg:text-lg">{dictionary.partners.description}</p>
+          <h2 className="section-title-balance section-heading-dark mt-5 mb-4">{dictionary.partners.title}</h2>
+          <p className="section-subtext-dark mx-auto text-base lg:text-lg">{dictionary.partners.description}</p>
         </div>
 
         <div
           dir="ltr"
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#111722] p-4"
+          className="reveal-card relative overflow-hidden rounded-3xl border border-[#e4bc73]/26 bg-[rgba(15,18,14,0.55)] p-4 shadow-[0_24px_44px_rgba(0,0,0,0.35)]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#111722] to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#111722] to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#10140f] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#10140f] to-transparent" />
 
           <div
             ref={trackRef}

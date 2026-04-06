@@ -32,13 +32,13 @@ export default function Features() {
   ];
 
   return (
-    <section className="bg-surface w-full py-20 px-6">
+    <section className="section-white w-full py-20 px-6">
       <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row-reverse gap-16" dir="rtl">
         
         {/* Right Side: Content List */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="mb-12 text-right">
-            <h2 className="text-3xl font-black text-darkGreen mb-4">نبذة عنا</h2>
+            <h2 className="text-3xl font-black leading-[1.12] text-darkGreen mb-4">نبذة عنا</h2>
             <div className="w-16 h-1 bg-gold rounded-full"></div>
             <p className="text-gray-600 mt-6 text-lg max-w-xl">
               نحن مؤسسة رائدة متخصصة في تقديم الخدمات بأعلى معايير الجودة، نسعى دائماً لتوفير حلول مبتكرة تسهل أعمالكم.
@@ -47,7 +47,7 @@ export default function Features() {
 
           <div className="flex flex-col gap-10">
             {featuresList.map((feature, index) => (
-              <div key={index} className="flex flex-row-reverse items-start gap-6 group">
+              <div key={index} className="flex flex-row-reverse items-start gap-6 group transition-all duration-300 hover:-translate-y-2 hover:shadow-lg px-4 py-4 rounded-2xl hover:bg-white">
                 {/* Text Container */}
                 <div className="text-right flex-1">
                   <h3 className="font-bold text-darkGreen text-xl mb-2 transition-colors">{feature.title}</h3>
