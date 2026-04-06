@@ -80,7 +80,7 @@ export default function Location() {
           <div className="rounded-3xl overflow-hidden shadow-[0_20px_45px_rgba(0,0,0,0.35)] border border-[var(--elite-secondary)]/10 min-h-[380px]">
             <iframe
               title={location.mapTitle}
-              src="https://www.google.com/maps?q=Al+Olaya,+Riyadh+Saudi+Arabia&z=15&output=embed"
+              src="https://www.google.com/maps?q=24.7135517,46.6752957&z=17&output=embed"
               width="100%"
               height="100%"
               style={{ minHeight: '380px', border: 0 }}
