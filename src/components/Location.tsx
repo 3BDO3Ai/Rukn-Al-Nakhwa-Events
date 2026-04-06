@@ -80,7 +80,7 @@ export default function Location() {
           <div className="rounded-3xl overflow-hidden shadow-[0_20px_45px_rgba(0,0,0,0.35)] border border-[var(--elite-secondary)]/10 min-h-[380px]">
             <iframe
               title={location.mapTitle}
-              src="https://maps.google.com/maps?q=%D8%AC%D8%AF%D8%A9%20%D8%AD%D9%8A%20%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD3%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%8A%D8%A7%D8%B3%D8%B1%20%D8%A8%D9%86%20%D8%B9%D8%A7%D9%85%D8%B1%20%D8%A7%D9%84%D9%83%D9%86%D8%A7%D9%86%D9%8A&z=16&output=embed"
+              src="https://www.google.com/maps?q=Al+Olaya,+Riyadh+Saudi+Arabia&z=15&output=embed"
               width="100%"
               height="100%"
               style={{ minHeight: '380px', border: 0 }}
