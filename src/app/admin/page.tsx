@@ -8,9 +8,7 @@ type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
 type Path = Array<string | number>;
 type Locale = "ar" | "en";
 type LocaleRoot = Record<string, JsonValue>;
-type SectionKey = "overview" | "services" | "gallery" | "partners" | "reviews" | "search";
-
-type NewEntryKind = "string" | "number" | "boolean" | "object" | "array";
+type SectionKey = "overview" | "services" | "gallery" | "partners" | "search";
 
 interface SearchResult {
   locale: Locale;
@@ -29,12 +27,6 @@ interface ServicePackage {
 interface PartnerLogo {
   src: string;
   alt: string;
-}
-
-interface ReviewItem {
-  name: string;
-  rating: number;
-  text: string;
 }
 
 type GalleryMediaType = "image" | "video";
@@ -124,14 +116,12 @@ interface AdminText {
     services: string;
     gallery: string;
     partners: string;
-    reviews: string;
     keys: string;
   };
   quick: {
     addService: string;
     addGallery: string;
     addPartner: string;
-    addReview: string;
     syncGallery: string;
     syncingGallery: string;
     upload: string;
@@ -164,21 +154,18 @@ const ADMIN_TEXTS: Record<Locale, AdminText> = {
       services: "Services Manager",
       gallery: "Gallery Manager",
       partners: "Partners Manager",
-      reviews: "Reviews Manager",
       search: "Global Search",
     },
     overviewCards: {
       services: "Services",
       gallery: "Gallery",
       partners: "Partners",
-      reviews: "Reviews",
       keys: "Top-level Keys",
     },
     quick: {
       addService: "Add service",
       addGallery: "Add gallery item",
       addPartner: "Add partner",
-      addReview: "Add review",
       syncGallery: "Sync from public/Gallery",
       syncingGallery: "Syncing gallery files...",
       upload: "Upload",
@@ -209,21 +196,18 @@ const ADMIN_TEXTS: Record<Locale, AdminText> = {
       services: "إدارة الخدمات",
       gallery: "إدارة المعرض",
       partners: "إدارة الشركاء",
-      reviews: "إدارة التقييمات",
       search: "بحث شامل",
     },
     overviewCards: {
       services: "الخدمات",
       gallery: "المعرض",
       partners: "الشركاء",
-      reviews: "التقييمات",
       keys: "المفاتيح الرئيسية",
     },
     quick: {
       addService: "إضافة خدمة",
       addGallery: "إضافة عنصر للمعرض",
       addPartner: "إضافة شريك",
-      addReview: "إضافة تقييم",
       syncGallery: "مزامنة من public/Gallery",
       syncingGallery: "جارٍ مزامنة ملفات المعرض...",
       upload: "رفع",
@@ -347,10 +331,6 @@ function createEmptyPartnerLogo(): PartnerLogo {
   return { src: "", alt: "" };
 }
 
-function createEmptyReview(): ReviewItem {
-  return { name: "", rating: 5, text: "" };
-}
-
 function isObject(value: JsonValue): value is { [key: string]: JsonValue } {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -371,7 +351,6 @@ function getSectionFromResultPath(path: string): SectionKey {
   if (head === "services") return "services";
   if (head === "gallery") return "gallery";
   if (head === "partners") return "partners";
-  if (head === "reviews") return "reviews";
 
   return "overview";
 }
@@ -387,30 +366,6 @@ function getFileNameFromSrc(src: string): string {
   } catch {
     return raw;
   }
-}
-
-function buildDefaultValue(kind: NewEntryKind): JsonValue {
-  if (kind === "string") return "";
-  if (kind === "number") return 0;
-  if (kind === "boolean") return false;
-  if (kind === "array") return [];
-  return {};
-}
-
-function getAtPath(root: JsonValue, path: Path): JsonValue {
-  let cursor: JsonValue = root;
-  for (const segment of path) {
-    if (Array.isArray(cursor) && typeof segment === "number") {
-      cursor = cursor[segment];
-      continue;
-    }
-    if (isObject(cursor) && typeof segment === "string") {
-      cursor = cursor[segment];
-      continue;
-    }
-    return null;
-  }
-  return cursor;
 }
 
 function setAtPath(root: JsonValue, path: Path, nextValue: JsonValue): JsonValue {
@@ -433,57 +388,6 @@ function setAtPath(root: JsonValue, path: Path, nextValue: JsonValue): JsonValue
   }
 
   return root;
-}
-
-function deleteAtPath(root: JsonValue, path: Path): JsonValue {
-  if (path.length === 0) {
-    return root;
-  }
-
-  const [head, ...tail] = path;
-
-  if (tail.length === 0) {
-    if (Array.isArray(root) && typeof head === "number") {
-      return root.filter((_, index) => index !== head);
-    }
-    if (isObject(root) && typeof head === "string") {
-      const next = { ...root };
-      delete next[head];
-      return next;
-    }
-    return root;
-  }
-
-  if (Array.isArray(root) && typeof head === "number") {
-    const next = [...root];
-    next[head] = deleteAtPath(next[head], tail);
-    return next;
-  }
-
-  if (isObject(root) && typeof head === "string") {
-    return {
-      ...root,
-      [head]: deleteAtPath(root[head], tail),
-    };
-  }
-
-  return root;
-}
-
-function moveInArray(root: JsonValue, path: Path, fromIndex: number, toIndex: number): JsonValue {
-  const target = getAtPath(root, path);
-  if (!Array.isArray(target)) {
-    return root;
-  }
-
-  if (toIndex < 0 || toIndex >= target.length) {
-    return root;
-  }
-
-  const next = [...target];
-  const [item] = next.splice(fromIndex, 1);
-  next.splice(toIndex, 0, item);
-  return setAtPath(root, path, next);
 }
 
 function moveItem<T>(items: T[], fromIndex: number, toIndex: number): T[] {
@@ -653,7 +557,7 @@ function PrimitiveField({ path, value, onChange, onUpload, uploadingPath }: Prim
             onClick={() => fileInputRef.current?.click()}
             className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-1.5 text-xs font-semibold text-darkGreen hover:bg-darkGreen/10"
           >
-            Upload to {uploadTarget} bucket
+            Upload media
           </button>
           <input
             ref={fileInputRef}
@@ -675,30 +579,43 @@ function PrimitiveField({ path, value, onChange, onUpload, uploadingPath }: Prim
   );
 }
 
+function toFriendlyLabel(key: string): string {
+  return key
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^./, (char) => char.toUpperCase());
+}
+
+function countEditableLeaves(node: JsonValue): number {
+  if (Array.isArray(node)) {
+    return node.reduce<number>((total, item) => total + countEditableLeaves(item), 0);
+  }
+
+  if (isObject(node)) {
+    return Object.values(node).reduce<number>((total, value) => total + countEditableLeaves(value), 0);
+  }
+
+  return 1;
+}
+
 interface NodeEditorProps {
   path: Path;
   value: JsonValue;
   onChange: (path: Path, value: JsonValue) => void;
-  onDelete: (path: Path) => void;
-  onMove: (path: Path, from: number, to: number) => void;
-  onAddToArray: (path: Path, kind: NewEntryKind) => void;
-  onAddToObject: (path: Path, key: string, kind: NewEntryKind) => void;
   onUpload: (path: Path, file: File) => Promise<void>;
   uploadingPath: string | null;
-  isRoot?: boolean;
+  depth?: number;
 }
 
 function NodeEditor({
   path,
   value,
   onChange,
-  onDelete,
-  onMove,
-  onAddToArray,
-  onAddToObject,
   onUpload,
   uploadingPath,
-  isRoot,
+  depth = 0,
 }: NodeEditorProps) {
   if (!Array.isArray(value) && !isObject(value)) {
     return (
@@ -717,60 +634,19 @@ function NodeEditor({
       <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-3">
         {value.map((item, index) => (
           <div key={`${formatPath(path)}-${index}`} className="rounded-xl border border-slate-200 bg-white p-3">
-            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Item {index + 1}</div>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => onMove(path, index, index - 1)}
-                  disabled={index === 0}
-                  className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-700 disabled:opacity-40"
-                >
-                  Up
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onMove(path, index, index + 1)}
-                  disabled={index === value.length - 1}
-                  className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-700 disabled:opacity-40"
-                >
-                  Down
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onDelete([...path, index])}
-                  className="rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700"
-                >
-                  Delete
-                </button>
-              </div>
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Item {index + 1}
             </div>
             <NodeEditor
               path={[...path, index]}
               value={item}
               onChange={onChange}
-              onDelete={onDelete}
-              onMove={onMove}
-              onAddToArray={onAddToArray}
-              onAddToObject={onAddToObject}
               onUpload={onUpload}
               uploadingPath={uploadingPath}
+              depth={depth + 1}
             />
           </div>
         ))}
-
-        <div className="flex flex-wrap gap-2 pt-1">
-          {(["string", "number", "boolean", "object", "array"] as NewEntryKind[]).map((kind) => (
-            <button
-              key={kind}
-              type="button"
-              onClick={() => onAddToArray(path, kind)}
-              className="rounded-md border border-darkGreen/25 bg-darkGreen/5 px-2.5 py-1 text-xs font-semibold text-darkGreen"
-            >
-              Add {kind}
-            </button>
-          ))}
-        </div>
       </div>
     );
   }
@@ -781,75 +657,19 @@ function NodeEditor({
     <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-3">
       {entries.map(([key, child]) => (
         <div key={`${formatPath(path)}.${key}`} className="rounded-xl border border-slate-200 bg-white p-3">
-          <div className="mb-2 flex items-center justify-between gap-2">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">{key}</div>
-            {!isRoot && (
-              <button
-                type="button"
-                onClick={() => onDelete([...path, key])}
-                className="rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700"
-              >
-                Delete key
-              </button>
-            )}
+          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            {toFriendlyLabel(key)}
           </div>
           <NodeEditor
             path={[...path, key]}
             value={child}
             onChange={onChange}
-            onDelete={onDelete}
-            onMove={onMove}
-            onAddToArray={onAddToArray}
-            onAddToObject={onAddToObject}
             onUpload={onUpload}
             uploadingPath={uploadingPath}
+            depth={depth + 1}
           />
         </div>
       ))}
-
-      <ObjectAddForm onAdd={(key, kind) => onAddToObject(path, key, kind)} />
-    </div>
-  );
-}
-
-function ObjectAddForm({ onAdd }: { onAdd: (key: string, kind: NewEntryKind) => void }) {
-  const [key, setKey] = useState("");
-  const [kind, setKind] = useState<NewEntryKind>("string");
-
-  return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-white p-3">
-      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Add New Key</div>
-      <div className="flex flex-wrap items-center gap-2">
-        <input
-          type="text"
-          value={key}
-          onChange={(event) => setKey(event.target.value)}
-          placeholder="newKey"
-          className="min-w-[180px] flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm text-slate-900 outline-none focus:border-darkGreen"
-        />
-        <select
-          value={kind}
-          onChange={(event) => setKind(event.target.value as NewEntryKind)}
-          className="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm text-slate-900 outline-none focus:border-darkGreen"
-        >
-          <option value="string">string</option>
-          <option value="number">number</option>
-          <option value="boolean">boolean</option>
-          <option value="object">object</option>
-          <option value="array">array</option>
-        </select>
-        <button
-          type="button"
-          onClick={() => {
-            if (!key.trim()) return;
-            onAdd(key.trim(), kind);
-            setKey("");
-          }}
-          className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-1.5 text-sm font-semibold text-darkGreen"
-        >
-          Add key
-        </button>
-      </div>
     </div>
   );
 }
@@ -902,14 +722,12 @@ export default function AdminPage() {
       : deepClone(DEFAULT_PARTNER_LOGOS);
   }, [localeRoot]);
 
-  const quickReviews = useMemo<ReviewItem[]>(() => {
-    const list = localeRoot?.reviews && isObject(localeRoot.reviews)
-      ? (localeRoot.reviews as Record<string, JsonValue>).list
-      : null;
-    return Array.isArray(list) ? (list as unknown as ReviewItem[]) : [];
-  }, [localeRoot]);
-
   const topLevelKeysCount = useMemo(() => (isObject(root) ? Object.keys(root).length : 0), [root]);
+
+  const overviewEditableEntries = useMemo(() => {
+    const nonOverviewManagedSections = new Set(["services", "gallery", "partners"]);
+    return Object.entries(localeRoot).filter(([key]) => !nonOverviewManagedSections.has(key));
+  }, [localeRoot]);
 
   const searchResults = useMemo<SearchResult[]>(() => {
     const all: SearchResult[] = [];
@@ -997,37 +815,6 @@ export default function AdminPage() {
     mutateLocaleRoot((currentRoot) => setAtPath(currentRoot, path, nextValue));
   };
 
-  const handleDelete = (path: Path) => {
-    mutateLocaleRoot((currentRoot) => deleteAtPath(currentRoot, path));
-  };
-
-  const handleMove = (path: Path, from: number, to: number) => {
-    mutateLocaleRoot((currentRoot) => moveInArray(currentRoot, path, from, to));
-  };
-
-  const handleAddToArray = (path: Path, kind: NewEntryKind) => {
-    mutateLocaleRoot((currentRoot) => {
-      const target = getAtPath(currentRoot, path);
-      if (!Array.isArray(target)) {
-        return currentRoot;
-      }
-      return setAtPath(currentRoot, path, [...target, buildDefaultValue(kind)]);
-    });
-  };
-
-  const handleAddToObject = (path: Path, key: string, kind: NewEntryKind) => {
-    mutateLocaleRoot((currentRoot) => {
-      const target = getAtPath(currentRoot, path);
-      if (!isObject(target)) {
-        return currentRoot;
-      }
-      return setAtPath(currentRoot, path, {
-        ...target,
-        [key]: buildDefaultValue(kind),
-      });
-    });
-  };
-
   const uploadAndGetUrl = async (path: Path, file: File): Promise<string | null> => {
     const bucket = inferUploadTarget(path);
     if (!bucket) {
@@ -1112,10 +899,6 @@ export default function AdminPage() {
 
   const setPartners = (logos: PartnerLogo[]) => {
     handleChange(["partners", "logos"], logos as unknown as JsonValue);
-  };
-
-  const setReviews = (reviews: ReviewItem[]) => {
-    handleChange(["reviews", "list"], reviews as unknown as JsonValue);
   };
 
   const logout = async () => {
@@ -1406,13 +1189,44 @@ export default function AdminPage() {
       return (
         <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-xl font-black text-darkGreen">{text.sectionLabels.overview}</h2>
-          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-5">
+          <p className="mt-2 text-sm text-slate-500">
+            {adminLocale === "ar"
+              ? "يمكنك هنا تعديل جميع نصوص الموقع غير الموجودة في أقسام الخدمات والمعرض والشركاء."
+              : "Edit all remaining site text here (everything except Services, Gallery, and Partners managers)."}
+          </p>
+
+          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.services}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickServices.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.gallery}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickGallery.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.partners}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickPartners.length}</p></div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.reviews}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickReviews.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.keys}</p><p className="mt-1 text-2xl font-black text-darkGreen">{topLevelKeysCount}</p></div>
           </div>
+
+          {overviewEditableEntries.length === 0 ? (
+            <div className="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
+              {adminLocale === "ar" ? "لا توجد أقسام نصية إضافية للتعديل." : "No additional text sections found for editing."}
+            </div>
+          ) : (
+            <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-2">
+              {overviewEditableEntries.map(([key, value]) => (
+                <div key={key} className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <h3 className="text-sm font-bold text-darkGreen">{sectionLabels[key] || key}</h3>
+                    <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-600">
+                      {countEditableLeaves(value)} {adminLocale === "ar" ? "حقل" : "fields"}
+                    </span>
+                  </div>
+                  <NodeEditor
+                    path={[key]}
+                    value={value}
+                    onChange={handleChange}
+                    onUpload={handleUpload}
+                    uploadingPath={uploadingPath}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       );
     }
@@ -1904,34 +1718,6 @@ export default function AdminPage() {
       );
     }
 
-    if (activeSection === "reviews") {
-      return (
-        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-          <h2 className="text-xl font-black text-darkGreen">{text.sectionLabels.reviews}</h2>
-          <div className="mt-4 space-y-3">
-            {quickReviews.map((review, index) => (
-              <div key={`${review.name}-${index}`} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                  <div className="text-xs font-semibold text-slate-500">#{index + 1}</div>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={() => setReviews(moveItem(quickReviews, index, index - 1))} disabled={index === 0} className="rounded border border-slate-300 px-2 py-1 text-xs disabled:opacity-40">{text.quick.up}</button>
-                    <button type="button" onClick={() => setReviews(moveItem(quickReviews, index, index + 1))} disabled={index === quickReviews.length - 1} className="rounded border border-slate-300 px-2 py-1 text-xs disabled:opacity-40">{text.quick.down}</button>
-                    <button type="button" onClick={() => setReviews(quickReviews.filter((_, i) => i !== index))} className="rounded border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{text.quick.delete}</button>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <input value={review.name || ""} onChange={(e) => setReviews(quickReviews.map((item, i) => (i === index ? { ...item, name: e.target.value } : item)))} placeholder="name" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input type="number" min={1} max={5} value={review.rating ?? 5} onChange={(e) => setReviews(quickReviews.map((item, i) => (i === index ? { ...item, rating: Number(e.target.value) } : item)))} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                </div>
-                <textarea value={review.text || ""} onChange={(e) => setReviews(quickReviews.map((item, i) => (i === index ? { ...item, text: e.target.value } : item)))} rows={3} placeholder="text" className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-              </div>
-            ))}
-            <button type="button" onClick={() => setReviews([...(quickReviews || []), createEmptyReview()])} className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-sm font-semibold text-darkGreen">{text.quick.addReview}</button>
-          </div>
-        </section>
-      );
-    }
-
     if (activeSection === "search") {
       return (
         <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -2038,7 +1824,7 @@ export default function AdminPage() {
           <aside className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
             <h2 className="mb-3 text-sm font-black uppercase tracking-wide text-darkGreen">{text.sidebarTitle}</h2>
             <div className="space-y-2">
-              {(["overview", "services", "gallery", "partners", "reviews", "search"] as SectionKey[]).map((section) => (
+              {(["overview", "services", "gallery", "partners", "search"] as SectionKey[]).map((section) => (
                 <button
                   key={section}
                   type="button"
