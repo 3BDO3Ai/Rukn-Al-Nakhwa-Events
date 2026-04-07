@@ -65,14 +65,14 @@ export default function AdminLoginPage() {
                 Secure login for the site management dashboard
               </h1>
               <p className="mt-4 max-w-xl text-sm leading-7 text-white/80 sm:text-base">
-                Use the admin password from your environment variables to access content management, uploads, and live publishing.
+                Use the configured admin password to access content management, uploads, and live publishing.
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-md">
               <div className="text-xs uppercase tracking-[0.2em] text-white/60">Secure management access</div>
               <div className="mt-2 text-sm leading-6 text-white/80">
-                Your dashboard is protected by an HttpOnly session and backed by the password in <span className="font-semibold">ADMIN_PASSWORD</span>.
+                Your dashboard is protected by an HttpOnly session token. Set <span className="font-semibold">ADMIN_PASSWORD</span> to override the project default password.
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function AdminLoginPage() {
                   </button>
                 </div>
                 <p className="mt-2 text-xs text-white/55">
-                  The password is read from <span className="font-semibold text-white/80">ADMIN_PASSWORD</span> in your environment.
+                  Uses <span className="font-semibold text-white/80">ADMIN_PASSWORD</span> when provided, otherwise uses the project default admin password.
                 </p>
               </div>
 

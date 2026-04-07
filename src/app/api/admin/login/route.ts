@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ADMIN_SESSION_COOKIE, getExpectedAdminToken } from "@/lib/adminAuth";
+import { ADMIN_SESSION_COOKIE, getAdminPassword, getExpectedAdminToken } from "@/lib/adminAuth";
 
 export async function POST(request: NextRequest) {
   try {
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
-      return NextResponse.json({ error: "ADMIN_PASSWORD is not configured." }, { status: 500 });
-    }
+    const adminPassword = getAdminPassword();
 
     const body = await request.json();
     const password = body?.password;
@@ -20,9 +17,6 @@ export async function POST(request: NextRequest) {
     }
 
     const token = getExpectedAdminToken();
-    if (!token) {
-      return NextResponse.json({ error: "Failed to create admin session." }, { status: 500 });
-    }
 
     const response = NextResponse.json({ success: true });
     response.cookies.set({

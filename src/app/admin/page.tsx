@@ -8,7 +8,7 @@ type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
 type Path = Array<string | number>;
 type Locale = "ar" | "en";
 type LocaleRoot = Record<string, JsonValue>;
-type SectionKey = "overview" | "services" | "partners" | "reviews" | "editor" | "search" | `section:${string}`;
+type SectionKey = "overview" | "services" | "gallery" | "partners" | "reviews" | "search";
 
 type NewEntryKind = "string" | "number" | "boolean" | "object" | "array";
 
@@ -18,14 +18,12 @@ interface SearchResult {
   value: string;
 }
 
-interface ServiceCard {
-  id: string;
+interface ServicePackage {
   title: string;
-  subtitle: string;
-  description: string;
-  logoUrl: string;
-  logoAlt: string;
+  price: string;
+  featured?: boolean;
   items: string[];
+  whatsappMessage?: string;
 }
 
 interface PartnerLogo {
@@ -39,16 +37,24 @@ interface ReviewItem {
   text: string;
 }
 
+type GalleryMediaType = "image" | "video";
+
+interface GalleryItem {
+  src: string;
+  fileName: string;
+  type: GalleryMediaType;
+  title: string;
+  description: string;
+  thumbnail?: string;
+}
+
 interface NewServiceDraft {
-  id: string;
-  logoUrl: string;
-  logoAlt: string;
   titleAr: string;
   titleEn: string;
-  subtitleAr: string;
-  subtitleEn: string;
-  descriptionAr: string;
-  descriptionEn: string;
+  price: string;
+  featured: boolean;
+  whatsappAr: string;
+  whatsappEn: string;
   firstItemAr: string;
   firstItemEn: string;
 }
@@ -59,16 +65,24 @@ interface NewPartnerDraft {
   altEn: string;
 }
 
+interface NewGalleryDraft {
+  src: string;
+  fileName: string;
+  type: GalleryMediaType;
+  thumbnail: string;
+  titleAr: string;
+  titleEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+}
+
 const EMPTY_NEW_SERVICE: NewServiceDraft = {
-  id: "",
-  logoUrl: "",
-  logoAlt: "",
   titleAr: "",
   titleEn: "",
-  subtitleAr: "",
-  subtitleEn: "",
-  descriptionAr: "",
-  descriptionEn: "",
+  price: "",
+  featured: false,
+  whatsappAr: "",
+  whatsappEn: "",
   firstItemAr: "",
   firstItemEn: "",
 };
@@ -77,6 +91,17 @@ const EMPTY_NEW_PARTNER: NewPartnerDraft = {
   src: "",
   altAr: "",
   altEn: "",
+};
+
+const EMPTY_NEW_GALLERY: NewGalleryDraft = {
+  src: "",
+  fileName: "",
+  type: "image",
+  thumbnail: "",
+  titleAr: "",
+  titleEn: "",
+  descriptionAr: "",
+  descriptionEn: "",
 };
 
 interface AdminText {
@@ -97,14 +122,18 @@ interface AdminText {
   sectionLabels: Record<SectionKey, string>;
   overviewCards: {
     services: string;
+    gallery: string;
     partners: string;
     reviews: string;
     keys: string;
   };
   quick: {
     addService: string;
+    addGallery: string;
     addPartner: string;
     addReview: string;
+    syncGallery: string;
+    syncingGallery: string;
     upload: string;
     delete: string;
     up: string;
@@ -133,21 +162,25 @@ const ADMIN_TEXTS: Record<Locale, AdminText> = {
     sectionLabels: {
       overview: "Overview",
       services: "Services Manager",
+      gallery: "Gallery Manager",
       partners: "Partners Manager",
       reviews: "Reviews Manager",
-      editor: "Full JSON Editor",
       search: "Global Search",
     },
     overviewCards: {
       services: "Services",
+      gallery: "Gallery",
       partners: "Partners",
       reviews: "Reviews",
       keys: "Top-level Keys",
     },
     quick: {
       addService: "Add service",
+      addGallery: "Add gallery item",
       addPartner: "Add partner",
       addReview: "Add review",
+      syncGallery: "Sync from public/Gallery",
+      syncingGallery: "Syncing gallery files...",
       upload: "Upload",
       delete: "Delete",
       up: "Up",
@@ -174,21 +207,25 @@ const ADMIN_TEXTS: Record<Locale, AdminText> = {
     sectionLabels: {
       overview: "نظرة عامة",
       services: "إدارة الخدمات",
+      gallery: "إدارة المعرض",
       partners: "إدارة الشركاء",
       reviews: "إدارة التقييمات",
-      editor: "محرر JSON الكامل",
       search: "بحث شامل",
     },
     overviewCards: {
       services: "الخدمات",
+      gallery: "المعرض",
       partners: "الشركاء",
       reviews: "التقييمات",
       keys: "المفاتيح الرئيسية",
     },
     quick: {
       addService: "إضافة خدمة",
+      addGallery: "إضافة عنصر للمعرض",
       addPartner: "إضافة شريك",
       addReview: "إضافة تقييم",
+      syncGallery: "مزامنة من public/Gallery",
+      syncingGallery: "جارٍ مزامنة ملفات المعرض...",
       upload: "رفع",
       delete: "حذف",
       up: "أعلى",
@@ -206,6 +243,7 @@ const CONTENT_SECTION_LABELS: Record<Locale, Record<string, string>> = {
     about: "About",
     common: "Common",
     footer: "Footer",
+    gallery: "Gallery",
     hero: "Hero",
     location: "Location",
     navbar: "Navbar",
@@ -218,6 +256,7 @@ const CONTENT_SECTION_LABELS: Record<Locale, Record<string, string>> = {
     about: "من نحن",
     common: "عام",
     footer: "التذييل",
+    gallery: "المعرض",
     hero: "البطل",
     location: "الموقع",
     navbar: "شريط التنقل",
@@ -244,16 +283,64 @@ const DEFAULT_PARTNER_LOGOS: PartnerLogo[] = [
   { src: "/Partners/Jeddah-Chamber-01.png", alt: "الغرفة التجارية" },
 ];
 
-function createEmptyServiceCard(): ServiceCard {
+const DEFAULT_GALLERY_BY_LOCALE: Record<Locale, Record<string, JsonValue>> = {
+  ar: {
+    badge: "معرض الأعمال",
+    title: "لقطات من أعمالنا",
+    subtitle: "شاهد نماذج حقيقية من صور وفيديوهات تجهيزاتنا في المناسبات الراقية.",
+    focusHint: "اضغط لعرض مكبر",
+    emptyMessage: "لا توجد وسائط متاحة حالياً.",
+    videoBadge: "فيديو",
+    items: [],
+  },
+  en: {
+    badge: "Our Gallery",
+    title: "Highlights From Our Work",
+    subtitle: "Browse real photo and video highlights from our premium event executions.",
+    focusHint: "Click for focus view",
+    emptyMessage: "No media available yet.",
+    videoBadge: "Video",
+    items: [],
+  },
+};
+
+function createEmptyServicePackage(): ServicePackage {
   return {
-    id: `service-${Date.now()}`,
     title: "",
-    subtitle: "",
-    description: "",
-    logoUrl: "",
-    logoAlt: "",
+    price: "",
+    featured: false,
     items: [""],
+    whatsappMessage: "",
   };
+}
+
+function normalizeServicePackage(value: unknown): ServicePackage {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return createEmptyServicePackage();
+  }
+
+  const input = value as Record<string, unknown>;
+  const items = Array.isArray(input.items)
+    ? input.items.filter((item) => typeof item === "string").map((item) => item.trim()).filter(Boolean)
+    : [];
+
+  const price = typeof input.price === "string"
+    ? input.price
+    : typeof input.subtitle === "string"
+      ? input.subtitle
+      : "";
+
+  return {
+    title: typeof input.title === "string" ? input.title : "",
+    price,
+    featured: Boolean(input.featured),
+    items,
+    whatsappMessage: typeof input.whatsappMessage === "string" ? input.whatsappMessage : "",
+  };
+}
+
+function mapLegacyCardsToPackages(cards: unknown[]): ServicePackage[] {
+  return cards.map(normalizeServicePackage);
 }
 
 function createEmptyPartnerLogo(): PartnerLogo {
@@ -276,6 +363,30 @@ function formatPath(path: Path): string {
   return path
     .map((part) => (typeof part === "number" ? `[${part}]` : part))
     .join(".");
+}
+
+function getSectionFromResultPath(path: string): SectionKey {
+  const head = path.split(/[.\[\]]/).filter(Boolean)[0] || "";
+
+  if (head === "services") return "services";
+  if (head === "gallery") return "gallery";
+  if (head === "partners") return "partners";
+  if (head === "reviews") return "reviews";
+
+  return "overview";
+}
+
+function getFileNameFromSrc(src: string): string {
+  const raw = src.split("/").pop() || "";
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
 }
 
 function buildDefaultValue(kind: NewEntryKind): JsonValue {
@@ -394,12 +505,21 @@ async function fileToDataUrl(file: File): Promise<string> {
   });
 }
 
-function inferUploadTarget(path: Path): "Services" | "Partners" | null {
-  if (path.length === 5 && path[1] === "services" && path[2] === "cards" && path[4] === "logoUrl") {
+function inferUploadTarget(path: Path): "Services" | "Partners" | "Gallery" | null {
+  if (path.length === 4 && path[0] === "services" && path[1] === "cards" && path[3] === "logoUrl") {
     return "Services";
   }
-  if (path.length === 5 && path[1] === "partners" && path[2] === "logos" && path[4] === "src") {
+  if (path.length === 4 && path[0] === "partners" && path[1] === "logos" && path[3] === "src") {
     return "Partners";
+  }
+  if (
+    path.length === 4 &&
+    path[0] === "gallery" &&
+    path[1] === "items" &&
+    typeof path[2] === "number" &&
+    (path[3] === "src" || path[3] === "thumbnail")
+  ) {
+    return "Gallery";
   }
   return null;
 }
@@ -428,11 +548,33 @@ function normalizeContentWithDefaults(input: BilingualContent): BilingualContent
 
   (["ar", "en"] as Locale[]).forEach((locale) => {
     const root = (next[locale] ?? {}) as Record<string, any>;
+    root.services = root.services && typeof root.services === "object" ? root.services : {};
     root.partners = root.partners && typeof root.partners === "object" ? root.partners : {};
+    root.gallery = root.gallery && typeof root.gallery === "object" ? root.gallery : deepClone(DEFAULT_GALLERY_BY_LOCALE[locale]);
+
+    if (!Array.isArray(root.services.packages) || root.services.packages.length === 0) {
+      if (Array.isArray(root.services.cards) && root.services.cards.length > 0) {
+        root.services.packages = mapLegacyCardsToPackages(root.services.cards);
+      } else {
+        root.services.packages = [];
+      }
+    } else {
+      root.services.packages = root.services.packages.map(normalizeServicePackage);
+    }
 
     if (!Array.isArray(root.partners.logos) || root.partners.logos.length === 0) {
       root.partners.logos = deepClone(DEFAULT_PARTNER_LOGOS);
     }
+
+    if (!Array.isArray(root.gallery.items)) {
+      root.gallery.items = [];
+    }
+
+    ["badge", "title", "subtitle", "focusHint", "emptyMessage", "videoBadge"].forEach((field) => {
+      if (typeof root.gallery[field] !== "string") {
+        root.gallery[field] = DEFAULT_GALLERY_BY_LOCALE[locale][field];
+      }
+    });
 
     next[locale] = root as unknown as BilingualContent[Locale];
   });
@@ -452,6 +594,7 @@ function PrimitiveField({ path, value, onChange, onUpload, uploadingPath }: Prim
   const pathId = formatPath(path);
   const uploadTarget = inferUploadTarget(path);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const uploadAccept = uploadTarget === "Gallery" ? "image/*,video/*" : "image/*";
 
   if (typeof value === "boolean") {
     return (
@@ -515,7 +658,7 @@ function PrimitiveField({ path, value, onChange, onUpload, uploadingPath }: Prim
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept={uploadAccept}
             className="hidden"
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               const file = event.target.files?.[0];
@@ -720,11 +863,14 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isSyncingGallery, setIsSyncingGallery] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [uploadingPath, setUploadingPath] = useState<string | null>(null);
   const [showNewServiceForm, setShowNewServiceForm] = useState(false);
+  const [showNewGalleryForm, setShowNewGalleryForm] = useState(false);
   const [showNewPartnerForm, setShowNewPartnerForm] = useState(false);
   const [newServiceDraft, setNewServiceDraft] = useState<NewServiceDraft>(EMPTY_NEW_SERVICE);
+  const [newGalleryDraft, setNewGalleryDraft] = useState<NewGalleryDraft>(EMPTY_NEW_GALLERY);
   const [newPartnerDraft, setNewPartnerDraft] = useState<NewPartnerDraft>(EMPTY_NEW_PARTNER);
   const [newItemDraftByService, setNewItemDraftByService] = useState<Record<number, { ar: string; en: string; open: boolean }>>({});
 
@@ -733,11 +879,18 @@ export default function AdminPage() {
   const root = useMemo<JsonValue>(() => data[activeLocale] ?? {}, [data, activeLocale]);
   const localeRoot = useMemo<LocaleRoot>(() => (isObject(root) ? (root as LocaleRoot) : {}), [root]);
 
-  const quickServices = useMemo<ServiceCard[]>(() => {
-    const cards = localeRoot?.services && isObject(localeRoot.services)
-      ? (localeRoot.services as Record<string, JsonValue>).cards
+  const quickServices = useMemo<ServicePackage[]>(() => {
+    const packages = localeRoot?.services && isObject(localeRoot.services)
+      ? (localeRoot.services as Record<string, JsonValue>).packages
       : null;
-    return Array.isArray(cards) ? (cards as unknown as ServiceCard[]) : [];
+    return Array.isArray(packages) ? (packages as unknown as ServicePackage[]) : [];
+  }, [localeRoot]);
+
+  const quickGallery = useMemo<GalleryItem[]>(() => {
+    const items = localeRoot?.gallery && isObject(localeRoot.gallery)
+      ? (localeRoot.gallery as Record<string, JsonValue>).items
+      : null;
+    return Array.isArray(items) ? (items as unknown as GalleryItem[]) : [];
   }, [localeRoot]);
 
   const quickPartners = useMemo<PartnerLogo[]>(() => {
@@ -757,16 +910,6 @@ export default function AdminPage() {
   }, [localeRoot]);
 
   const topLevelKeysCount = useMemo(() => (isObject(root) ? Object.keys(root).length : 0), [root]);
-  const dynamicSectionKeys = useMemo(() => {
-    if (!isObject(root)) {
-      return [];
-    }
-
-    const blocked = new Set(["services", "partners", "reviews"]);
-    return Object.keys(root)
-      .filter((key) => !blocked.has(key))
-      .sort();
-  }, [root]);
 
   const searchResults = useMemo<SearchResult[]>(() => {
     const all: SearchResult[] = [];
@@ -817,14 +960,27 @@ export default function AdminPage() {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to save: ${response.status}`);
+        let message = `Failed to save: ${response.status}`;
+        try {
+          const payload = (await response.json()) as { error?: string; details?: string };
+          const details = [payload.error, payload.details].filter(Boolean).join(" - ");
+          if (details) {
+            message = details;
+          }
+        } catch {
+          // Ignore JSON parse errors and keep status-based fallback message.
+        }
+
+        throw new Error(message);
       }
 
       announceContentUpdated();
       setStatus(adminLocale === "ar" ? "تم الحفظ والنشر بنجاح." : "Saved successfully. Site content updated.");
     } catch (error) {
       console.error(error);
-      setStatus(adminLocale === "ar" ? "فشل حفظ المحتوى." : "Failed to save content.");
+      const fallback = adminLocale === "ar" ? "فشل حفظ المحتوى." : "Failed to save content.";
+      const details = error instanceof Error && error.message ? ` ${error.message}` : "";
+      setStatus(`${fallback}${details}`);
     } finally {
       setIsSaving(false);
     }
@@ -880,7 +1036,7 @@ export default function AdminPage() {
 
     const pathKey = formatPath(path);
     setUploadingPath(pathKey);
-    setStatus(adminLocale === "ar" ? `جارٍ رفع الصورة إلى حاوية ${bucket}...` : `Uploading image to ${bucket} bucket...`);
+    setStatus(adminLocale === "ar" ? `جارٍ رفع الوسائط إلى حاوية ${bucket}...` : `Uploading media to ${bucket} bucket...`);
 
     try {
       const dataUrl = await fileToDataUrl(file);
@@ -908,9 +1064,9 @@ export default function AdminPage() {
     }
   };
 
-  const uploadByBucket = async (bucket: "Services" | "Partners", file: File, uploadKey: string): Promise<string | null> => {
+  const uploadByBucket = async (bucket: "Services" | "Partners" | "Gallery", file: File, uploadKey: string): Promise<string | null> => {
     setUploadingPath(uploadKey);
-    setStatus(adminLocale === "ar" ? `جارٍ رفع الصورة إلى حاوية ${bucket}...` : `Uploading image to ${bucket} bucket...`);
+    setStatus(adminLocale === "ar" ? `جارٍ رفع الوسائط إلى حاوية ${bucket}...` : `Uploading media to ${bucket} bucket...`);
 
     try {
       const dataUrl = await fileToDataUrl(file);
@@ -925,11 +1081,11 @@ export default function AdminPage() {
       }
 
       const result = (await response.json()) as { url: string };
-      setStatus(adminLocale === "ar" ? "تم رفع الصورة بنجاح." : "Image uploaded successfully.");
+      setStatus(adminLocale === "ar" ? "تم رفع الوسائط بنجاح." : "Media uploaded successfully.");
       return result.url;
     } catch (error) {
       console.error(error);
-      setStatus(adminLocale === "ar" ? "فشل رفع الصورة." : "Upload failed.");
+      setStatus(adminLocale === "ar" ? "فشل رفع الوسائط." : "Upload failed.");
       return null;
     } finally {
       setUploadingPath(null);
@@ -943,11 +1099,15 @@ export default function AdminPage() {
     }
 
     handleChange(path, url);
-    setStatus(adminLocale === "ar" ? "تم رفع الصورة وتحديث الرابط." : "Upload complete. URL updated.");
+    setStatus(adminLocale === "ar" ? "تم رفع الوسائط وتحديث الرابط." : "Upload complete. URL updated.");
   };
 
-  const setServices = (services: ServiceCard[]) => {
-    handleChange(["services", "cards"], services as unknown as JsonValue);
+  const setServices = (services: ServicePackage[]) => {
+    handleChange(["services", "packages"], services as unknown as JsonValue);
+  };
+
+  const setGallery = (items: GalleryItem[]) => {
+    handleChange(["gallery", "items"], items as unknown as JsonValue);
   };
 
   const setPartners = (logos: PartnerLogo[]) => {
@@ -969,13 +1129,13 @@ export default function AdminPage() {
     }
   };
 
-  const syncServiceSharedField = (index: number, field: "logoUrl" | "id" | "logoAlt", value: string) => {
+  const syncServiceSharedField = (index: number, field: "price" | "featured", value: string | boolean) => {
     setData((current) => {
       const arServices = getLocaleServices(current, "ar").map((service, i) => (i === index ? { ...service, [field]: value } : service));
       const enServices = getLocaleServices(current, "en").map((service, i) => (i === index ? { ...service, [field]: value } : service));
       const next = deepClone(current);
-      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "cards"], arServices as unknown as JsonValue) as unknown as BilingualContent["ar"];
-      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "cards"], enServices as unknown as JsonValue) as unknown as BilingualContent["en"];
+      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "packages"], arServices as unknown as JsonValue) as unknown as BilingualContent["ar"];
+      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "packages"], enServices as unknown as JsonValue) as unknown as BilingualContent["en"];
       return next;
     });
   };
@@ -987,6 +1147,28 @@ export default function AdminPage() {
       const next = deepClone(current);
       next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["partners", "logos"], arPartners as unknown as JsonValue) as unknown as BilingualContent["ar"];
       next.en = setAtPath((next.en ?? {}) as JsonValue, ["partners", "logos"], enPartners as unknown as JsonValue) as unknown as BilingualContent["en"];
+      return next;
+    });
+  };
+
+  const syncGallerySharedField = (
+    index: number,
+    field: "src" | "type" | "fileName" | "thumbnail",
+    value: string,
+  ) => {
+    setData((current) => {
+      const applyField = (item: GalleryItem) => {
+        if (field === "type") {
+          return { ...item, type: value as GalleryMediaType };
+        }
+        return { ...item, [field]: value };
+      };
+
+      const arItems = getLocaleGalleryItems(current, "ar").map((item, i) => (i === index ? applyField(item) : item));
+      const enItems = getLocaleGalleryItems(current, "en").map((item, i) => (i === index ? applyField(item) : item));
+      const next = deepClone(current);
+      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["gallery", "items"], arItems as unknown as JsonValue) as unknown as BilingualContent["ar"];
+      next.en = setAtPath((next.en ?? {}) as JsonValue, ["gallery", "items"], enItems as unknown as JsonValue) as unknown as BilingualContent["en"];
       return next;
     });
   };
@@ -1007,8 +1189,8 @@ export default function AdminPage() {
       );
 
       const next = deepClone(current);
-      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "cards"], arServices as unknown as JsonValue) as unknown as BilingualContent["ar"];
-      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "cards"], enServices as unknown as JsonValue) as unknown as BilingualContent["en"];
+      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "packages"], arServices as unknown as JsonValue) as unknown as BilingualContent["ar"];
+      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "packages"], enServices as unknown as JsonValue) as unknown as BilingualContent["en"];
       return next;
     });
 
@@ -1018,10 +1200,38 @@ export default function AdminPage() {
     }));
   };
 
-  const getLocaleServices = (source: BilingualContent, locale: Locale): ServiceCard[] => {
+  const getLocaleServices = (source: BilingualContent, locale: Locale): ServicePackage[] => {
     const raw = source[locale] as unknown as Record<string, any>;
-    const cards = raw?.services?.cards;
-    return Array.isArray(cards) ? (cards as ServiceCard[]) : [];
+    const packages = raw?.services?.packages;
+    if (Array.isArray(packages) && packages.length > 0) {
+      return packages.map(normalizeServicePackage);
+    }
+
+    if (Array.isArray(raw?.services?.cards) && raw.services.cards.length > 0) {
+      return mapLegacyCardsToPackages(raw.services.cards);
+    }
+
+    return [];
+  };
+
+  const getLocaleGalleryItems = (source: BilingualContent, locale: Locale): GalleryItem[] => {
+    const raw = source[locale] as unknown as Record<string, any>;
+    const items = raw?.gallery?.items;
+    if (!Array.isArray(items)) {
+      return [];
+    }
+
+    return (items as GalleryItem[]).map((item) => {
+      const decodedFileName = item?.fileName?.trim() || getFileNameFromSrc(item?.src || "");
+      return {
+        src: item?.src || "",
+        fileName: decodedFileName,
+        type: item?.type === "video" ? "video" : "image",
+        title: item?.title || "",
+        description: item?.description || "",
+        thumbnail: item?.thumbnail || "",
+      };
+    });
   };
 
   const getLocalePartners = (source: BilingualContent, locale: Locale): PartnerLogo[] => {
@@ -1043,8 +1253,8 @@ export default function AdminPage() {
   };
 
   const addServiceBilingual = () => {
-    if (!newServiceDraft.id.trim() || !newServiceDraft.titleAr.trim() || !newServiceDraft.titleEn.trim()) {
-      setStatus(adminLocale === "ar" ? "أدخل معرف الخدمة والعنوان بالعربية والإنجليزية." : "Please fill service id and both AR/EN titles.");
+    if (!newServiceDraft.titleAr.trim() || !newServiceDraft.titleEn.trim()) {
+      setStatus(adminLocale === "ar" ? "أدخل اسم الباقة بالعربية والإنجليزية." : "Please fill package title in AR and EN.");
       return;
     }
 
@@ -1052,34 +1262,116 @@ export default function AdminPage() {
       const arServices = getLocaleServices(current, "ar");
       const enServices = getLocaleServices(current, "en");
 
-      const arCard: ServiceCard = {
-        id: newServiceDraft.id.trim(),
+      const arCard: ServicePackage = {
         title: newServiceDraft.titleAr.trim(),
-        subtitle: newServiceDraft.subtitleAr.trim(),
-        description: newServiceDraft.descriptionAr.trim(),
-        logoUrl: newServiceDraft.logoUrl.trim(),
-        logoAlt: newServiceDraft.logoAlt.trim(),
+        price: newServiceDraft.price.trim(),
+        featured: newServiceDraft.featured,
         items: newServiceDraft.firstItemAr.trim() ? [newServiceDraft.firstItemAr.trim()] : [],
+        whatsappMessage: newServiceDraft.whatsappAr.trim(),
       };
 
-      const enCard: ServiceCard = {
-        id: newServiceDraft.id.trim(),
+      const enCard: ServicePackage = {
         title: newServiceDraft.titleEn.trim(),
-        subtitle: newServiceDraft.subtitleEn.trim(),
-        description: newServiceDraft.descriptionEn.trim(),
-        logoUrl: newServiceDraft.logoUrl.trim(),
-        logoAlt: newServiceDraft.logoAlt.trim(),
+        price: newServiceDraft.price.trim(),
+        featured: newServiceDraft.featured,
         items: newServiceDraft.firstItemEn.trim() ? [newServiceDraft.firstItemEn.trim()] : [],
+        whatsappMessage: newServiceDraft.whatsappEn.trim(),
       };
 
       const next = deepClone(current);
-      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "cards"], [...arServices, arCard] as unknown as JsonValue) as unknown as BilingualContent["ar"];
-      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "cards"], [...enServices, enCard] as unknown as JsonValue) as unknown as BilingualContent["en"];
+      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["services", "packages"], [...arServices, arCard] as unknown as JsonValue) as unknown as BilingualContent["ar"];
+      next.en = setAtPath((next.en ?? {}) as JsonValue, ["services", "packages"], [...enServices, enCard] as unknown as JsonValue) as unknown as BilingualContent["en"];
       return next;
     });
 
     setNewServiceDraft(EMPTY_NEW_SERVICE);
     setShowNewServiceForm(false);
+  };
+
+  const addGalleryBilingual = () => {
+    if (!newGalleryDraft.src.trim() || !newGalleryDraft.titleAr.trim() || !newGalleryDraft.titleEn.trim()) {
+      setStatus(adminLocale === "ar" ? "أدخل رابط الوسائط والعنوان بالعربية والإنجليزية." : "Please fill media URL and both AR/EN titles.");
+      return;
+    }
+
+    setData((current) => {
+      const arItems = getLocaleGalleryItems(current, "ar");
+      const enItems = getLocaleGalleryItems(current, "en");
+      const inferredFileName = getFileNameFromSrc(newGalleryDraft.src.trim());
+      const fileName = newGalleryDraft.fileName.trim() || inferredFileName;
+
+      const arItem: GalleryItem = {
+        src: newGalleryDraft.src.trim(),
+        fileName,
+        type: newGalleryDraft.type,
+        title: newGalleryDraft.titleAr.trim(),
+        description: newGalleryDraft.descriptionAr.trim(),
+        thumbnail: newGalleryDraft.thumbnail.trim(),
+      };
+
+      const enItem: GalleryItem = {
+        src: newGalleryDraft.src.trim(),
+        fileName,
+        type: newGalleryDraft.type,
+        title: newGalleryDraft.titleEn.trim(),
+        description: newGalleryDraft.descriptionEn.trim(),
+        thumbnail: newGalleryDraft.thumbnail.trim(),
+      };
+
+      const next = deepClone(current);
+      next.ar = setAtPath((next.ar ?? {}) as JsonValue, ["gallery", "items"], [...arItems, arItem] as unknown as JsonValue) as unknown as BilingualContent["ar"];
+      next.en = setAtPath((next.en ?? {}) as JsonValue, ["gallery", "items"], [...enItems, enItem] as unknown as JsonValue) as unknown as BilingualContent["en"];
+      return next;
+    });
+
+    setNewGalleryDraft(EMPTY_NEW_GALLERY);
+    setShowNewGalleryForm(false);
+  };
+
+  const syncGalleryFromPublicFolder = async () => {
+    setIsSyncingGallery(true);
+    setStatus(text.quick.syncingGallery);
+
+    try {
+      const response = await fetch(`/api/admin/gallery-files?t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Failed to load gallery files: ${response.status}`);
+      }
+
+      const payload = (await response.json()) as {
+        files: Array<{ fileName: string; src: string; type: GalleryMediaType; title: string }>;
+      };
+
+      const files = Array.isArray(payload.files) ? payload.files : [];
+      const arItems: GalleryItem[] = files.map((file) => ({
+        src: file.src,
+        fileName: file.fileName,
+        type: file.type,
+        title: file.title,
+        description: file.type === "video" ? "عرض فيديو من تنفيذاتنا في المناسبات." : "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية.",
+        thumbnail: "",
+      }));
+      const enItems: GalleryItem[] = files.map((file) => ({
+        src: file.src,
+        fileName: file.fileName,
+        type: file.type,
+        title: file.title,
+        description: file.type === "video" ? "Video highlight from one of our event setups." : "A real capture from one of our premium hospitality executions.",
+        thumbnail: "",
+      }));
+
+      updateBothLocalesPath(["gallery", "items"], arItems as unknown as JsonValue, enItems as unknown as JsonValue);
+      setStatus(
+        adminLocale === "ar"
+          ? `تمت مزامنة ${files.length} ملف من public/Gallery. احفظ لنشر التغييرات.`
+          : `Synced ${files.length} files from public/Gallery. Save to publish changes.`,
+      );
+    } catch (error) {
+      console.error(error);
+      setStatus(adminLocale === "ar" ? "فشلت مزامنة ملفات المعرض." : "Failed to sync gallery files.");
+    } finally {
+      setIsSyncingGallery(false);
+    }
   };
 
   const addPartnerBilingual = () => {
@@ -1114,8 +1406,9 @@ export default function AdminPage() {
       return (
         <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-xl font-black text-darkGreen">{text.sectionLabels.overview}</h2>
-          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-5">
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.services}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickServices.length}</p></div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.gallery}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickGallery.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.partners}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickPartners.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.reviews}</p><p className="mt-1 text-2xl font-black text-darkGreen">{quickReviews.length}</p></div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><p className="text-xs text-slate-500">{text.overviewCards.keys}</p><p className="mt-1 text-2xl font-black text-darkGreen">{topLevelKeysCount}</p></div>
@@ -1128,6 +1421,12 @@ export default function AdminPage() {
       return (
         <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-xl font-black text-darkGreen">{text.sectionLabels.services}</h2>
+          <p className="mt-2 text-sm text-slate-500">
+            {adminLocale === "ar"
+              ? "حرّر باقات الخدمات المعروضة في الصفحة الرئيسية. هذه الحقول مرتبطة مباشرة بقسم الباقات الظاهر للعميل."
+              : "Edit the package cards shown on the website. These fields map directly to the live Services section."}
+          </p>
+
           <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
             <button
               type="button"
@@ -1138,51 +1437,33 @@ export default function AdminPage() {
             </button>
             {showNewServiceForm && (
               <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <input value={newServiceDraft.id} onChange={(e) => setNewServiceDraft((d) => ({ ...d, id: e.target.value }))} placeholder="id (shared)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                <div className="flex gap-2">
-                  <input value={newServiceDraft.logoUrl} onChange={(e) => setNewServiceDraft((d) => ({ ...d, logoUrl: e.target.value }))} placeholder="logoUrl (shared)" className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <label className="cursor-pointer rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-xs font-semibold text-darkGreen">
-                    {text.quick.upload}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={async (event) => {
-                        const file = event.target.files?.[0];
-                        if (file) {
-                          const url = await uploadByBucket("Services", file, "new-service-logo");
-                          if (url) {
-                            setNewServiceDraft((draft) => ({ ...draft, logoUrl: url }));
-                          }
-                        }
-                        event.target.value = "";
-                      }}
-                    />
-                  </label>
-                </div>
-                <input value={newServiceDraft.logoAlt} onChange={(e) => setNewServiceDraft((d) => ({ ...d, logoAlt: e.target.value }))} placeholder="logoAlt (shared)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                <div className="sm:col-span-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <input value={newServiceDraft.titleAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleAr: e.target.value }))} placeholder="title AR" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input value={newServiceDraft.titleEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleEn: e.target.value }))} placeholder="title EN" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input value={newServiceDraft.subtitleAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, subtitleAr: e.target.value }))} placeholder="subtitle AR" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input value={newServiceDraft.subtitleEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, subtitleEn: e.target.value }))} placeholder="subtitle EN" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                </div>
-                <textarea value={newServiceDraft.descriptionAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, descriptionAr: e.target.value }))} placeholder="description AR" rows={2} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                <textarea value={newServiceDraft.descriptionEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, descriptionEn: e.target.value }))} placeholder="description EN" rows={2} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <input value={newServiceDraft.titleAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleAr: e.target.value }))} placeholder="title AR" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <input value={newServiceDraft.titleEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleEn: e.target.value }))} placeholder="title EN" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <input value={newServiceDraft.price} onChange={(e) => setNewServiceDraft((d) => ({ ...d, price: e.target.value }))} placeholder="price (shared)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <label className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
+                  <input
+                    type="checkbox"
+                    checked={newServiceDraft.featured}
+                    onChange={(event) => setNewServiceDraft((draft) => ({ ...draft, featured: event.target.checked }))}
+                    className="h-4 w-4 rounded border-slate-300"
+                  />
+                  {adminLocale === "ar" ? "باقة مميزة" : "Featured package"}
+                </label>
+                <textarea value={newServiceDraft.whatsappAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, whatsappAr: e.target.value }))} placeholder="WhatsApp message AR" rows={2} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <textarea value={newServiceDraft.whatsappEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, whatsappEn: e.target.value }))} placeholder="WhatsApp message EN" rows={2} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <input value={newServiceDraft.firstItemAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, firstItemAr: e.target.value }))} placeholder="first item AR" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <input value={newServiceDraft.firstItemEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, firstItemEn: e.target.value }))} placeholder="first item EN" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <div className="sm:col-span-2 flex gap-2">
                   <button type="button" onClick={addServiceBilingual} className="rounded-lg bg-darkGreen px-3 py-2 text-sm font-semibold text-white">{text.quick.addService}</button>
                   <button type="button" onClick={() => setShowNewServiceForm(false)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">Cancel</button>
                 </div>
-                {uploadingPath === "new-service-logo" && <div className="sm:col-span-2 text-xs text-slate-500">Uploading service image...</div>}
               </div>
             )}
           </div>
 
           <div className="mt-4 space-y-3">
             {quickServices.map((service, index) => (
-              <div key={`${service.id}-${index}`} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <div key={`${service.title || "package"}-${index}`} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                   <div className="text-xs font-semibold text-slate-500">#{index + 1}</div>
                   <div className="flex gap-2">
@@ -1192,17 +1473,24 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <input value={service.id || ""} onChange={(e) => syncServiceSharedField(index, "id", e.target.value)} placeholder="id" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                   <input value={service.title || ""} onChange={(e) => setServices(quickServices.map((item, i) => (i === index ? { ...item, title: e.target.value } : item)))} placeholder="title" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input value={service.subtitle || ""} onChange={(e) => setServices(quickServices.map((item, i) => (i === index ? { ...item, subtitle: e.target.value } : item)))} placeholder="subtitle" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <input value={service.logoAlt || ""} onChange={(e) => syncServiceSharedField(index, "logoAlt", e.target.value)} placeholder="logoAlt" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                  <input value={service.price || ""} onChange={(e) => syncServiceSharedField(index, "price", e.target.value)} placeholder="price" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                  <label className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(service.featured)}
+                      onChange={(event) => syncServiceSharedField(index, "featured", event.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300"
+                    />
+                    {adminLocale === "ar" ? "باقة مميزة" : "Featured package"}
+                  </label>
                 </div>
-                <textarea value={service.description || ""} onChange={(e) => setServices(quickServices.map((item, i) => (i === index ? { ...item, description: e.target.value } : item)))} rows={3} placeholder="description" className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <textarea value={service.whatsappMessage || ""} onChange={(e) => setServices(quickServices.map((item, i) => (i === index ? { ...item, whatsappMessage: e.target.value } : item)))} rows={3} placeholder="WhatsApp message" className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
 
                 <div className="mt-2 space-y-2 rounded-xl border border-slate-200 bg-white p-2">
                   <div className="text-xs font-semibold text-slate-500">{text.quick.items}</div>
                   {(service.items || []).map((item, itemIndex) => (
-                    <div key={`${service.id}-item-${itemIndex}`} className="flex gap-2">
+                    <div key={`service-item-${index}-${itemIndex}`} className="flex gap-2">
                       <input
                         value={item || ""}
                         onChange={(e) => setServices(quickServices.map((currentService, i) => {
@@ -1265,21 +1553,245 @@ export default function AdminPage() {
                     </div>
                   )}
                 </div>
+              </div>
+            ))}
+            <button type="button" onClick={() => setShowNewServiceForm(true)} className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-sm font-semibold text-darkGreen">{text.quick.addService}</button>
+          </div>
+        </section>
+      );
+    }
 
-                <div className="mt-2 flex gap-2">
-                  <input value={service.logoUrl || ""} onChange={(e) => syncServiceSharedField(index, "logoUrl", e.target.value)} placeholder="logoUrl" className="min-w-[220px] flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <label className="cursor-pointer rounded border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-xs font-semibold text-darkGreen">
+    if (activeSection === "gallery") {
+      return (
+        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-black text-darkGreen">{text.sectionLabels.gallery}</h2>
+          <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowNewGalleryForm((value) => !value)}
+                className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-sm font-semibold text-darkGreen"
+              >
+                {text.quick.addGallery}
+              </button>
+              <button
+                type="button"
+                onClick={() => void syncGalleryFromPublicFolder()}
+                disabled={isSyncingGallery}
+                className="rounded-lg border border-darkGreen/25 bg-white px-3 py-2 text-sm font-semibold text-darkGreen disabled:opacity-50"
+              >
+                {isSyncingGallery ? text.quick.syncingGallery : text.quick.syncGallery}
+              </button>
+            </div>
+
+            {showNewGalleryForm && (
+              <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="flex gap-2 sm:col-span-2">
+                  <input
+                    value={newGalleryDraft.src}
+                    onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, src: event.target.value }))}
+                    placeholder="media src (shared)"
+                    className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <label className="cursor-pointer rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-xs font-semibold text-darkGreen">
                     {text.quick.upload}
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,video/*"
                       className="hidden"
                       onChange={async (event) => {
                         const file = event.target.files?.[0];
                         if (file) {
-                          const url = await uploadAndGetUrl(["services", "cards", index, "logoUrl"], file);
+                          const url = await uploadByBucket("Gallery", file, "new-gallery-src");
                           if (url) {
-                            syncServiceSharedField(index, "logoUrl", url);
+                            setNewGalleryDraft((draft) => ({
+                              ...draft,
+                              src: url,
+                              fileName: draft.fileName || getFileNameFromSrc(url),
+                              type: file.type.startsWith("video/") ? "video" : "image",
+                            }));
+                          }
+                        }
+                        event.target.value = "";
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <input
+                  value={newGalleryDraft.fileName}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, fileName: event.target.value }))}
+                  placeholder="fileName (shared)"
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+                <select
+                  value={newGalleryDraft.type}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, type: event.target.value as GalleryMediaType }))}
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                >
+                  <option value="image">image</option>
+                  <option value="video">video</option>
+                </select>
+
+                <input
+                  value={newGalleryDraft.thumbnail}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, thumbnail: event.target.value }))}
+                  placeholder="thumbnail src (optional, for video)"
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm sm:col-span-2"
+                />
+
+                <input
+                  value={newGalleryDraft.titleAr}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, titleAr: event.target.value }))}
+                  placeholder="title AR"
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+                <input
+                  value={newGalleryDraft.titleEn}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, titleEn: event.target.value }))}
+                  placeholder="title EN"
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+
+                <textarea
+                  value={newGalleryDraft.descriptionAr}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, descriptionAr: event.target.value }))}
+                  placeholder="description AR"
+                  rows={2}
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+                <textarea
+                  value={newGalleryDraft.descriptionEn}
+                  onChange={(event) => setNewGalleryDraft((draft) => ({ ...draft, descriptionEn: event.target.value }))}
+                  placeholder="description EN"
+                  rows={2}
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+
+                <div className="sm:col-span-2 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={addGalleryBilingual}
+                    className="rounded-lg bg-darkGreen px-3 py-2 text-sm font-semibold text-white"
+                  >
+                    {text.quick.addGallery}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowNewGalleryForm(false)}
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  >
+                    Cancel
+                  </button>
+                </div>
+
+                {uploadingPath === "new-gallery-src" && (
+                  <div className="sm:col-span-2 text-xs text-slate-500">Uploading gallery media...</div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {quickGallery.map((item, index) => (
+              <div key={`${item.src}-${index}`} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <div className="text-xs font-semibold text-slate-500">#{index + 1}</div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setGallery(moveItem(quickGallery, index, index - 1))}
+                      disabled={index === 0}
+                      className="rounded border border-slate-300 px-2 py-1 text-xs disabled:opacity-40"
+                    >
+                      {text.quick.up}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGallery(moveItem(quickGallery, index, index + 1))}
+                      disabled={index === quickGallery.length - 1}
+                      className="rounded border border-slate-300 px-2 py-1 text-xs disabled:opacity-40"
+                    >
+                      {text.quick.down}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGallery(quickGallery.filter((_, i) => i !== index))}
+                      className="rounded border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700"
+                    >
+                      {text.quick.delete}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <input
+                    value={item.title || ""}
+                    onChange={(event) =>
+                      setGallery(quickGallery.map((entry, i) => (i === index ? { ...entry, title: event.target.value } : entry)))
+                    }
+                    placeholder="title"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <select
+                    value={item.type || "image"}
+                    onChange={(event) => syncGallerySharedField(index, "type", event.target.value)}
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  >
+                    <option value="image">image</option>
+                    <option value="video">video</option>
+                  </select>
+                </div>
+
+                <textarea
+                  value={item.description || ""}
+                  onChange={(event) =>
+                    setGallery(quickGallery.map((entry, i) => (i === index ? { ...entry, description: event.target.value } : entry)))
+                  }
+                  rows={2}
+                  placeholder="description"
+                  className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+
+                <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <input
+                    value={item.fileName || ""}
+                    onChange={(event) => syncGallerySharedField(index, "fileName", event.target.value)}
+                    placeholder="fileName (shared)"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <input
+                    value={item.thumbnail || ""}
+                    onChange={(event) => syncGallerySharedField(index, "thumbnail", event.target.value)}
+                    placeholder="thumbnail src (optional)"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+
+                <div className="mt-2 flex gap-2">
+                  <input
+                    value={item.src || ""}
+                    onChange={(event) => {
+                      const nextSrc = event.target.value;
+                      syncGallerySharedField(index, "src", nextSrc);
+                    }}
+                    placeholder="src (shared)"
+                    className="min-w-[220px] flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <label className="cursor-pointer rounded border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-xs font-semibold text-darkGreen">
+                    {text.quick.upload}
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      className="hidden"
+                      onChange={async (event) => {
+                        const file = event.target.files?.[0];
+                        if (file) {
+                          const url = await uploadAndGetUrl(["gallery", "items", index, "src"], file);
+                          if (url) {
+                            syncGallerySharedField(index, "src", url);
+                            syncGallerySharedField(index, "fileName", getFileNameFromSrc(url));
+                            syncGallerySharedField(index, "type", file.type.startsWith("video/") ? "video" : "image");
                           }
                         }
                         event.target.value = "";
@@ -1289,7 +1801,14 @@ export default function AdminPage() {
                 </div>
               </div>
             ))}
-            <button type="button" onClick={() => setShowNewServiceForm(true)} className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-sm font-semibold text-darkGreen">{text.quick.addService}</button>
+
+            <button
+              type="button"
+              onClick={() => setShowNewGalleryForm(true)}
+              className="rounded-lg border border-darkGreen/25 bg-darkGreen/5 px-3 py-2 text-sm font-semibold text-darkGreen"
+            >
+              {text.quick.addGallery}
+            </button>
           </div>
         </section>
       );
@@ -1428,12 +1947,12 @@ export default function AdminPage() {
                     type="button"
                     onClick={() => {
                       setActiveLocale(result.locale);
-                      setActiveSection("editor");
-                      setStatus(adminLocale === "ar" ? `انتقال إلى ${result.locale}: ${result.path}` : `Jumped to ${result.locale}: ${result.path}`);
+                      setActiveSection(getSectionFromResultPath(result.path));
+                      setStatus(adminLocale === "ar" ? `تم فتح القسم المطابق لـ ${result.path}` : `Opened matching section for ${result.path}`);
                     }}
                     className="rounded border border-darkGreen/25 bg-darkGreen/5 px-2 py-1 text-xs font-semibold text-darkGreen"
                   >
-                    Open in editor
+                    {adminLocale === "ar" ? "فتح القسم" : "Open section"}
                   </button>
                 </div>
                 <div className="mt-1 text-xs text-slate-500">{result.path}</div>
@@ -1445,67 +1964,7 @@ export default function AdminPage() {
       );
     }
 
-    if (activeSection.startsWith("section:")) {
-      const sectionKey = activeSection.replace("section:", "");
-
-      if (sectionKey === "services") {
-        return (
-          <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <p className="text-sm text-slate-600">Use the dedicated Services Manager from the sidebar.</p>
-          </section>
-        );
-      }
-      if (sectionKey === "partners") {
-        return (
-          <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <p className="text-sm text-slate-600">Use the dedicated Partners Manager from the sidebar.</p>
-          </section>
-        );
-      }
-      if (sectionKey === "reviews") {
-        return (
-          <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <p className="text-sm text-slate-600">Use the dedicated Reviews Manager from the sidebar.</p>
-          </section>
-        );
-      }
-
-      const sectionValue = (localeRoot?.[sectionKey] ?? {}) as JsonValue;
-      return (
-        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-          <h2 className="mb-3 text-xl font-black text-darkGreen">{sectionKey}</h2>
-          <NodeEditor
-            path={[sectionKey]}
-            value={sectionValue}
-            onChange={handleChange}
-            onDelete={handleDelete}
-            onMove={handleMove}
-            onAddToArray={handleAddToArray}
-            onAddToObject={handleAddToObject}
-            onUpload={handleUpload}
-            uploadingPath={uploadingPath}
-          />
-        </section>
-      );
-    }
-
-    return (
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-        <h2 className="mb-3 text-xl font-black text-darkGreen">{text.sectionLabels.editor}</h2>
-        <NodeEditor
-          path={[]}
-          value={root}
-          onChange={handleChange}
-          onDelete={handleDelete}
-          onMove={handleMove}
-          onAddToArray={handleAddToArray}
-          onAddToObject={handleAddToObject}
-          onUpload={handleUpload}
-          uploadingPath={uploadingPath}
-          isRoot
-        />
-      </section>
-    );
+    return null;
   };
 
   const uiDir = adminLocale === "ar" ? "rtl" : "ltr";
@@ -1553,6 +2012,12 @@ export default function AdminPage() {
               placeholder={text.searchPlaceholder}
               className="min-w-[260px] flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm outline-none focus:border-darkGreen"
             />
+            <a
+              href="/admin/blogs"
+              className="rounded-xl border border-[#d0b071]/70 bg-[#fff6e1] px-4 py-2.5 text-sm font-semibold text-[#3b4d26]"
+            >
+              {adminLocale === "ar" ? "إدارة المدونة" : "Blog Manager"}
+            </a>
             <button type="button" onClick={() => setActiveSection("search")} className="rounded-xl border border-darkGreen/25 bg-darkGreen/5 px-4 py-2.5 text-sm font-semibold text-darkGreen">
               {text.searchResults} ({searchResults.length})
             </button>
@@ -1573,7 +2038,7 @@ export default function AdminPage() {
           <aside className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
             <h2 className="mb-3 text-sm font-black uppercase tracking-wide text-darkGreen">{text.sidebarTitle}</h2>
             <div className="space-y-2">
-              {(["overview", "services", "partners", "reviews", "editor", "search"] as SectionKey[]).map((section) => (
+              {(["overview", "services", "gallery", "partners", "reviews", "search"] as SectionKey[]).map((section) => (
                 <button
                   key={section}
                   type="button"
@@ -1583,28 +2048,6 @@ export default function AdminPage() {
                   {text.sectionLabels[section]}
                 </button>
               ))}
-
-              <div className="mt-3 border-t border-slate-200 pt-3">
-                <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-slate-500">
-                  {adminLocale === "ar" ? "جميع أقسام المحتوى" : "All Content Sections"}
-                </div>
-                <div className="space-y-2">
-                  {dynamicSectionKeys.map((key) => {
-                    const section = `section:${key}` as SectionKey;
-                    const displayName = sectionLabels[key] || key;
-                    return (
-                      <button
-                        key={section}
-                        type="button"
-                        onClick={() => setActiveSection(section)}
-                        className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold transition ${activeSection === section ? "bg-darkGreen text-white" : "bg-slate-50 text-slate-700 hover:bg-slate-100"}`}
-                      >
-                        {displayName}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
             </div>
           </aside>
 

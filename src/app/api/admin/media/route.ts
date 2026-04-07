@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ALLOWED_BUCKETS = new Set(['Services', 'Partners']);
+const ALLOWED_BUCKETS = new Set(['Services', 'Partners', 'Gallery']);
 
 function getEnvVars() {
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     const dataUrl = body?.dataUrl;
 
     if (!bucket || !ALLOWED_BUCKETS.has(bucket)) {
-      return NextResponse.json({ error: 'Bucket must be one of: Services, Partners' }, { status: 400 });
+      return NextResponse.json({ error: 'Bucket must be one of: Services, Partners, Gallery' }, { status: 400 });
     }
 
     if (!fileName || typeof fileName !== 'string') {

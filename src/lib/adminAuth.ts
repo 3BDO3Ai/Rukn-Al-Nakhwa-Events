@@ -1,4 +1,5 @@
 export const ADMIN_SESSION_COOKIE = "admin_session";
+export const DEFAULT_ADMIN_PASSWORD = "Al-Nakhwa_Admin@123";
 
 function stringHash(input: string): string {
   let hash = 5381;
@@ -12,12 +13,17 @@ export function buildAdminSessionToken(adminPassword: string): string {
   return `v1_${stringHash(`pto-admin:${adminPassword}:session`)}`;
 }
 
-export function getExpectedAdminToken(): string | null {
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (!adminPassword) {
-    return null;
+export function getAdminPassword(): string {
+  const configured = process.env.ADMIN_PASSWORD?.trim();
+  if (configured) {
+    return configured;
   }
-  return buildAdminSessionToken(adminPassword);
+
+  return DEFAULT_ADMIN_PASSWORD;
+}
+
+export function getExpectedAdminToken(): string {
+  return buildAdminSessionToken(getAdminPassword());
 }
 
 export function isAdminSessionValid(token: string | undefined): boolean {
@@ -26,9 +32,5 @@ export function isAdminSessionValid(token: string | undefined): boolean {
   }
 
   const expected = getExpectedAdminToken();
-  if (!expected) {
-    return false;
-  }
-
   return token === expected;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { useContent } from '@/content/useContent';
 import { buildWhatsAppHref } from '@/lib/contact';
 import Image from 'next/image';
@@ -10,9 +11,33 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeHash, setActiveHash] = useState('#hero');
   const scrollFrameRef = useRef<number | null>(null);
+  const pathname = usePathname();
   const { dictionary, dir, toggleLocale } = useContent();
   const navbar = dictionary.navbar;
   const brandName = dictionary.common?.brandName;
+  const isHomePage = pathname === '/';
+  const isBlogsPage = pathname.startsWith('/blogs');
+  const blogLabel = dir === 'rtl' ? 'المدونة' : 'Blog';
+
+  const resolveNavHref = (href: string) => {
+    if (!href) {
+      return '/';
+    }
+
+    if (href.startsWith('#')) {
+      return isHomePage ? href : `/${href}`;
+    }
+
+    return href;
+  };
+
+  const isNavLinkActive = (href: string, index: number) => {
+    if (href.startsWith('#')) {
+      return isHomePage && (href === activeHash || (index === 0 && !activeHash));
+    }
+
+    return pathname === href;
+  };
 
   useEffect(() => {
     const updateScrolledState = () => {
@@ -41,14 +66,14 @@ export default function Navbar() {
 
   useEffect(() => {
     const onHashChange = () => {
-      setActiveHash(window.location.hash || '#hero');
+      setActiveHash(isHomePage ? window.location.hash || '#hero' : '');
       setMobileOpen(false);
     };
 
     onHashChange();
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
+  }, [isHomePage]);
 
   const whatsappHref = buildWhatsAppHref(navbar?.ctaMessage ?? '');
 
@@ -59,10 +84,12 @@ export default function Navbar() {
           className={
             scrolled
               ? 'mx-auto flex items-center justify-between rounded-[1rem] border border-[#ccb06f]/65 bg-[linear-gradient(90deg,rgba(8,38,32,0.96)_0%,rgba(5,27,23,0.97)_45%,rgba(8,38,32,0.96)_100%)] px-4 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur md:px-5'
-              : 'flex w-full items-center justify-between bg-transparent px-6 py-3 md:px-10'
+              : isBlogsPage
+                ? 'flex w-full items-center justify-between border-b border-[#ccb06f]/40 bg-[linear-gradient(90deg,rgba(8,38,32,0.96)_0%,rgba(5,27,23,0.97)_45%,rgba(8,38,32,0.96)_100%)] px-6 py-3 md:px-10'
+                : 'flex w-full items-center justify-between bg-transparent px-6 py-3 md:px-10'
           }
         >
-          <a href="#hero" className="group flex min-w-0 items-center gap-2 text-right md:gap-3">
+          <a href={isHomePage ? '#hero' : '/#hero'} className="group flex min-w-0 items-center gap-2 text-right md:gap-3">
             <Image
               src="/logo_2.svg"
               alt={dictionary.common?.brandShort ?? 'Logo'}
@@ -82,10 +109,10 @@ export default function Navbar() {
           <nav className="hidden items-center gap-1 md:flex">
             {navbar?.links?.map((link: { label: string; href: string }, index: number) => (
               <a
-                key={link.href}
-                href={link.href}
+                key={`${link.href}-${index}`}
+                href={resolveNavHref(link.href)}
                 className={
-                  link.href === activeHash || (index === 0 && !activeHash)
+                  isNavLinkActive(link.href, index)
                     ? 'rounded-full bg-[var(--elite-primary)] px-4 py-1.5 text-sm font-black text-[#1a1f14] shadow-[0_4px_18px_rgba(231,173,30,0.24)]'
                     : 'rounded-full px-4 py-1.5 text-sm font-black text-white/95 transition hover:bg-white/12'
                 }
@@ -93,6 +120,16 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="/blogs"
+              className={
+                isBlogsPage
+                  ? 'rounded-full bg-[var(--elite-primary)] px-4 py-1.5 text-sm font-black text-[#1a1f14] shadow-[0_4px_18px_rgba(231,173,30,0.24)]'
+                  : 'rounded-full px-4 py-1.5 text-sm font-black text-white/95 transition hover:bg-white/12'
+              }
+            >
+              {blogLabel}
+            </a>
           </nav>
 
           <div className="flex min-w-0 items-center gap-2 md:gap-3">
@@ -139,10 +176,10 @@ export default function Navbar() {
             <div className="grid gap-2">
               {navbar?.links?.map((link: { label: string; href: string }, index: number) => (
                 <a
-                  key={link.href}
-                  href={link.href}
+                  key={`${link.href}-${index}`}
+                  href={resolveNavHref(link.href)}
                   className={
-                    link.href === activeHash || (index === 0 && !activeHash)
+                    isNavLinkActive(link.href, index)
                       ? 'rounded-xl bg-[var(--elite-primary)] px-4 py-2 text-sm font-extrabold text-[#1a1f14]'
                       : 'rounded-xl bg-white/5 px-4 py-2 text-sm font-bold text-white'
                   }
@@ -150,6 +187,16 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/blogs"
+                className={
+                  isBlogsPage
+                    ? 'rounded-xl bg-[var(--elite-primary)] px-4 py-2 text-sm font-extrabold text-[#1a1f14]'
+                    : 'rounded-xl bg-white/5 px-4 py-2 text-sm font-bold text-white'
+                }
+              >
+                {blogLabel}
+              </a>
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-primary-gold mt-1 text-xs sm:text-sm">
                 <span className="inline sm:hidden">احجز الآن</span>
                 <span className="hidden sm:inline">{navbar?.ctaLabel}</span>

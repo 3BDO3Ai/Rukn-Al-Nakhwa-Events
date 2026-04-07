@@ -39,6 +39,52 @@ const setStoreContent = (content: BilingualContent) => {
   emitStoreChange();
 };
 
+function mergeBlogFallback(remote: BilingualContent): BilingualContent {
+  const fallback = fallbackContent as BilingualContent;
+
+  const applyForLocale = (locale: keyof BilingualContent): SiteDictionary => {
+    const remoteLocale = (remote[locale] && typeof remote[locale] === "object") ? { ...remote[locale] } : {};
+    const fallbackLocale = (fallback[locale] && typeof fallback[locale] === "object") ? fallback[locale] : {};
+
+    const fallbackBlogs = (fallbackLocale.blogs && typeof fallbackLocale.blogs === "object")
+      ? (fallbackLocale.blogs as Record<string, unknown>)
+      : null;
+
+    if (!fallbackBlogs) {
+      return remoteLocale;
+    }
+
+    const remoteBlogs = (remoteLocale.blogs && typeof remoteLocale.blogs === "object")
+      ? (remoteLocale.blogs as Record<string, unknown>)
+      : null;
+
+    if (!remoteBlogs) {
+      return {
+        ...remoteLocale,
+        blogs: fallbackBlogs,
+      };
+    }
+
+    const remotePosts = Array.isArray(remoteBlogs.posts) && remoteBlogs.posts.length > 0
+      ? remoteBlogs.posts
+      : fallbackBlogs.posts;
+
+    return {
+      ...remoteLocale,
+      blogs: {
+        ...fallbackBlogs,
+        ...remoteBlogs,
+        posts: remotePosts,
+      },
+    };
+  };
+
+  return {
+    ar: applyForLocale("ar"),
+    en: applyForLocale("en"),
+  };
+}
+
 async function fetchRemoteContent(): Promise<BilingualContent | null> {
   try {
     const timestamp = Date.now();
@@ -51,7 +97,7 @@ async function fetchRemoteContent(): Promise<BilingualContent | null> {
     if (!data?.ar || !data?.en) {
       return null;
     }
-    return data;
+    return mergeBlogFallback(data);
   } catch (error) {
     console.warn("Failed to fetch remote content.", error);
     return null;

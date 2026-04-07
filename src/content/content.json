@@ -8,12 +8,34 @@
     },
     "navbar": {
       "links": [
-        { "label": "الرئيسية", "href": "#hero" },
-        { "label": "أرقامنا", "href": "#stats" },
-        { "label": "باقاتنا", "href": "#packages" },
-        { "label": "عن المؤسسة", "href": "#about" },
-        { "label": "الشركاء", "href": "#partners" },
-        { "label": "تواصل معنا", "href": "#contact" }
+        {
+          "label": "الرئيسية",
+          "href": "#hero"
+        },
+        {
+          "label": "أرقامنا",
+          "href": "#stats"
+        },
+        {
+          "label": "باقاتنا",
+          "href": "#packages"
+        },
+        {
+          "label": "الأعمال",
+          "href": "#gallery"
+        },
+        {
+          "label": "عن المؤسسة",
+          "href": "#about"
+        },
+        {
+          "label": "الشركاء",
+          "href": "#partners"
+        },
+        {
+          "label": "تواصل معنا",
+          "href": "#contact"
+        }
       ],
       "ctaLabel": "احجز مناسبتك الآن",
       "ctaMessage": "السلام عليكم، أرغب في حجز مناسبة لدى مؤسسة ركن النخوة للحفلات."
@@ -44,10 +66,24 @@
       "title": "مسيرة من العطاء في خدمة مناسباتكم",
       "description": "نفخر بمسيرة من العطاء تعكس التزامنا بتقديم أرقى مستويات الضيافة في كافة المناسبات.",
       "items": [
-        { "target": 10, "prefix": "+", "label": "سنوات من الأصالة" },
-        { "value": "24/7", "label": "جاهزية لتلبية مناسباتكم" },
-        { "target": 500, "prefix": "+", "label": "مناسبة وحفل ناجح" },
-        { "value": "طاقم متكامل", "label": "للرجال والنساء" }
+        {
+          "target": 10,
+          "prefix": "+",
+          "label": "سنوات من الأصالة"
+        },
+        {
+          "value": "24/7",
+          "label": "جاهزية لتلبية مناسباتكم"
+        },
+        {
+          "target": 500,
+          "prefix": "+",
+          "label": "مناسبة وحفل ناجح"
+        },
+        {
+          "value": "طاقم متكامل",
+          "label": "للرجال والنساء"
+        }
       ]
     },
     "services": {
@@ -122,7 +158,11 @@
           "description": "أعلى باقة ضيافة ملكية مع طاقم كامل وتجهيزات فاخرة.",
           "logoUrl": "",
           "logoAlt": "",
-          "items": ["ضيافة ملكية", "ديكور فاخر", "طاقم متكامل"]
+          "items": [
+            "ضيافة ملكية",
+            "ديكور فاخر",
+            "طاقم متكامل"
+          ]
         },
         {
           "id": "package-diamond",
@@ -131,7 +171,11 @@
           "description": "تجهيز متوازن لمناسبات فاخرة بطابع راقٍ.",
           "logoUrl": "",
           "logoAlt": "",
-          "items": ["قهوجي وصبابين", "مدخل خزامي", "تمور وحلا"]
+          "items": [
+            "قهوجي وصبابين",
+            "مدخل خزامي",
+            "تمور وحلا"
+          ]
         }
       ]
     },
@@ -192,16 +236,46 @@
       "title": "ثقة شركائنا مصدر فخرنا",
       "description": "نفخر بالشراكة مع جهات وعلامات تعكس جودة التنفيذ واحترافية الخدمة.",
       "logos": [
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg", "alt": "FLOROOM" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg", "alt": "SALAM" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg", "alt": "ADAM Car Service" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg", "alt": "Al Wardiah Nursery" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg", "alt": "Darwin Accounting Services" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg", "alt": "ZJ Brand" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg", "alt": "Idea Smart" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg",
+          "alt": "MAKEOVER Salon & Spa"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg",
+          "alt": "LAFLOR"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg",
+          "alt": "FLOROOM"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg",
+          "alt": "SALAM"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg",
+          "alt": "ADAM Car Service"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg",
+          "alt": "Al Wardiah Nursery"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg",
+          "alt": "Darwin Accounting Services"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg",
+          "alt": "ZJ Brand"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg",
+          "alt": "Idea Smart"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg",
+          "alt": "Etqan Veterinary Laboratory"
+        }
       ]
     },
     "contact": {
@@ -210,9 +284,18 @@
       "description": "تواصلوا معنا الآن لحجز باقتكم. متاحون على مدار الساعة 24/7 لخدمتكم.",
       "mapEmbedUrl": "https://www.google.com/maps?q=24.7135517,46.6752957&z=17&output=embed",
       "cards": [
-        { "title": "الهاتف والواتساب", "value": "__PHONE__" },
-        { "title": "ساعات العمل", "value": "متاحون 24/7" },
-        { "title": "الموقع", "value": "سكاكا طريق الشيخ جابر, Al Olaya, Riyadh 72341, Saudi Arabia" }
+        {
+          "title": "الهاتف والواتساب",
+          "value": "__PHONE__"
+        },
+        {
+          "title": "ساعات العمل",
+          "value": "متاحون 24/7"
+        },
+        {
+          "title": "الموقع",
+          "value": "سكاكا طريق الشيخ جابر, Al Olaya, Riyadh 72341, Saudi Arabia"
+        }
       ],
       "buttons": [
         {
@@ -226,11 +309,26 @@
       "description": "نقدّم ضيافة راقية وتنفيذًا متكاملًا للمناسبات وفق أعلى معايير الاحتراف والجودة.",
       "quickLinksTitle": "روابط سريعة",
       "quickLinks": [
-        { "label": "الرئيسية", "href": "#hero" },
-        { "label": "باقاتنا", "href": "#packages" },
-        { "label": "عن المؤسسة", "href": "#about" },
-        { "label": "الشركاء", "href": "#partners" },
-        { "label": "تواصل معنا", "href": "#contact" }
+        {
+          "label": "الرئيسية",
+          "href": "#hero"
+        },
+        {
+          "label": "باقاتنا",
+          "href": "#packages"
+        },
+        {
+          "label": "عن المؤسسة",
+          "href": "#about"
+        },
+        {
+          "label": "الشركاء",
+          "href": "#partners"
+        },
+        {
+          "label": "تواصل معنا",
+          "href": "#contact"
+        }
       ],
       "contactTitle": "تواصل مباشر",
       "phoneLabel": "الهاتف والواتساب",
@@ -260,10 +358,213 @@
       "badge": "تواصل معنا",
       "title": "معلومات التواصل والموقع",
       "description": "يسعدنا تواصلكم معنا. يمكنكم زيارتنا أو الاتصال بنا خلال ساعات العمل.",
-      "address": ["المملكة العربية السعودية"],
-      "workingHours": ["متاحون 24/7", "الزيارات حسب التنسيق"],
+      "address": [
+        "المملكة العربية السعودية"
+      ],
+      "workingHours": [
+        "متاحون 24/7",
+        "الزيارات حسب التنسيق"
+      ],
       "directionsButton": "الحصول على الاتجاهات",
       "mapTitle": "خريطة الموقع"
+    },
+    "gallery": {
+      "badge": "معرض الأعمال",
+      "title": "لقطات من أعمالنا",
+      "subtitle": "شاهد نماذج حقيقية من صور وفيديوهات تجهيزاتنا في المناسبات الراقية.",
+      "focusHint": "اضغط لعرض مكبر",
+      "emptyMessage": "لا توجد وسائط متاحة حالياً.",
+      "videoBadge": "فيديو",
+      "items": [
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.12%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.12 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.12 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (2)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (1)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (2)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (3).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (3)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (4).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (4)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM (1)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM (2)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.16 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.16 PM (1)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.16 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.16 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.17 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.17 PM (1)",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.17 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.17 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.18 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.18 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.19%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.19 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.19 PM",
+          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.16%20PM.mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.16 PM.mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.16 PM",
+          "description": "عرض فيديو من تنفيذاتنا في المناسبات."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.17%20PM%20(1).mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.17 PM (1).mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.17 PM (1)",
+          "description": "عرض فيديو من تنفيذاتنا في المناسبات."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.17%20PM%20(2).mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.17 PM (2).mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.17 PM (2)",
+          "description": "عرض فيديو من تنفيذاتنا في المناسبات."
+        }
+      ]
+    },
+    "blogs": {
+      "badge": "المدونة",
+      "title": "مقالاتنا",
+      "subtitle": "تابع أحدث المقالات والنصائح المتعلقة بخدمات الضيافة وتنظيم المناسبات.",
+      "galleryLabel": "المعرض",
+      "readMoreLabel": "اقرأ المزيد",
+      "backHomeLabel": "العودة للرئيسية",
+      "emptyMessage": "لا توجد مقالات منشورة حالياً.",
+      "publishedLabel": "تاريخ النشر",
+      "backToBlogsLabel": "العودة للمدونة",
+      "posts": [
+        {
+          "slug": "royal-hospitality-etiquette",
+          "title": "دليل الضيافة الملكية: كيف تترك انطباعاً لا ينسى",
+          "excerpt": "خطوات عملية لترتيب استقبال الضيوف وتقديم القهوة والحلا بأسلوب احترافي يليق بالمناسبات الراقية.",
+          "contentHtml": "<h2>البداية من لحظة الاستقبال</h2><p>الانطباع الأول يتكوّن خلال الدقائق الأولى، لذلك نهتم في ركن النخوة بتنسيق المدخل وترتيب مسار الضيافة من أول خطوة حتى جلوس الضيوف.</p><h2>تنسيق الطاقم والخدمة</h2><p>اختيار عدد <strong>القهوجيين والصبابين</strong> يعتمد على حجم المناسبة. الزي الموحد، اللباقة، وسرعة الاستجابة تفاصيل تصنع الفرق في جودة التجربة.</p><h2>توازن القائمة</h2><p>لأفضل نتيجة، اجمع بين القهوة العربية، المشروبات الساخنة، وأصناف حلا متنوعة. هذا التوازن يرفع مستوى الضيافة ويمنح كل ضيف تجربة مميزة.</p><p>للحجز والاستشارة يمكنك التواصل معنا مباشرة عبر <a href='https://wa.me/966550072339' target='_blank' rel='noopener noreferrer'>واتساب</a>.</p>",
+          "coverImage": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(1).jpeg",
+          "gallery": [
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(2).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM.jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM.jpeg"
+          ],
+          "author": "فريق ركن النخوة",
+          "publishedAt": "2026-04-05"
+        },
+        {
+          "slug": "event-planning-checklist",
+          "title": "قائمة تجهيز المناسبة الناجحة قبل يوم التنفيذ",
+          "excerpt": "قائمة مختصرة تساعدك على مراجعة أهم عناصر المناسبة: المساحة، عدد الضيوف، نوع الضيافة، وتوزيع الطاقم.",
+          "contentHtml": "<h2>قبل المناسبة بأسبوع</h2><ul><li>تأكيد موعد التنفيذ والموقع.</li><li>حصر عدد الضيوف المتوقع.</li><li>اختيار الباقة المناسبة للمساحة.</li></ul><h2>قبل المناسبة بيوم</h2><ul><li>مراجعة خطة توزيع الطاقم.</li><li>تأكيد أصناف القهوة والحلا.</li><li>تجهيز نقطة الاستقبال والمداخل.</li></ul><h2>يوم المناسبة</h2><p>وجود مشرف ميداني يضمن انسيابية الخدمة من الاستقبال إلى ختام المناسبة، ويُسهل التعامل مع أي تعديل سريع أثناء التنفيذ.</p><p>شاهد نماذج من أعمالنا في <a href='/#gallery'>المعرض</a> لمعرفة شكل التنفيذ على أرض الواقع.</p>",
+          "coverImage": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(1).jpeg",
+          "gallery": [
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg"
+          ],
+          "author": "فريق التشغيل",
+          "publishedAt": "2026-04-03"
+        }
+      ]
     }
   },
   "en": {
@@ -275,12 +576,34 @@
     },
     "navbar": {
       "links": [
-        { "label": "Home", "href": "#hero" },
-        { "label": "Stats", "href": "#stats" },
-        { "label": "Packages", "href": "#packages" },
-        { "label": "About", "href": "#about" },
-        { "label": "Partners", "href": "#partners" },
-        { "label": "Contact", "href": "#contact" }
+        {
+          "label": "Home",
+          "href": "#hero"
+        },
+        {
+          "label": "Stats",
+          "href": "#stats"
+        },
+        {
+          "label": "Packages",
+          "href": "#packages"
+        },
+        {
+          "label": "Gallery",
+          "href": "#gallery"
+        },
+        {
+          "label": "About",
+          "href": "#about"
+        },
+        {
+          "label": "Partners",
+          "href": "#partners"
+        },
+        {
+          "label": "Contact",
+          "href": "#contact"
+        }
       ],
       "ctaLabel": "Book Your Event",
       "ctaMessage": "Hello, I would like to book an event with Rukn Al-Nakhwa Events."
@@ -311,10 +634,24 @@
       "title": "A strong hospitality track record",
       "description": "Our journey reflects commitment to luxury hospitality in all occasions.",
       "items": [
-        { "target": 10, "prefix": "+", "label": "Years of authenticity" },
-        { "value": "24/7", "label": "Event readiness" },
-        { "target": 500, "prefix": "+", "label": "Successful events" },
-        { "value": "Full Teams", "label": "For men and women" }
+        {
+          "target": 10,
+          "prefix": "+",
+          "label": "Years of authenticity"
+        },
+        {
+          "value": "24/7",
+          "label": "Event readiness"
+        },
+        {
+          "target": 500,
+          "prefix": "+",
+          "label": "Successful events"
+        },
+        {
+          "value": "Full Teams",
+          "label": "For men and women"
+        }
       ]
     },
     "services": {
@@ -389,7 +726,11 @@
           "description": "Top tier package with full hospitality team and premium decor.",
           "logoUrl": "",
           "logoAlt": "",
-          "items": ["Royal hospitality", "Luxury decor", "Full serving team"]
+          "items": [
+            "Royal hospitality",
+            "Luxury decor",
+            "Full serving team"
+          ]
         },
         {
           "id": "package-diamond-en",
@@ -398,7 +739,11 @@
           "description": "Balanced premium package for elegant events.",
           "logoUrl": "",
           "logoAlt": "",
-          "items": ["Coffee team", "Lavender entrance", "Dates and desserts"]
+          "items": [
+            "Coffee team",
+            "Lavender entrance",
+            "Dates and desserts"
+          ]
         }
       ]
     },
@@ -459,16 +804,46 @@
       "title": "Trusted by valued partners",
       "description": "We take pride in collaborating with brands and entities that value quality execution.",
       "logos": [
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg", "alt": "MAKEOVER Salon & Spa" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg", "alt": "LAFLOR" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg", "alt": "FLOROOM" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg", "alt": "SALAM" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg", "alt": "ADAM Car Service" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg", "alt": "Al Wardiah Nursery" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg", "alt": "Darwin Accounting Services" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg", "alt": "ZJ Brand" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg", "alt": "Idea Smart" },
-        { "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg", "alt": "Etqan Veterinary Laboratory" }
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.05 PM.jpeg",
+          "alt": "MAKEOVER Salon & Spa"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.12.39 PM.jpeg",
+          "alt": "LAFLOR"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.16.46 PM.jpeg",
+          "alt": "FLOROOM"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.12 PM.jpeg",
+          "alt": "SALAM"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.18.58 PM.jpeg",
+          "alt": "ADAM Car Service"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.19.15 PM.jpeg",
+          "alt": "Al Wardiah Nursery"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.20.35 PM.jpeg",
+          "alt": "Darwin Accounting Services"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.19 PM.jpeg",
+          "alt": "ZJ Brand"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.36 PM.jpeg",
+          "alt": "Idea Smart"
+        },
+        {
+          "src": "/Partners/WhatsApp Image 2026-03-24 at 2.21.58 PM.jpeg",
+          "alt": "Etqan Veterinary Laboratory"
+        }
       ]
     },
     "contact": {
@@ -477,9 +852,18 @@
       "description": "Reach us now to reserve your package. Our team is available 24/7.",
       "mapEmbedUrl": "https://www.google.com/maps?q=24.7135517,46.6752957&z=17&output=embed",
       "cards": [
-        { "title": "Phone & WhatsApp", "value": "__PHONE__" },
-        { "title": "Working Hours", "value": "Available 24/7" },
-        { "title": "Location", "value": "Sakaka, Sheikh Jaber Street, Al Olaya, Riyadh 72341, Saudi Arabia" }
+        {
+          "title": "Phone & WhatsApp",
+          "value": "__PHONE__"
+        },
+        {
+          "title": "Working Hours",
+          "value": "Available 24/7"
+        },
+        {
+          "title": "Location",
+          "value": "Sakaka, Sheikh Jaber Street, Al Olaya, Riyadh 72341, Saudi Arabia"
+        }
       ],
       "buttons": [
         {
@@ -493,11 +877,26 @@
       "description": "We craft every event detail with refined hospitality and full-service execution, from planning to flawless delivery.",
       "quickLinksTitle": "Quick Links",
       "quickLinks": [
-        { "label": "Home", "href": "#hero" },
-        { "label": "Packages", "href": "#packages" },
-        { "label": "About", "href": "#about" },
-        { "label": "Partners", "href": "#partners" },
-        { "label": "Contact", "href": "#contact" }
+        {
+          "label": "Home",
+          "href": "#hero"
+        },
+        {
+          "label": "Packages",
+          "href": "#packages"
+        },
+        {
+          "label": "About",
+          "href": "#about"
+        },
+        {
+          "label": "Partners",
+          "href": "#partners"
+        },
+        {
+          "label": "Contact",
+          "href": "#contact"
+        }
       ],
       "contactTitle": "Direct Contact",
       "phoneLabel": "Phone & WhatsApp",
@@ -527,10 +926,213 @@
       "badge": "Contact Us",
       "title": "Contact & Location Information",
       "description": "We are happy to hear from you. Visit us or call during working hours.",
-      "address": ["Saudi Arabia"],
-      "workingHours": ["Available 24/7", "Visits by appointment"],
+      "address": [
+        "Saudi Arabia"
+      ],
+      "workingHours": [
+        "Available 24/7",
+        "Visits by appointment"
+      ],
       "directionsButton": "Get Directions",
       "mapTitle": "Location Map"
+    },
+    "gallery": {
+      "badge": "Our Gallery",
+      "title": "Highlights From Our Work",
+      "subtitle": "Browse real photo and video highlights from our premium event executions.",
+      "focusHint": "Click for focus view",
+      "emptyMessage": "No media available yet.",
+      "videoBadge": "Video",
+      "items": [
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.12%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.12 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.12 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (2)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (1)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (2)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (3).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (3)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM (4).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM (4)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.14 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.14 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM (1)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(2).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM (2).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM (2)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.15 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.15 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.16 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.16 PM (1)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.16 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.16 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM%20(1).jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.17 PM (1).jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.17 PM (1)",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.17 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.17 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.18 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.18 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.19%20PM.jpeg",
+          "fileName": "WhatsApp Image 2026-04-03 at 8.13.19 PM.jpeg",
+          "type": "image",
+          "title": "WhatsApp Image 2026-04-03 at 8.13.19 PM",
+          "description": "A real capture from one of our premium hospitality executions."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.16%20PM.mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.16 PM.mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.16 PM",
+          "description": "Video highlight from one of our event setups."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.17%20PM%20(1).mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.17 PM (1).mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.17 PM (1)",
+          "description": "Video highlight from one of our event setups."
+        },
+        {
+          "src": "/Gallery/WhatsApp%20Video%202026-04-03%20at%208.13.17%20PM%20(2).mp4",
+          "fileName": "WhatsApp Video 2026-04-03 at 8.13.17 PM (2).mp4",
+          "type": "video",
+          "title": "WhatsApp Video 2026-04-03 at 8.13.17 PM (2)",
+          "description": "Video highlight from one of our event setups."
+        }
+      ]
+    },
+    "blogs": {
+      "badge": "Blog",
+      "title": "Our Blog",
+      "subtitle": "Read the latest articles and practical tips about hospitality and premium event execution.",
+      "galleryLabel": "Gallery",
+      "readMoreLabel": "Read More",
+      "backHomeLabel": "Back To Home",
+      "emptyMessage": "No published articles yet.",
+      "publishedLabel": "Published",
+      "backToBlogsLabel": "Back To Blog",
+      "posts": [
+        {
+          "slug": "royal-hospitality-etiquette",
+          "title": "Royal Hospitality Guide: How To Leave A Lasting Impression",
+          "excerpt": "A practical guide to welcoming guests and serving coffee and desserts with premium event-level standards.",
+          "contentHtml": "<h2>Start Strong At The Entrance</h2><p>First impressions are formed within minutes. A well-planned reception flow, clear pathways, and polished service setup create confidence from the first moment.</p><h2>Team Structure Matters</h2><p>The right number of <strong>coffee makers and servers</strong> should match the guest count and event layout. Uniform appearance and smooth coordination are key to luxury-level service.</p><h2>Balance Your Hospitality Menu</h2><p>Blend Arabic coffee, hot beverages, and curated sweets to satisfy different preferences. This balance keeps the guest experience both elegant and memorable.</p><p>For booking and consultation, contact us directly on <a href='https://wa.me/966550072339' target='_blank' rel='noopener noreferrer'>WhatsApp</a>.</p>",
+          "coverImage": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(1).jpeg",
+          "gallery": [
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(2).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.16%20PM.jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.17%20PM.jpeg"
+          ],
+          "author": "Rukn Al-Nakhwa Team",
+          "publishedAt": "2026-04-05"
+        },
+        {
+          "slug": "event-planning-checklist",
+          "title": "Event Preparation Checklist Before Execution Day",
+          "excerpt": "A concise checklist covering venue size, guest count, hospitality menu, and team allocation before event day.",
+          "contentHtml": "<h2>One Week Before The Event</h2><ul><li>Confirm the execution date and exact location.</li><li>Finalize expected guest count.</li><li>Select the package that fits the venue capacity.</li></ul><h2>One Day Before The Event</h2><ul><li>Review team distribution and service flow.</li><li>Confirm coffee and dessert selections.</li><li>Prepare reception zone and entrance setup.</li></ul><h2>On Event Day</h2><p>A dedicated on-site supervisor ensures a smooth service journey from guest arrival to closing moments, while handling real-time adjustments professionally.</p><p>Browse our <a href='/#gallery'>gallery</a> to see real execution samples.</p>",
+          "coverImage": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.15%20PM%20(1).jpeg",
+          "gallery": [
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg"
+          ],
+          "author": "Operations Team",
+          "publishedAt": "2026-04-03"
+        }
+      ]
     }
   }
 }
