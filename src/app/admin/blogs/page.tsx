@@ -49,15 +49,6 @@ function reorder<T>(items: T[], fromIndex: number, toIndex: number): T[] {
   return next;
 }
 
-async function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Failed to read selected file."));
-    reader.readAsDataURL(file);
-  });
-}
-
 interface RichTextEditorProps {
   value: string;
   dir: "rtl" | "ltr";
@@ -422,16 +413,14 @@ export default function BlogAdminPage() {
     setStatus(`Uploading ${variant} image...`);
 
     try {
-      const dataUrl = await fileToDataUrl(file);
+      const formData = new FormData();
+      formData.append("blogName", slug);
+      formData.append("variant", variant);
+      formData.append("file", file);
+
       const response = await fetch("/api/admin/blog-media", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          blogName: slug,
-          fileName: file.name,
-          dataUrl,
-          variant,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {

@@ -559,11 +559,22 @@
           "gallery": [
             "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
             "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
-            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg",
-            "/Blogs/event-planning-checklist/gallery-untitled-design-15-1775591446879-ywokywzm.x-icon"
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg"
           ],
           "author": "فريق التشغيل",
           "publishedAt": "2026-04-03"
+        },
+        {
+          "slug": "blog-1775642785420",
+          "title": "",
+          "excerpt": "",
+          "contentHtml": "",
+          "coverImage": "/Blogs/blog-1775642785420/cover-gemini_generated_image_91aiz691aiz691ai-1775642798916-s9wuc1yw.png",
+          "gallery": [
+            "/Blogs/blog-1775642785420/gallery-whatsapp-image-2026-04-03-at-81314-pm-4-1775642826530-6amwqnmz.jpg"
+          ],
+          "author": "",
+          "publishedAt": "2026-04-08"
         }
       ]
     }
@@ -1128,11 +1139,22 @@
           "gallery": [
             "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(3).jpeg",
             "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.14%20PM%20(4).jpeg",
-            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg",
-            "/Blogs/event-planning-checklist/gallery-untitled-design-15-1775591446879-ywokywzm.x-icon"
+            "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.18%20PM.jpeg"
           ],
           "author": "Operations Team",
           "publishedAt": "2026-04-03"
+        },
+        {
+          "slug": "blog-1775642785420",
+          "title": "",
+          "excerpt": "",
+          "contentHtml": "",
+          "coverImage": "/Blogs/blog-1775642785420/cover-gemini_generated_image_91aiz691aiz691ai-1775642798916-s9wuc1yw.png",
+          "gallery": [
+            "/Blogs/blog-1775642785420/gallery-whatsapp-image-2026-04-03-at-81314-pm-4-1775642826530-6amwqnmz.jpg"
+          ],
+          "author": "",
+          "publishedAt": "2026-04-08"
         }
       ]
     }

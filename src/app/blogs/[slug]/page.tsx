@@ -29,7 +29,7 @@ export default function BlogArticlePage() {
   }, [params?.slug]);
 
   const post = section.posts.find((item) => item.slug === slug);
-  const hasGallerySlider = Boolean(post && post.gallery.length > 3);
+  const hasGalleryFocusMode = Boolean(post && post.gallery.length >= 4);
   const previousImageLabel = locale === "ar" ? "الصورة السابقة" : "Previous image";
   const nextImageLabel = locale === "ar" ? "الصورة التالية" : "Next image";
   const selectImageLabel = locale === "ar" ? "عرض الصورة" : "Show image";
@@ -96,39 +96,39 @@ export default function BlogArticlePage() {
                   <section className="mt-8">
                     <h2 className="text-xl font-black text-[#2b3c1f]">{section.galleryLabel}</h2>
 
-                    {hasGallerySlider ? (
-                      <div className="mt-4">
-                        <div className="relative overflow-hidden rounded-2xl border border-[#d7c79f] bg-[#f7f2e6]">
-                          <img
-                            src={post.gallery[galleryIndex]}
-                            alt={`${post.title || post.slug} ${galleryIndex + 1}`}
-                            className="h-72 w-full object-cover sm:h-[26rem]"
-                          />
+                    <div className="mt-4">
+                      <div className="relative overflow-hidden rounded-2xl border border-[#d7c79f] bg-[#f7f2e6]">
+                        <img
+                          src={post.gallery[galleryIndex]}
+                          alt={`${post.title || post.slug} ${galleryIndex + 1}`}
+                          className={hasGalleryFocusMode ? "h-72 w-full object-cover sm:h-[26rem]" : "h-44 w-full object-cover sm:h-56"}
+                        />
 
-                          <button
-                            type="button"
-                            onClick={handlePreviousImage}
-                            disabled={galleryIndex === 0}
-                            aria-label={previousImageLabel}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-[#d0b071] bg-white/95 px-3 py-2 text-sm font-black text-[#304424] shadow hover:bg-[#f5ead0] disabled:cursor-not-allowed disabled:opacity-45"
-                          >
-                            {dir === "rtl" ? ">" : "<"}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleNextImage}
-                            disabled={galleryIndex >= post.gallery.length - 1}
-                            aria-label={nextImageLabel}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-[#d0b071] bg-white/95 px-3 py-2 text-sm font-black text-[#304424] shadow hover:bg-[#f5ead0] disabled:cursor-not-allowed disabled:opacity-45"
-                          >
-                            {dir === "rtl" ? "<" : ">"}
-                          </button>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={handlePreviousImage}
+                          disabled={galleryIndex === 0}
+                          aria-label={previousImageLabel}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-[#d0b071] bg-white/95 px-3 py-2 text-sm font-black text-[#304424] shadow hover:bg-[#f5ead0] disabled:cursor-not-allowed disabled:opacity-45"
+                        >
+                          {dir === "rtl" ? ">" : "<"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextImage}
+                          disabled={galleryIndex >= post.gallery.length - 1}
+                          aria-label={nextImageLabel}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-[#d0b071] bg-white/95 px-3 py-2 text-sm font-black text-[#304424] shadow hover:bg-[#f5ead0] disabled:cursor-not-allowed disabled:opacity-45"
+                        >
+                          {dir === "rtl" ? "<" : ">"}
+                        </button>
+                      </div>
 
-                        <div className="mt-3 text-sm font-semibold text-[#5a6f3e]">
-                          {galleryIndex + 1} / {post.gallery.length}
-                        </div>
+                      <div className="mt-3 text-sm font-semibold text-[#5a6f3e]">
+                        {galleryIndex + 1} / {post.gallery.length}
+                      </div>
 
+                      {post.gallery.length > 1 && (
                         <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-6">
                           {post.gallery.map((image, index) => (
                             <button
@@ -146,16 +146,8 @@ export default function BlogArticlePage() {
                             </button>
                           ))}
                         </div>
-                      </div>
-                    ) : (
-                      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                        {post.gallery.map((image, index) => (
-                          <div key={`${post.slug}-gallery-${index}`} className="overflow-hidden rounded-xl border border-[#d7c79f] bg-[#f7f2e6]">
-                            <img src={image} alt={`${post.title || post.slug} ${index + 1}`} className="h-36 w-full object-cover sm:h-44" />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </section>
                 )}
               </div>

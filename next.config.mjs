@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '500mb',
+    },
+  },
+  
   images: {
     remotePatterns: [
       {
@@ -15,6 +21,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  
   async headers() {
     return [
       {
