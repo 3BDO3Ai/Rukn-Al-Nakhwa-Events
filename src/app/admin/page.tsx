@@ -400,13 +400,11 @@ function moveItem<T>(items: T[], fromIndex: number, toIndex: number): T[] {
   return next;
 }
 
-async function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Failed to read file"));
-    reader.readAsDataURL(file);
-  });
+function createUploadFormData(bucket: "Services" | "Partners" | "Gallery", file: File): FormData {
+  const formData = new FormData();
+  formData.append("bucket", bucket);
+  formData.append("file", file);
+  return formData;
 }
 
 function inferUploadTarget(path: Path): "Services" | "Partners" | "Gallery" | null {
@@ -826,11 +824,9 @@ export default function AdminPage() {
     setStatus(adminLocale === "ar" ? `جارٍ رفع الوسائط إلى حاوية ${bucket}...` : `Uploading media to ${bucket} bucket...`);
 
     try {
-      const dataUrl = await fileToDataUrl(file);
       const response = await fetch("/api/admin/media", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bucket, fileName: file.name, dataUrl }),
+        body: createUploadFormData(bucket, file),
       });
 
       if (!response.ok) {
@@ -856,11 +852,9 @@ export default function AdminPage() {
     setStatus(adminLocale === "ar" ? `جارٍ رفع الوسائط إلى حاوية ${bucket}...` : `Uploading media to ${bucket} bucket...`);
 
     try {
-      const dataUrl = await fileToDataUrl(file);
       const response = await fetch("/api/admin/media", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bucket, fileName: file.name, dataUrl }),
+        body: createUploadFormData(bucket, file),
       });
 
       if (!response.ok) {
