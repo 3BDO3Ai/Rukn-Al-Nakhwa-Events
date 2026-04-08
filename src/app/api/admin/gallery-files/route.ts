@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { getPublicDir } from "@/lib/serverPaths";
 
 type GalleryMediaType = "image" | "video";
 
@@ -31,7 +32,7 @@ function toPublicSrc(fileName: string): string {
 
 export async function GET() {
   try {
-    const galleryDir = path.join(process.cwd(), "public", "Gallery");
+    const galleryDir = getPublicDir("Gallery");
     const entries = await fs.readdir(galleryDir, { withFileTypes: true });
 
     const files = entries

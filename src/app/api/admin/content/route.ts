@@ -2,11 +2,12 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 import fallbackContent from '@/content/content.json';
+import { getSrcDir } from '@/lib/serverPaths';
 
 export const runtime = 'nodejs';
 
 const DEFAULT_BUCKET_CANDIDATES = ['Content', 'content'];
-const LOCAL_CONTENT_PATH = path.join(process.cwd(), 'src', 'content', 'content.json');
+const LOCAL_CONTENT_PATH = getSrcDir('content', 'content.json');
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);

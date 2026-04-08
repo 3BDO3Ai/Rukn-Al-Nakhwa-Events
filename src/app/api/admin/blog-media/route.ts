@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
+import { getPublicDir } from "@/lib/serverPaths";
 
 export const runtime = "nodejs";
 
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
     const finalFileName = `${variant}-${baseFileName}-${uniqueSuffix}.${extension}`;
 
     // تأكد من أن حرف B كابيتال يتطابق مع الفولدر في السيرفر
-    const blogDirectory = path.join(process.cwd(), "public", "Blogs", blogSlug);
+    const blogDirectory = getPublicDir("Blogs", blogSlug);
     await fs.mkdir(blogDirectory, { recursive: true });
 
     const fullFilePath = path.join(blogDirectory, finalFileName);
