@@ -864,7 +864,9 @@ export default function AdminPage() {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed upload: ${response.status}`);
+        const errorPayload = await response.json().catch(() => null) as { error?: string; details?: string } | null;
+        const message = errorPayload?.details || errorPayload?.error || `Failed upload: ${response.status}`;
+        throw new Error(message);
       }
 
       const result = (await response.json()) as { url: string };
@@ -872,7 +874,8 @@ export default function AdminPage() {
       return result.url;
     } catch (error) {
       console.error(error);
-      setStatus(adminLocale === "ar" ? "فشل رفع الوسائط." : "Upload failed.");
+      const message = error instanceof Error ? error.message : "Upload failed.";
+      setStatus(adminLocale === "ar" ? `فشل رفع الوسائط: ${message}` : `Upload failed: ${message}`);
       return null;
     } finally {
       setUploadingPath(null);

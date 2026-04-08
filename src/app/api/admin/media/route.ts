@@ -1,20 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { getPublicDir } from '@/lib/serverPaths';
 
 const ALLOWED_BUCKETS = new Set(['Services', 'Partners', 'Gallery']);
-
-function getEnvVars() {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-  const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
-    return null;
-  }
-
-  return {
-    SUPABASE_URL,
-    SERVICE_ROLE_KEY,
-  };
-}
 
 function getFileExtension(contentType: string, fileName: string): string {
   const known = contentType.split('/')[1]?.split(';')[0]?.trim();
@@ -41,18 +30,6 @@ function toBase64Payload(dataUrl: string): { contentType: string; base64: string
 
 export async function POST(request: NextRequest) {
   try {
-    const env = getEnvVars();
-    if (!env) {
-      console.error('[/api/admin/media] Missing Supabase environment variables.');
-      return NextResponse.json(
-        {
-          error: 'Missing Supabase write environment variables.',
-          details: 'Set NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local',
-        },
-        { status: 400 }
-      );
-    }
-
     const body = await request.json();
     const bucket = body?.bucket;
     const fileName = body?.fileName;
@@ -84,29 +61,14 @@ export async function POST(request: NextRequest) {
     console.log('[/api/admin/media] Upload starting for:', bucket, fileName);
     const extension = getFileExtension(parsed.contentType, fileName);
     const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${extension}`;
-    const objectPath = `${bucket}/${safeName}`;
-    const uploadUrl = `${env.SUPABASE_URL}/storage/v1/object/${objectPath}`;
-
+    const bucketDir = getPublicDir(bucket);
+    await fs.mkdir(bucketDir, { recursive: true });
+    const absoluteFilePath = path.join(bucketDir, safeName);
     const buffer = Buffer.from(parsed.base64, 'base64');
+    await fs.writeFile(absoluteFilePath, buffer);
 
-    const uploadRes = await fetch(uploadUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': parsed.contentType,
-        apikey: env.SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${env.SERVICE_ROLE_KEY}`,
-        'x-upsert': 'true',
-      },
-      body: buffer,
-    });
-
-    if (!uploadRes.ok) {
-      const text = await uploadRes.text();
-      console.error('[/api/admin/media] Supabase upload failed:', uploadRes.status, text);
-      return NextResponse.json({ error: 'Failed to upload media to Supabase', details: text }, { status: 502 });
-    }
-
-    const publicUrl = `${env.SUPABASE_URL}/storage/v1/object/public/${objectPath}`;
+    const objectPath = `${bucket}/${safeName}`;
+    const publicUrl = `/${objectPath}`;
     console.log('[/api/admin/media] Upload succeeded:', publicUrl);
     return NextResponse.json({ success: true, url: publicUrl, bucket, path: objectPath });
   } catch (error) {
