@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useContent } from '@/content/useContent';
 
 type GalleryMediaType = 'image' | 'video';
@@ -27,6 +28,27 @@ function normalizeMediaType(item: GalleryItem): GalleryMediaType {
   return 'image';
 }
 
+function isFilenameLikeTitle(value?: string): boolean {
+  if (!value) {
+    return false;
+  }
+
+  const title = value.trim().toLowerCase();
+  if (!title) {
+    return false;
+  }
+
+  if (title.includes('whatsapp image')) {
+    return true;
+  }
+
+  if (/\.(jpg|jpeg|png|webp|gif|bmp|mp4|mov|webm)$/i.test(title)) {
+    return true;
+  }
+
+  return /^img[-_ ]?\d+/i.test(title);
+}
+
 export default function GalleryShowcase() {
   const { dictionary, dir } = useContent();
   const isArabic = dir === 'rtl';
@@ -51,6 +73,12 @@ export default function GalleryShowcase() {
   }, [gallery]);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (activeIndex >= items.length) {
@@ -59,6 +87,61 @@ export default function GalleryShowcase() {
   }, [activeIndex, items.length]);
 
   const activeItem = items[activeIndex];
+
+  useEffect(() => {
+    if (!previewOpen) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setPreviewOpen(false);
+        return;
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        if (isArabic) {
+          goToNext();
+        } else {
+          goToPrevious();
+        }
+        return;
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        if (isArabic) {
+          goToPrevious();
+        } else {
+          goToNext();
+        }
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [previewOpen, isArabic, items]);
+
+  useEffect(() => {
+    if (!previewOpen) {
+      return;
+    }
+
+    const closePreview = () => setPreviewOpen(false);
+    window.addEventListener('hashchange', closePreview);
+    window.addEventListener('popstate', closePreview);
+
+    return () => {
+      window.removeEventListener('hashchange', closePreview);
+      window.removeEventListener('popstate', closePreview);
+    };
+  }, [previewOpen]);
 
   const goToPrevious = () => {
     if (items.length <= 1) {
@@ -111,7 +194,8 @@ export default function GalleryShowcase() {
                   src={activeItem?.src}
                   alt={activeItem?.title || (isArabic ? 'لقطة من أعمالنا' : 'A moment from our work')}
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full cursor-zoom-in object-cover"
+                  onClick={() => setPreviewOpen(true)}
                 />
               )}
 
@@ -148,9 +232,6 @@ export default function GalleryShowcase() {
                 {activeItem?.description && (
                   <p className="mt-1 max-w-3xl text-sm text-white/90 md:text-base">{activeItem.description}</p>
                 )}
-                <p className="mt-2 text-xs font-semibold text-white/85">
-                  {gallery?.focusHint || (isArabic ? 'استخدم الأسهم للتنقل بين الصور والفيديوهات' : 'Use arrows to browse the gallery slider')}
-                </p>
               </div>
             </div>
 
@@ -179,7 +260,91 @@ export default function GalleryShowcase() {
             )}
           </div>
         )}
+
       </div>
+
+      {isMounted &&
+        previewOpen &&
+        activeItem &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-6"
+            onClick={() => setPreviewOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={isArabic ? 'معاينة الصورة بالحجم الكامل' : 'Full-size image preview'}
+          >
+            <div
+              className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-[#d6bf8a]/65 bg-[#0d0d0d] shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-white/15 bg-black/45 px-4 py-3 text-white sm:px-5">
+                <div className="text-xs font-semibold text-white/75 sm:text-sm">
+                  {isArabic ? `عنصر ${activeIndex + 1} من ${items.length}` : `Item ${activeIndex + 1} of ${items.length}`}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewOpen(false)}
+                  className="rounded-full border border-white/35 bg-black/60 px-3 py-1 text-2xl font-bold leading-none text-white hover:bg-black/80"
+                  aria-label={isArabic ? 'إغلاق المعاينة' : 'Close preview'}
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="relative bg-black">
+                {activeItem.type === 'video' ? (
+                  <video
+                    key={activeItem.src}
+                    src={activeItem.src}
+                    poster={activeItem.thumbnail}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="max-h-[72vh] w-full object-contain"
+                  />
+                ) : (
+                  <img
+                    src={activeItem.src}
+                    alt={activeItem.title || (isArabic ? 'معاينة الصورة' : 'Image preview')}
+                    className="max-h-[72vh] w-full object-contain"
+                  />
+                )}
+
+                {items.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={isArabic ? goToNext : goToPrevious}
+                      className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/35 bg-black/55 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/75"
+                      aria-label={isArabic ? 'التالي' : 'Previous'}
+                    >
+                      {isArabic ? '›' : '‹'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={isArabic ? goToPrevious : goToNext}
+                      className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/35 bg-black/55 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/75"
+                      aria-label={isArabic ? 'السابق' : 'Next'}
+                    >
+                      {isArabic ? '‹' : '›'}
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {activeItem.description && (
+                <div className={`border-t border-white/15 bg-black/45 px-4 py-3 text-white sm:px-5 ${isArabic ? 'text-right' : 'text-left'}`}>
+                  {!isFilenameLikeTitle(activeItem.title) && activeItem.title && (
+                    <h3 className="text-sm font-bold text-white sm:text-base">{activeItem.title}</h3>
+                  )}
+                  <p className="mt-1 text-xs text-white/85 sm:text-sm">{activeItem.description}</p>
+                </div>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }
