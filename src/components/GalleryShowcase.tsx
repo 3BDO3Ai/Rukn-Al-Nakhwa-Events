@@ -38,7 +38,7 @@ function isFilenameLikeTitle(value?: string): boolean {
     return false;
   }
 
-  if (title.includes('whatsapp image')) {
+  if (title.includes('whatsapp image') || title.includes('whatsapp video')) {
     return true;
   }
 
@@ -177,88 +177,121 @@ export default function GalleryShowcase() {
             {gallery?.emptyMessage || (isArabic ? 'لا توجد وسائط للعرض حالياً.' : 'No media available yet.')}
           </div>
         ) : (
-          <div className="reveal-card overflow-hidden rounded-[2rem] border border-[#bfa66a]/40 bg-[linear-gradient(180deg,#fffefb_0%,#f6f0e2_100%)] shadow-[0_22px_55px_rgba(46,35,11,0.16)]">
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#1a1a1a] sm:aspect-[21/9]">
-              {activeItem?.type === 'video' ? (
-                <video
-                  key={activeItem.src}
-                  src={activeItem.src}
-                  poster={activeItem.thumbnail}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <img
-                  src={activeItem?.src}
-                  alt={activeItem?.title || (isArabic ? 'لقطة من أعمالنا' : 'A moment from our work')}
-                  loading="lazy"
-                  className="h-full w-full cursor-zoom-in object-cover"
-                  onClick={() => setPreviewOpen(true)}
-                />
-              )}
+          <>
+            <div className="space-y-5 md:hidden">
+              {items.map((item, index) => (
+                <article
+                  key={`${item.src}-${index}`}
+                  className="overflow-hidden rounded-2xl border border-[#d7c7a0]/45 bg-white shadow-[0_8px_24px_rgba(38,27,8,0.12)]"
+                >
+                  <div className="relative bg-[#111]">
+                    {item.type === 'video' ? (
+                      <video
+                        src={item.src}
+                        poster={item.thumbnail}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="w-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={item.src}
+                        alt={item.title || (isArabic ? 'صورة من المعرض' : 'Gallery image')}
+                        loading="lazy"
+                        className="w-full object-cover"
+                      />
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
 
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="hidden md:block">
+              <div className="reveal-card overflow-hidden rounded-[2rem] border border-[#bfa66a]/40 bg-[linear-gradient(180deg,#fffefb_0%,#f6f0e2_100%)] shadow-[0_22px_55px_rgba(46,35,11,0.16)]">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#1a1a1a] sm:aspect-[21/9]">
+                  {activeItem?.type === 'video' ? (
+                    <video
+                      key={activeItem.src}
+                      src={activeItem.src}
+                      poster={activeItem.thumbnail}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={activeItem?.src}
+                      alt={activeItem?.title || (isArabic ? 'لقطة من أعمالنا' : 'A moment from our work')}
+                      loading="lazy"
+                      className="h-full w-full cursor-zoom-in object-cover"
+                      onClick={() => setPreviewOpen(true)}
+                    />
+                  )}
 
-              {activeItem?.type === 'video' && (
-                <span className="absolute left-4 top-4 rounded-full border border-white/35 bg-black/55 px-3 py-1 text-xs font-bold text-white">
-                  {gallery?.videoBadge || (isArabic ? 'فيديو' : 'Video')}
-                </span>
-              )}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 
-              {items.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={goToPrevious}
-                    className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/25 bg-black/50 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/70"
-                    aria-label={isArabic ? 'السابق' : 'Previous'}
-                  >
-                    {isArabic ? '›' : '‹'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={goToNext}
-                    className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/25 bg-black/50 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/70"
-                    aria-label={isArabic ? 'التالي' : 'Next'}
-                  >
-                    {isArabic ? '‹' : '›'}
-                  </button>
-                </>
-              )}
+                  {activeItem?.type === 'video' && (
+                    <span className="absolute left-4 top-4 rounded-full border border-white/35 bg-black/55 px-3 py-1 text-xs font-bold text-white">
+                      {gallery?.videoBadge || (isArabic ? 'فيديو' : 'Video')}
+                    </span>
+                  )}
 
-              <div className={`absolute bottom-0 left-0 right-0 p-5 text-white ${isArabic ? 'text-right' : 'text-left'}`}>
-                {activeItem?.description && (
-                  <p className="mt-1 max-w-3xl text-sm text-white/90 md:text-base">{activeItem.description}</p>
+                  {items.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={goToPrevious}
+                        className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/25 bg-black/50 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/70"
+                        aria-label={isArabic ? 'السابق' : 'Previous'}
+                      >
+                        {isArabic ? '›' : '‹'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={goToNext}
+                        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/25 bg-black/50 px-3 py-2 text-2xl font-black text-white transition hover:bg-black/70"
+                        aria-label={isArabic ? 'التالي' : 'Next'}
+                      >
+                        {isArabic ? '‹' : '›'}
+                      </button>
+                    </>
+                  )}
+
+                  <div className={`absolute bottom-0 left-0 right-0 p-5 text-white ${isArabic ? 'text-right' : 'text-left'}`}>
+                    {activeItem?.description && (
+                      <p className="mt-1 max-w-3xl text-sm text-white/90 md:text-base">{activeItem.description}</p>
+                    )}
+                  </div>
+                </div>
+
+                {items.length > 1 && (
+                  <div className="flex items-center justify-between gap-3 border-t border-[#d7c7a0]/45 bg-[#f8f1df] px-4 py-3 sm:px-6" dir={dir}>
+                    <span className="text-xs font-bold text-[#5d4a28] sm:text-sm">
+                      {isArabic ? `عنصر ${activeIndex + 1} من ${items.length}` : `Item ${activeIndex + 1} of ${items.length}`}
+                    </span>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      {items.map((item, index) => (
+                        <button
+                          key={`${item.src}-${index}`}
+                          type="button"
+                          onClick={() => setActiveIndex(index)}
+                          aria-label={isArabic ? `الانتقال إلى العنصر ${index + 1}` : `Go to item ${index + 1}`}
+                          className={`h-2.5 rounded-full transition ${
+                            index === activeIndex
+                              ? 'w-8 bg-[#9d7a33]'
+                              : 'w-2.5 bg-[#c8b186] hover:bg-[#b59656]'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
-
-            {items.length > 1 && (
-              <div className="flex items-center justify-between gap-3 border-t border-[#d7c7a0]/45 bg-[#f8f1df] px-4 py-3 sm:px-6" dir={dir}>
-                <span className="text-xs font-bold text-[#5d4a28] sm:text-sm">
-                  {isArabic ? `عنصر ${activeIndex + 1} من ${items.length}` : `Item ${activeIndex + 1} of ${items.length}`}
-                </span>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  {items.map((item, index) => (
-                    <button
-                      key={`${item.src}-${index}`}
-                      type="button"
-                      onClick={() => setActiveIndex(index)}
-                      aria-label={isArabic ? `الانتقال إلى العنصر ${index + 1}` : `Go to item ${index + 1}`}
-                      className={`h-2.5 rounded-full transition ${
-                        index === activeIndex
-                          ? 'w-8 bg-[#9d7a33]'
-                          : 'w-2.5 bg-[#c8b186] hover:bg-[#b59656]'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          </>
         )}
 
       </div>

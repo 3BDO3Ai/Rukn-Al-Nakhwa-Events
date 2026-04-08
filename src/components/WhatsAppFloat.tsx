@@ -33,7 +33,7 @@ export default function WhatsAppFloat() {
   }
 
   return (
-    <div className="fixed bottom-6 right-4 z-[70] flex flex-col gap-3 sm:right-6">
+    <div className="fixed left-3 top-1/2 z-[70] flex -translate-y-1/2 flex-col gap-3 sm:left-auto sm:right-6 sm:top-auto sm:bottom-6 sm:translate-y-0">
       <a
         href={SOCIAL_LINKS.tiktok}
         target="_blank"
@@ -43,7 +43,7 @@ export default function WhatsAppFloat() {
         className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-[#0f1115] text-white shadow-[0_12px_28px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#1a1d25]"
       >
         <FaTiktok className="h-6 w-6" />
-        <span className="pointer-events-none absolute right-[calc(100%+0.75rem)] hidden whitespace-nowrap rounded-lg bg-[#111723] px-3 py-1.5 text-xs font-semibold text-white shadow-lg group-hover:block">
+        <span className="pointer-events-none absolute left-[calc(100%+0.75rem)] hidden whitespace-nowrap rounded-lg bg-[#111723] px-3 py-1.5 text-xs font-semibold text-white shadow-lg group-hover:hidden sm:left-auto sm:right-[calc(100%+0.75rem)] sm:group-hover:block">
           {isArabic ? 'تابعنا على تيك توك' : 'Follow us on TikTok'}
         </span>
       </a>
@@ -58,7 +58,7 @@ export default function WhatsAppFloat() {
       >
         <span className="absolute inset-0 animate-ping rounded-full bg-[#21c064]/35" />
         <FaWhatsapp className="relative h-7 w-7" />
-        <span className="pointer-events-none absolute right-[calc(100%+0.75rem)] hidden whitespace-nowrap rounded-lg bg-[#111723] px-3 py-1.5 text-xs font-semibold text-white shadow-lg group-hover:block">
+        <span className="pointer-events-none absolute left-[calc(100%+0.75rem)] hidden whitespace-nowrap rounded-lg bg-[#111723] px-3 py-1.5 text-xs font-semibold text-white shadow-lg group-hover:hidden sm:left-auto sm:right-[calc(100%+0.75rem)] sm:group-hover:block">
           {isArabic ? `واتساب ${CONTACT_NUMBER_DISPLAY}` : `WhatsApp ${CONTACT_NUMBER_DISPLAY}`}
         </span>
       </a>
