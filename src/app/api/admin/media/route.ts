@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
   try {
     const env = getEnvVars();
     if (!env) {
+      console.error('[/api/admin/media] Missing Supabase environment variables.');
       return NextResponse.json(
         {
           error: 'Missing Supabase write environment variables.',
@@ -57,23 +58,30 @@ export async function POST(request: NextRequest) {
     const fileName = body?.fileName;
     const dataUrl = body?.dataUrl;
 
+    console.log('[/api/admin/media] Received:', { bucket, fileName: fileName ? `${fileName.slice(0, 20)}...` : null, dataUrlLength: dataUrl?.length });
+
     if (!bucket || !ALLOWED_BUCKETS.has(bucket)) {
-      return NextResponse.json({ error: 'Bucket must be one of: Services, Partners, Gallery' }, { status: 400 });
+      console.error('[/api/admin/media] Invalid bucket:', bucket, 'Allowed:', Array.from(ALLOWED_BUCKETS));
+      return NextResponse.json({ error: `Bucket must be one of: ${Array.from(ALLOWED_BUCKETS).join(', ')}. Received: ${bucket}` }, { status: 400 });
     }
 
     if (!fileName || typeof fileName !== 'string') {
-      return NextResponse.json({ error: 'fileName is required' }, { status: 400 });
+      console.error('[/api/admin/media] Invalid fileName:', fileName);
+      return NextResponse.json({ error: 'fileName is required and must be a string' }, { status: 400 });
     }
 
     if (!dataUrl || typeof dataUrl !== 'string') {
-      return NextResponse.json({ error: 'dataUrl is required' }, { status: 400 });
+      console.error('[/api/admin/media] Invalid dataUrl');
+      return NextResponse.json({ error: 'dataUrl is required and must be a string' }, { status: 400 });
     }
 
     const parsed = toBase64Payload(dataUrl);
     if (!parsed) {
-      return NextResponse.json({ error: 'Invalid dataUrl format' }, { status: 400 });
+      console.error('[/api/admin/media] Failed to parse dataUrl (expected "data:mime;base64,...")');
+      return NextResponse.json({ error: 'Invalid dataUrl format (expected "data:mime;base64,...")' }, { status: 400 });
     }
 
+    console.log('[/api/admin/media] Upload starting for:', bucket, fileName);
     const extension = getFileExtension(parsed.contentType, fileName);
     const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${extension}`;
     const objectPath = `${bucket}/${safeName}`;
@@ -94,14 +102,15 @@ export async function POST(request: NextRequest) {
 
     if (!uploadRes.ok) {
       const text = await uploadRes.text();
-      console.error('Failed to upload media to Supabase:', uploadRes.status, text);
-      return NextResponse.json({ error: 'Failed to upload media' }, { status: 502 });
+      console.error('[/api/admin/media] Supabase upload failed:', uploadRes.status, text);
+      return NextResponse.json({ error: 'Failed to upload media to Supabase', details: text }, { status: 502 });
     }
 
     const publicUrl = `${env.SUPABASE_URL}/storage/v1/object/public/${objectPath}`;
+    console.log('[/api/admin/media] Upload succeeded:', publicUrl);
     return NextResponse.json({ success: true, url: publicUrl, bucket, path: objectPath });
   } catch (error) {
-    console.error('Error uploading media:', error);
-    return NextResponse.json({ error: 'Failed to upload media' }, { status: 500 });
+    console.error('[/api/admin/media] Exception:', error);
+    return NextResponse.json({ error: 'Failed to upload media', details: error instanceof Error ? error.message : String(error) }, { status: 500 });
   }
 }
