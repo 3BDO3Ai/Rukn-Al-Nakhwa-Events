@@ -575,6 +575,16 @@
           ],
           "author": "",
           "publishedAt": "2026-04-08"
+        },
+        {
+          "slug": "blog-1775649493687",
+          "title": "",
+          "excerpt": "",
+          "contentHtml": "",
+          "coverImage": "/Blogs/blog-1775649493687/cover-whatsapp-image-2026-04-03-at-81319-pm-1775649499795-ir4ad114.jpg",
+          "gallery": [],
+          "author": "",
+          "publishedAt": "2026-04-08"
         }
       ]
     }
@@ -1153,6 +1163,16 @@
           "gallery": [
             "/Blogs/blog-1775642785420/gallery-whatsapp-image-2026-04-03-at-81314-pm-4-1775642826530-6amwqnmz.jpg"
           ],
+          "author": "",
+          "publishedAt": "2026-04-08"
+        },
+        {
+          "slug": "blog-1775649493687",
+          "title": "",
+          "excerpt": "",
+          "contentHtml": "",
+          "coverImage": "/Blogs/blog-1775649493687/cover-whatsapp-image-2026-04-03-at-81319-pm-1775649499795-ir4ad114.jpg",
+          "gallery": [],
           "author": "",
           "publishedAt": "2026-04-08"
         }

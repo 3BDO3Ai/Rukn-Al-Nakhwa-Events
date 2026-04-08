@@ -20,6 +20,18 @@ function isPublicAdminApi(pathname: string, method: string): boolean {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  const segments = pathname.split("/").filter(Boolean);
+  const maybeBlogMediaPath =
+    segments.length === 3 &&
+    (segments[0] === "Blogs" || segments[0] === "blogs") &&
+    segments[2].includes(".");
+
+  if (maybeBlogMediaPath) {
+    const rewrittenUrl = request.nextUrl.clone();
+    rewrittenUrl.pathname = `/api/blog-files/Blogs/${segments[1]}/${segments[2]}`;
+    return NextResponse.rewrite(rewrittenUrl);
+  }
+
   const isAdminPage = pathname.startsWith("/admin");
   const isAdminApi = pathname.startsWith("/api/admin");
 
@@ -55,5 +67,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*", "/Blogs/:path*", "/blogs/:path*"],
 };

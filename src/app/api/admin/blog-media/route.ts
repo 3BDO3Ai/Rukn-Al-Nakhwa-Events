@@ -5,7 +5,7 @@ import { getPublicDir } from "@/lib/serverPaths";
 
 export const runtime = "nodejs";
 
-const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; // 15MB
+const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; 
 
 function toSafeSlug(value: string): string {
   return value
@@ -41,7 +41,6 @@ function extensionFromMime(mimeType: string, fileName: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. استقبال البيانات كـ FormData بدلاً من JSON
     const formData = await request.formData();
     
     const blogName = formData.get("blogName")?.toString() || "";
@@ -64,7 +63,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Image exceeds 15MB limit" }, { status: 400 });
     }
 
-    // 2. تحويل الملف الحقيقي إلى Buffer مباشرة (بدون Base64)
     const buffer = Buffer.from(await file.arrayBuffer());
 
     const blogSlug = toSafeSlug(blogName) || `blog-${Date.now()}`;
@@ -73,7 +71,6 @@ export async function POST(request: NextRequest) {
     const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     const finalFileName = `${variant}-${baseFileName}-${uniqueSuffix}.${extension}`;
 
-    // تأكد من أن حرف B كابيتال يتطابق مع الفولدر في السيرفر
     const blogDirectory = getPublicDir("Blogs", blogSlug);
     await fs.mkdir(blogDirectory, { recursive: true });
 
