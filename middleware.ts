@@ -21,14 +21,16 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const segments = pathname.split("/").filter(Boolean);
-  const maybeBlogMediaPath =
-    segments.length === 3 &&
-    (segments[0] === "Blogs" || segments[0] === "blogs") &&
-    segments[2].includes(".");
+  const mediaRoots = new Set(["blogs", "gallery", "partners", "services"]);
+  const mediaRoot = segments[0]?.toLowerCase();
+  const hasExtension = segments.length > 1 && segments[segments.length - 1].includes(".");
+  const maybeManagedMediaPath = Boolean(mediaRoot && mediaRoots.has(mediaRoot) && hasExtension);
 
-  if (maybeBlogMediaPath) {
+  if (maybeManagedMediaPath) {
     const rewrittenUrl = request.nextUrl.clone();
-    rewrittenUrl.pathname = `/api/blog-files/Blogs/${segments[1]}/${segments[2]}`;
+    const normalizedRoot = `${segments[0][0].toUpperCase()}${segments[0].slice(1).toLowerCase()}`;
+    const encodedRemainder = segments.slice(1).map((segment) => encodeURIComponent(segment)).join("/");
+    rewrittenUrl.pathname = `/api/public-files/${normalizedRoot}/${encodedRemainder}`;
     return NextResponse.rewrite(rewrittenUrl);
   }
 
@@ -67,5 +69,16 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*", "/Blogs/:path*", "/blogs/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*",
+    "/Blogs/:path*",
+    "/blogs/:path*",
+    "/Gallery/:path*",
+    "/gallery/:path*",
+    "/Partners/:path*",
+    "/partners/:path*",
+    "/Services/:path*",
+    "/services/:path*",
+  ],
 };
