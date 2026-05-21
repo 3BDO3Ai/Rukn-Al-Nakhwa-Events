@@ -6,6 +6,7 @@ import { buildWhatsAppHref } from '@/lib/contact';
 interface PackageItem {
   title: string;
   price: string;
+  previous_price?: string;
   featured?: boolean;
   items: string[];
   whatsappMessage?: string;
@@ -50,7 +51,12 @@ export default function Services() {
                 </h3>
                 <p className={pkg.featured ? 'mt-2 text-4xl font-black text-[var(--elite-primary)]' : 'mt-2 text-4xl font-black text-[#8dd4ab]'}>
                   {pkg.price}
-                  <span className="mr-2 text-lg font-bold">{services?.currency}</span>
+                  <span className="mx-2 text-lg font-bold">{services?.currency}</span>
+                  {pkg.previous_price && (
+                    <span className="mx-2 text-lg font-medium text-[#c4b699] line-through opacity-80">
+                      {pkg.previous_price} {services?.currency}
+                    </span>
+                  )}
                 </p>
 
                 <ul className="mt-6 space-y-3 text-sm leading-7">

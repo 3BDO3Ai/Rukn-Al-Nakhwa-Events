@@ -97,57 +97,66 @@
         {
           "title": "باقة الاستقبال الملكي",
           "price": "8000",
+          "previous_price": "",
           "featured": true,
-          "whatsappMessage": "السلام عليكم، أرغب في حجز باقة الاستقبال الملكي (8000 ريال).",
           "items": [
             "ديكور ملكي فاخر مع 2 أعلام الراية.",
             "10 أنواع شاي + قهوة عربية وأمريكية + عصير 4 أشكال لـ 200 شخص.",
             "طاقم: قهوجي معلم + 10 صبابين بزي موحد + 1 مشرف.",
             "الضيافة: 15 صينية حلا مشكل، 1 محمل حلا، 1 محمل فطاير، 60 مقداع تمر مع المضير، 4 صياني كبيرة مع الزبد والخواضة."
-          ]
+          ],
+          "whatsappMessage": "السلام عليكم، أرغب في حجز باقة الاستقبال الملكي (8000 ريال)."
         },
         {
           "title": "الباقة الماسية",
           "price": "6500",
-          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الماسية (6500 ريال).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "طاقم: 1 قهوجي و 9 صبابين.",
             "10 أنواع شاي + قهوة عربية وأمريكية.",
             "مدخل خزامي 25 متر.",
             "الضيافة: 60 صحن تمور في صحون ذهبية + 20 صحن حلا شرقي مشكل."
-          ]
+          ],
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الماسية (6500 ريال)."
         },
         {
           "title": "الباقة الذهبية",
           "price": "4500",
-          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الذهبية (4500 ريال).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "طاقم: 1 قهوجي و 6 صبابين.",
             "10 أنواع شاي + قهوة عربية وأمريكية.",
             "مدخل خزامي 25 متر.",
             "الضيافة: 40 صحن تمور + 2 صحن محامل كبيرة + 10 صحون حلا شرقي."
-          ]
+          ],
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الذهبية (4500 ريال)."
         },
         {
           "title": "الباقة الفضية",
           "price": "3500",
-          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الفضية (3500 ريال).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "طاقم: 1 قهوجي و 4 صبابين.",
             "10 أنواع شاي + قهوة عربية وأمريكية.",
             "مدخل خزامي 25 متر.",
             "الضيافة: 25 صحن تمور + 6 صحون حلا شرقي مشكلة."
-          ]
+          ],
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الفضية (3500 ريال)."
         },
         {
           "title": "الباقة الأساسية",
           "price": "2500",
-          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الأساسية (2500 ريال).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "طاقم: 1 قهوجي و 3 صبابين.",
             "10 أنواع شاي + قهوة عربية وأمريكية.",
             "ديكور ملكي فاخر."
-          ]
+          ],
+          "whatsappMessage": "السلام عليكم، أرغب في حجز الباقة الأساسية (2500 ريال)."
         }
       ],
       "items": [
@@ -376,13 +385,6 @@
       "emptyMessage": "لا توجد وسائط متاحة حالياً.",
       "videoBadge": "فيديو",
       "items": [
-        {
-          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.12%20PM.jpeg",
-          "fileName": "WhatsApp Image 2026-04-03 at 8.13.12 PM.jpeg",
-          "type": "image",
-          "title": "WhatsApp Image 2026-04-03 at 8.13.12 PM",
-          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
-        },
         {
           "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(1).jpeg",
           "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1).jpeg",
@@ -687,57 +689,66 @@
         {
           "title": "Royal Reception Package",
           "price": "8000",
+          "previous_price": "",
           "featured": true,
-          "whatsappMessage": "Hello, I would like to book the Royal Reception Package (8000 SAR).",
           "items": [
             "Luxury royal decor with 2 flag banners.",
             "10 tea types + Arabic and American coffee + 4 juice varieties for 200 guests.",
             "Team: Master coffee maker + 10 uniform pourers + 1 supervisor.",
             "Full luxury dessert and dates setup."
-          ]
+          ],
+          "whatsappMessage": "Hello, I would like to book the Royal Reception Package (8000 SAR)."
         },
         {
           "title": "Diamond Package",
           "price": "6500",
-          "whatsappMessage": "Hello, I would like to book the Diamond Package (6500 SAR).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "Team: 1 coffee maker + 9 pourers.",
             "10 tea types + Arabic and American coffee.",
             "25m lavender entrance.",
             "Premium dates and oriental desserts distributed in hall."
-          ]
+          ],
+          "whatsappMessage": "Hello, I would like to book the Diamond Package (6500 SAR)."
         },
         {
           "title": "Gold Package",
           "price": "4500",
-          "whatsappMessage": "Hello, I would like to book the Gold Package (4500 SAR).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "Team: 1 coffee maker + 6 pourers.",
             "10 tea types + Arabic and American coffee.",
             "25m lavender entrance.",
             "Dates and oriental sweets setup."
-          ]
+          ],
+          "whatsappMessage": "Hello, I would like to book the Gold Package (4500 SAR)."
         },
         {
           "title": "Silver Package",
           "price": "3500",
-          "whatsappMessage": "Hello, I would like to book the Silver Package (3500 SAR).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "Team: 1 coffee maker + 4 pourers.",
             "10 tea types + Arabic and American coffee.",
             "25m lavender entrance.",
             "Dates and sweets distributed across hall."
-          ]
+          ],
+          "whatsappMessage": "Hello, I would like to book the Silver Package (3500 SAR)."
         },
         {
           "title": "Basic Package",
           "price": "2500",
-          "whatsappMessage": "Hello, I would like to book the Basic Package (2500 SAR).",
+          "previous_price": "",
+          "featured": false,
           "items": [
             "Team: 1 coffee maker + 3 pourers.",
             "10 tea types + Arabic and American coffee.",
             "Luxury royal decor."
-          ]
+          ],
+          "whatsappMessage": "Hello, I would like to book the Basic Package (2500 SAR)."
         }
       ],
       "items": [

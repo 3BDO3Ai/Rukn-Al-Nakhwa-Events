@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { getPublicDir } from '@/lib/serverPaths';
+import { logAdminAction } from '@/lib/logger';
 
 const ALLOWED_BUCKETS = new Set(['Services', 'Partners', 'Gallery']);
 
@@ -104,6 +105,9 @@ export async function POST(request: NextRequest) {
     const objectPath = `${bucket}/${safeName}`;
     const publicUrl = `/${objectPath}`;
     console.log('[/api/admin/media] Upload succeeded:', publicUrl);
+
+    await logAdminAction('MEDIA_UPLOAD', `Uploaded file to bucket ${bucket} as ${safeName}`);
+
     return NextResponse.json({ success: true, url: publicUrl, bucket, path: objectPath });
   } catch (error) {
     console.error('[/api/admin/media] Exception:', error);

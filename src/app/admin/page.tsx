@@ -19,6 +19,7 @@ interface SearchResult {
 interface ServicePackage {
   title: string;
   price: string;
+  previous_price?: string;
   featured?: boolean;
   items: string[];
   whatsappMessage?: string;
@@ -44,6 +45,7 @@ interface NewServiceDraft {
   titleAr: string;
   titleEn: string;
   price: string;
+  previousPrice: string;
   featured: boolean;
   whatsappAr: string;
   whatsappEn: string;
@@ -72,6 +74,7 @@ const EMPTY_NEW_SERVICE: NewServiceDraft = {
   titleAr: "",
   titleEn: "",
   price: "",
+  previousPrice: "",
   featured: false,
   whatsappAr: "",
   whatsappEn: "",
@@ -317,6 +320,7 @@ function normalizeServicePackage(value: unknown): ServicePackage {
   return {
     title: typeof input.title === "string" ? input.title : "",
     price,
+    previous_price: typeof input.previous_price === "string" ? input.previous_price : "",
     featured: Boolean(input.featured),
     items,
     whatsappMessage: typeof input.whatsappMessage === "string" ? input.whatsappMessage : "",
@@ -909,7 +913,7 @@ export default function AdminPage() {
     }
   };
 
-  const syncServiceSharedField = (index: number, field: "price" | "featured", value: string | boolean) => {
+  const syncServiceSharedField = (index: number, field: "price" | "featured" | "previous_price", value: string | boolean) => {
     setData((current) => {
       const arServices = getLocaleServices(current, "ar").map((service, i) => (i === index ? { ...service, [field]: value } : service));
       const enServices = getLocaleServices(current, "en").map((service, i) => (i === index ? { ...service, [field]: value } : service));
@@ -1045,6 +1049,7 @@ export default function AdminPage() {
       const arCard: ServicePackage = {
         title: newServiceDraft.titleAr.trim(),
         price: newServiceDraft.price.trim(),
+        previous_price: newServiceDraft.previousPrice.trim() || undefined,
         featured: newServiceDraft.featured,
         items: newServiceDraft.firstItemAr.trim() ? [newServiceDraft.firstItemAr.trim()] : [],
         whatsappMessage: newServiceDraft.whatsappAr.trim(),
@@ -1053,6 +1058,7 @@ export default function AdminPage() {
       const enCard: ServicePackage = {
         title: newServiceDraft.titleEn.trim(),
         price: newServiceDraft.price.trim(),
+        previous_price: newServiceDraft.previousPrice.trim() || undefined,
         featured: newServiceDraft.featured,
         items: newServiceDraft.firstItemEn.trim() ? [newServiceDraft.firstItemEn.trim()] : [],
         whatsappMessage: newServiceDraft.whatsappEn.trim(),
@@ -1106,6 +1112,29 @@ export default function AdminPage() {
 
     setNewGalleryDraft(EMPTY_NEW_GALLERY);
     setShowNewGalleryForm(false);
+  };
+
+  const deleteGalleryItem = async (index: number, item: GalleryItem) => {
+    const confirmDelete = window.confirm(adminLocale === "ar" ? "هل أنت متأكد من حذف هذا العنصر؟" : "Are you sure you want to delete this item?");
+    if (!confirmDelete) return;
+
+    setStatus(adminLocale === "ar" ? "جارٍ الحذف نهائياً..." : "Permanently deleting item...");
+    try {
+      const decodedFileName = item.fileName || getFileNameFromSrc(item.src);
+      const response = await fetch(`/api/admin/gallery-files?fileName=${encodeURIComponent(decodedFileName)}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete: ${response.status}`);
+      }
+
+      setGallery(quickGallery.filter((_, i) => i !== index));
+      setStatus(adminLocale === "ar" ? "تم حذف العنصر من الخادم ومن قاعدة البيانات." : "Item permanently deleted from server and DB.");
+    } catch (error) {
+      console.error("Deletion failed:", error);
+      setStatus(adminLocale === "ar" ? "فشل الحذف." : "Failed to delete item.");
+    }
   };
 
   const syncGalleryFromPublicFolder = async () => {
@@ -1251,6 +1280,7 @@ export default function AdminPage() {
                 <input value={newServiceDraft.titleAr} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleAr: e.target.value }))} placeholder="title AR" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <input value={newServiceDraft.titleEn} onChange={(e) => setNewServiceDraft((d) => ({ ...d, titleEn: e.target.value }))} placeholder="title EN" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <input value={newServiceDraft.price} onChange={(e) => setNewServiceDraft((d) => ({ ...d, price: e.target.value }))} placeholder="price (shared)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <input value={newServiceDraft.previousPrice} onChange={(e) => setNewServiceDraft((d) => ({ ...d, previousPrice: e.target.value }))} placeholder="previous price (optional)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                 <label className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
                   <input
                     type="checkbox"
@@ -1283,10 +1313,11 @@ export default function AdminPage() {
                     <button type="button" onClick={() => setServices(quickServices.filter((_, i) => i !== index))} className="rounded border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{text.quick.delete}</button>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                   <input value={service.title || ""} onChange={(e) => setServices(quickServices.map((item, i) => (i === index ? { ...item, title: e.target.value } : item)))} placeholder="title" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
                   <input value={service.price || ""} onChange={(e) => syncServiceSharedField(index, "price", e.target.value)} placeholder="price" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-                  <label className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
+                  <input value={service.previous_price || ""} onChange={(e) => syncServiceSharedField(index, "previous_price", e.target.value)} placeholder="previous price (optional)" className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                  <label className="sm:col-span-3 inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
                     <input
                       type="checkbox"
                       checked={Boolean(service.featured)}
@@ -1527,7 +1558,7 @@ export default function AdminPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setGallery(quickGallery.filter((_, i) => i !== index))}
+                      onClick={() => deleteGalleryItem(index, item)}
                       className="rounded border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700"
                     >
                       {text.quick.delete}

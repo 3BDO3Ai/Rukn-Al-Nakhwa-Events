@@ -41,3 +41,7 @@ coverage
 # Misc
 .vercel
 .turbo
+
+# Application Data & Uploads
+/public/Gallery
+src/content/content.json

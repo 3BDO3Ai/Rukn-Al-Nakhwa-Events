@@ -3,6 +3,7 @@ import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 import fallbackContent from '@/content/content.json';
 import { getSrcDir } from '@/lib/serverPaths';
+import { logAdminAction } from '@/lib/logger';
 
 export const runtime = 'nodejs';
 
@@ -112,6 +113,7 @@ export async function PUT(request: NextRequest) {
     const env = getWriteEnvVars();
     if (!env) {
       await writeLocalContent(newContent);
+      await logAdminAction('CONTENT_UPDATE', `Local content.json successfully updated. AR keys: ${Object.keys((newContent as any).ar || {}).length}, EN keys: ${Object.keys((newContent as any).en || {}).length}`);
       return NextResponse.json({ success: true, storage: 'local' });
     }
 
@@ -141,6 +143,7 @@ export async function PUT(request: NextRequest) {
         } catch (syncError) {
           console.error('Saved to Supabase but failed to sync local content.json:', syncError);
         }
+        await logAdminAction('CONTENT_UPDATE', `Remote and local content.json successfully updated. Bucket: ${bucket}`);
         return NextResponse.json({ success: true, bucket });
       }
 
