@@ -386,13 +386,6 @@
       "videoBadge": "فيديو",
       "items": [
         {
-          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(1).jpeg",
-          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1).jpeg",
-          "type": "image",
-          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1)",
-          "description": "لقطة حقيقية من أحد أعمالنا في الضيافة الملكية."
-        },
-        {
           "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(2).jpeg",
           "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (2).jpeg",
           "type": "image",
@@ -982,13 +975,6 @@
           "fileName": "WhatsApp Image 2026-04-03 at 8.13.12 PM.jpeg",
           "type": "image",
           "title": "WhatsApp Image 2026-04-03 at 8.13.12 PM",
-          "description": "A real capture from one of our premium hospitality executions."
-        },
-        {
-          "src": "/Gallery/WhatsApp%20Image%202026-04-03%20at%208.13.13%20PM%20(1).jpeg",
-          "fileName": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1).jpeg",
-          "type": "image",
-          "title": "WhatsApp Image 2026-04-03 at 8.13.13 PM (1)",
           "description": "A real capture from one of our premium hospitality executions."
         },
         {

@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import { getPublicDir } from "@/lib/serverPaths";
+import { getPublicDir, getSrcDir } from "@/lib/serverPaths";
 
 type GalleryMediaType = "image" | "video";
 
@@ -93,15 +93,15 @@ export async function DELETE(request: NextRequest) {
     }
 
     // 2. Database Deletion (content.json)
-    const contentApiPath = new URL("/api/admin/content", request.url).toString();
-    console.log(`[/api/admin/gallery-files DELETE] Fetching current database from ${contentApiPath}`);
-    
-    const getRes = await fetch(contentApiPath, { cache: "no-store" });
-    if (!getRes.ok) {
-      console.error(`[/api/admin/gallery-files DELETE] ERROR: Failed to fetch DB. Status: ${getRes.status}`);
+    const localContentPath = getSrcDir("content", "content.json");
+    let content: any = {};
+    try {
+      const raw = await fs.readFile(localContentPath, "utf8");
+      content = JSON.parse(raw);
+    } catch (e) {
+      console.error("[/api/admin/gallery-files DELETE] ERROR: Failed to read local content.json:", e);
       return NextResponse.json({ error: "Failed to read database." }, { status: 500 });
     }
-    const content = await getRes.json();
 
     let dbUpdated = false;
     const publicSrc = toPublicSrc(fileName);
@@ -120,18 +120,14 @@ export async function DELETE(request: NextRequest) {
     });
 
     if (dbUpdated) {
-      console.log(`[/api/admin/gallery-files DELETE] Saving updated database...`);
-      const putRes = await fetch(contentApiPath, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
-      });
-
-      if (!putRes.ok) {
-        console.error(`[/api/admin/gallery-files DELETE] ERROR: Failed to save updated DB. Status: ${putRes.status}`);
+      console.log(`[/api/admin/gallery-files DELETE] Saving updated database to disk...`);
+      try {
+        await fs.writeFile(localContentPath, JSON.stringify(content, null, 2) + "\n", "utf8");
+        console.log(`[/api/admin/gallery-files DELETE] SUCCESS: DB record completely removed.`);
+      } catch (e) {
+        console.error(`[/api/admin/gallery-files DELETE] ERROR: Failed to save updated DB to disk:`, e);
         return NextResponse.json({ error: "Failed to write database." }, { status: 500 });
       }
-      console.log(`[/api/admin/gallery-files DELETE] SUCCESS: DB record completely removed.`);
     } else {
       console.log(`[/api/admin/gallery-files DELETE] INFO: No matching record found in DB to remove.`);
     }
